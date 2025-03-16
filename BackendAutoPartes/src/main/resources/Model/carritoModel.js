@@ -1,37 +1,37 @@
-// CarritoModel.js
+// Model/carritoModel.js
 
-export function updateQuantity(button, change) {
-    let item = button.closest('.cart-item');
-    let quantityElement = item.querySelector('.quantity');
-    let availableElement = item.querySelector('.available');
-    let price = parseInt(item.getAttribute('data-price'));
-    let quantity = parseInt(quantityElement.textContent);
-    let available = parseInt(availableElement.textContent);
+export const cartModel = {
+    // Cargar el carrito desde localStorage
+    loadCart() {
+        return JSON.parse(localStorage.getItem('cart')) || [];
+    },
 
-    if (change > 0 && available > 0) {
-        quantity++;
-        available--;
-    } else if (change < 0 && quantity > 1) {
-        quantity--;
-        available++;
-    }
+    // Guardar el carrito en localStorage
+    saveCart(cart) {
+        localStorage.setItem('cart', JSON.stringify(cart));
+    },
 
-    quantityElement.textContent = quantity;
-    availableElement.textContent = available;
-    updateTotal();
-}
+    // Actualizar la cantidad de un producto en el carrito
+    updateQuantity(cart, index, change) {
+        const item = cart[index];
+        if (change > 0 && item.available > 0) {
+            item.quantity++;
+            item.available--;
+        } else if (change < 0 && item.quantity > 1) {
+            item.quantity--;
+            item.available++;
+        }
+        return cart;
+    },
 
-export function removeFromCart(button) {
-    button.closest('.cart-item').remove();
-    updateTotal();
-}
+    // Eliminar un producto del carrito
+    removeItem(cart, index) {
+        cart.splice(index, 1);
+        return cart;
+    },
 
-export function updateTotal() {
-    let total = 0;
-    document.querySelectorAll('.cart-item').forEach(item => {
-        let quantity = parseInt(item.querySelector('.quantity').textContent);
-        let price = parseInt(item.getAttribute('data-price'));
-        total += quantity * price;
-    });
-    document.getElementById('total-price').textContent = total > 0 ? `$${total.toLocaleString()}` : '$0';
-}
+    // Calcular el total del carrito
+    calculateTotal(cart) {
+        return cart.reduce((total, item) => total + item.quantity * item.price, 0);
+    },
+};
