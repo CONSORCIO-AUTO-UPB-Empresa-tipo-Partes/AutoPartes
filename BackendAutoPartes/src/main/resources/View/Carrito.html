@@ -478,13 +478,15 @@ body { background-color: black; color: white; font-family: Arial, sans-serif; }
 <button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
 
 <script>
-    // Función para cargar el carrito desde localStorage
-    function loadCart() {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    // Función para cargar el carrito desde el backend
+async function loadCart() {
+    try {
+        const response = await fetch('http://localhost:8080/api/cart'); // Agregar puerto 8080
+        const cartItems = await response.json();
         const cartItemsContainer = document.getElementById('cart-items');
         cartItemsContainer.innerHTML = '';
 
-        cart.forEach((item, index) => {
+        cartItems.forEach((item, index) => {
             const cartItem = document.createElement('div');
             cartItem.classList.add('cart-item');
             cartItem.setAttribute('data-price', item.price);
@@ -508,74 +510,121 @@ body { background-color: black; color: white; font-family: Arial, sans-serif; }
         });
 
         updateTotal();
+    } catch (error) {
+        console.error('Error loading cart:', error);
+    }
+}
+
+// Función para actualizar la cantidad de un producto
+
+async function updateQuantity(button, change) {
+    const item = button.closest('.cart-item');
+    const quantityElement = item.querySelector('.quantity');
+    const availableElement = item.querySelector('.available');
+    const price = parseFloat(item.getAttribute('data-price')); // Convertir a número
+    const index = parseInt(item.getAttribute('data-index'));
+    let quantity = parseInt(quantityElement.textContent); // Convertir a número
+    let available = parseInt(availableElement.textContent); // Convertir a número
+
+    if (change > 0 && available > 0) {
+        quantity++;
+        available--;
+    } else if (change < 0 && quantity > 1) {
+        quantity--;
+        available++;
     }
 
-    // Función para actualizar la cantidad de un producto
-    function updateQuantity(button, change) {
-        const item = button.closest('.cart-item');
-        const quantityElement = item.querySelector('.quantity');
-        const availableElement = item.querySelector('.available');
-        const price = parseFloat(item.getAttribute('data-price')); // Convertir a número
-        const index = parseInt(item.getAttribute('data-index'));
-        let quantity = parseInt(quantityElement.textContent); // Convertir a número
-        let available = parseInt(availableElement.textContent); // Convertir a número
+    quantityElement.textContent = quantity;
+    availableElement.textContent = available;
 
-        if (change > 0 && available > 0) {
-            quantity++;
-            available--;
-        } else if (change < 0 && quantity > 1) {
-            quantity--;
-            available++;
-        }
-
-        quantityElement.textContent = quantity;
-        availableElement.textContent = available;
-
-        // Actualizar el carrito en localStorage
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        cart[index].quantity = quantity;
-        cart[index].available = available;
-        localStorage.setItem('cart', JSON.stringify(cart));
-
-        updateTotal();
-    }
-
-    // Función para eliminar un producto del carrito
-    function removeFromCart(button) {
-        const item = button.closest('.cart-item');
-        const index = parseInt(item.getAttribute('data-index'));
-
-        // Eliminar el producto del carrito en localStorage
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        cart.splice(index, 1);
-        localStorage.setItem('cart', JSON.stringify(cart));
-
-        // Recargar el carrito
-        loadCart();
-    }
-
-    // Función para actualizar el total
-    function updateTotal() {
-        let total = 0;
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        cart.forEach(item => {
-            total += item.quantity * item.price; // Multiplicar cantidad por precio
+    // Actualizar el carrito en el backend
+    try {
+        const response = await fetch(`http://localhost:8080/api/cart/update?batchId=${index}&quantity=${quantity}`, { // Agregar puerto 8080
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
         });
-        document.getElementById('total-price').textContent = `$${total.toLocaleString()}`;
-    }
-
-    // Función para continuar a la factura
-    function continueToCheckout() {
-        const cart = JSON.parse(localStorage.getItem('cart')) || [];
-        if (cart.length === 0) {
-            alert('El carrito está vacío.');
-            return;
+        if (!response.ok) {
+            throw new Error('Failed to update cart');
         }
-        window.location.href = 'Factura.html';
+    } catch (error) {
+        console.error('Error updating cart:', error);
     }
 
-    // Cargar el carrito al iniciar la página
-    window.addEventListener('load', loadCart);
+    updateTotal();
+}
+
+// Función para eliminar un producto del carrito
+async function removeFromCart(button) {
+    const item = button.closest('.cart-item');
+    const index = parseInt(item.getAttribute('data-index'));
+
+    // Eliminar el producto del carrito en el backend
+    try {
+        const response = await fetch(`http://localhost:8080/api/cart/remove?batchId=${index}`, { // Agregar puerto 8080
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+        if (!response.ok) {
+            throw new Error('Failed to remove item from cart');
+        }
+    } catch (error) {
+        console.error('Error removing item from cart:', error);
+    }
+
+    // Recargar el carrito
+    loadCart();
+}
+
+// Función para continuar a la factura
+async function continueToCheckout() {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    if (cart.length === 0) {
+        alert('El carrito está vacío.');
+        return;
+    }
+
+    try {
+        // Crear el objeto de solicitud para la factura
+        const saleRequest = {
+            items: cart.map(item => ({
+                batchId: item.batchId, // Asegúrate de que `batchId` esté definido en los items del carrito
+                quantity: item.quantity
+            })),
+            buyer: {
+                id: 1 // Aquí deberías obtener el ID del usuario logueado. Si no lo tienes, usa un valor temporal.
+            }
+        };
+
+        // Enviar la solicitud al backend para crear la factura
+        const response = await fetch('http://localhost:8080/api/sales/create', { // Agregar puerto 8080
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(saleRequest)
+        });
+
+        if (!response.ok) {
+            throw new Error('Error al crear la factura');
+        }
+
+        // Obtener la respuesta del backend
+        const bill = await response.json();
+
+        // Redirigir a la página de factura con el ID de la factura
+        window.location.href = `Factura.html?billId=${bill.id}`; // Asegúrate de que `bill.id` sea el ID de la factura generada
+    } catch (error) {
+        console.error('Error al continuar con la compra:', error);
+        alert('Hubo un error al procesar la compra. Por favor, inténtalo de nuevo.');
+    }
+}
+
+// Cargar el carrito al iniciar la página
+window.addEventListener('load', loadCart);
 </script>
 
 <button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
