@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador - Totes BGA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Tus estilos CSS originales... */
+        body {
+            background-color: #000;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .navbar {
+            background-color: black;
+            padding: 20px 0;
+            border-bottom: 4px solid white;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .navbar-brand {
+            color: white !important;
+            font-size: 24px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        .navbar-brand img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        .nav-link {
+            color: white !important;
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+        .btn-primary {
+            background-color: #ff0033;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #cc0029;
+        }
+        .carousel-inner {
+            position: relative;
+        }
+        .carousel-inner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), black);
+            z-index: 1;
+        }
+        .carousel-item img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            position: relative;
+            z-index: 0;
+        }
+        .admin-panel {
+            padding: 40px 20px;
+        }
+        .table-dark {
+            background-color: #111;
+            color: white;
+        }
+        .table-dark th,
+        .table-dark td {
+            border-color: #444;
+        }
+        .footer {
+            background-color: #222;
+            color: white;
+            padding: 20px 0;
+            margin-top: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 15px;
+        }
+        .footer-links li {
+            display: inline;
+        }
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        .policy {
+            margin-top: 5px;
+            font-size: 12px;
+        }
+        .copy {
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        .modo-claro {
+            background-color: white !important;
+            color: black !important;
+        }
+        .modo-claro .navbar {
+            background-color: white !important;
+            border-bottom: 4px solid #ddd;
+        }
+        .modo-claro .navbar-brand,
+        .modo-claro .nav-link {
+            color: black !important;
+        }
+        .modo-claro .table-dark {
+            background-color: #f8f9fa !important;
+            color: black !important;
+        }
+        .modo-claro .table-dark th,
+        .modo-claro .table-dark td {
+            border-color: #ddd;
+        }
+        .modo-claro .footer {
+            background-color: #f8f9fa !important;
+            color: black !important;
+        }
+        .modo-claro .footer-links a {
+            color: black !important;
+        }
+        .toggle-mode {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, color 0.3s, transform 0.2s;
+            z-index: 1000;
+        }
+        .toggle-mode:hover {
+            transform: scale(1.05);
+        }
+        .consultar-section {
+            margin-top: 20px;
+        }
+        .consultar-section input {
+            margin-right: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Botón de modo claro/oscuro -->
+<button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="../IMAGENES/Logo%20blanco.png" alt="Logo">
+            Totes BGA - Administrador
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="#" onclick="mostrarAgregar()">Agregar</a></li>
+                <li class="nav-item"><a class="nav-link" href="#" onclick="mostrarConsultar()">Consultar</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></button>
+    </div>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="../IMAGENES/fondo%20admin.jpg" class="d-block w-100" alt="Imagen 1">
+        </div>
+        <div class="carousel-item">
+            <img src="../IMAGENES/Fondoadmin2.webp" class="d-block w-100" alt="Imagen 2">
+        </div>
+        <div class="carousel-item">
+            <img src="../IMAGENES/fondoadmin3.avif" class="d-block w-100" alt="Imagen 3">
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+        <span class="carousel-control-next-icon"></span>
+    </button>
+</div>
+
+<div class="admin-panel container">
+    <h2 class="text-center">Administrar empleados</h2>
+
+    <!-- Sección de Agregar Empleado -->
+    <div id="agregarEmpleado">
+        <h4 class="mt-4">Agregar empleado</h4>
+        <form id="formAgregarempleado">
+            <div class="mb-3">
+                <label class="form-label">Nombre del empleado</label>
+                <input type="text" class="form-control" id="nombreProducto" required>
+            </div>
+            <form id="formAgregarempleado">
+                <div class="mb-3">
+                    <label class="form-label">Apellido del empleado</label>
+                    <input type="text" class="form-control" id="nombreProducto" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Rol</label>
+                    <select class="form-control" id="rolUsuario" required>
+                        <option value="admin">Administrador</option>
+                        <option value="secretaria">Secretaria</option>
+                        <option value="empleado">Empleado</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">ID</label>
+                    <input type="number" class="form-control" id="precioProducto" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Agregar empleado</button>
+            </form>
+    </div>
+
+
+    <!-- Sección de Consultar Empleado por ID -->
+    <div id="consultarEmpleado" class="consultar-section hidden">
+        <h4 class="mt-4">Consultar empleado por ID</h4>
+        <div class="mb-3">
+            <label class="form-label">ID del empleado</label>
+            <input type="number" class="form-control" id="idConsultar" placeholder="Ingrese el ID">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="consultarEmpleado()">Buscar</button>
+        <div id="resultadoConsulta" class="mt-3"></div>
+    </div>
+
+    <!-- Tabla dinámica de empleados -->
+    <div id="tablaEmpleados">
+        <h4 class="mt-4">Lista de empleados</h4>
+        <table class="table table-dark table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombres</th>
+                <th>Permiso</th>
+                <th>ID-empleado</th>
+            </tr>
+            </thead>
+            <tbody id="tablaProductos">
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <ul class="footer-links">
+                    <li><a href="#">TotesBGA Financiación</a></li>
+                    <li><a href="#">Cookie Settings</a></li>
+                    <li><a href="#">Acerca de</a></li>
+                    <li><a href="#">Privacidad</a></li>
+                    <li><a href="#">Nuestro Sistema</a></li>
+                </ul>
+                <p class="policy">Política de Protección De Datos Personales</p>
+                <p class="copy">&copy; 2025 TotesBGA Colombia. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    let empleados = [];
+
+    document.getElementById("formAgregarProducto").addEventListener("submit", function (event) {
+        event.preventDefault();
+
+        let nombre = document.getElementById("nombreProducto").value;
+        let permiso = document.getElementById("descripcionProducto").value;
+        let id = document.getElementById("precioProducto").value;
+
+        if (empleados.some(emp => emp.id === id)) {
+            alert("El ID ya existe. Intente con otro.");
+            return;
+        }
+
+        let nuevoEmpleado = { id, nombre, permiso };
+        empleados.push(nuevoEmpleado);
+        actualizarTabla();
+
+        // Limpiar formulario
+        document.getElementById("formAgregarProducto").reset();
+    });
+
+    function actualizarTabla() {
+        let tabla = document.getElementById("tablaProductos");
+        tabla.innerHTML = "";
+        empleados.forEach(emp => {
+            let fila = <tr>
+                            <td>${emp.id}</td>
+                            <td>${emp.nombre}</td>
+                            <td>${emp.permiso}</td>
+                            <td>
+                                <button class="btn btn-danger btn-sm" onclick="eliminarEmpleado('${emp.id}')">Eliminar</button>
+                            </td>
+                        </tr>;
+            tabla.innerHTML += fila;
+        });
+    }
+
+    function consultarEmpleado() {
+        let idConsulta = document.getElementById("idConsultar").value;
+        let empleado = empleados.find(emp => emp.id === idConsulta);
+        let resultado = document.getElementById("resultadoConsulta");
+
+        if (empleado) {
+            resultado.innerHTML = <div class="alert alert-success">
+                                      <strong>Empleado encontrado:</strong><br>
+                                      <b>ID:</b> ${empleado.id}<br>
+                                      <b>Nombre:</b> ${empleado.nombre}<br>
+                                      <b>Permiso:</b> ${empleado.permiso}
+                                   </div>;
+        } else {
+            resultado.innerHTML = <div class="alert alert-danger">No se encontró un empleado con ese ID.</div>;
+        }
+    }
+
+    function eliminarEmpleado(id) {
+        empleados = empleados.filter(emp => emp.id !== id);
+        actualizarTabla();
+    }
+
+    function mostrarConsultar() {
+        document.getElementById("consultarEmpleado").classList.remove("hidden");
+        document.getElementById("agregarEmpleado").classList.add("hidden");
+    }
+
+    function mostrarAgregar() {
+        document.getElementById("agregarEmpleado").classList.remove("hidden");
+        document.getElementById("consultarEmpleado").classList.add("hidden");
+    }

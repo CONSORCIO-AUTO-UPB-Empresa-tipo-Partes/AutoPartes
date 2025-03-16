@@ -1,0 +1,157 @@
+<style>
+        /* Tus estilos CSS originales... */
+        body {
+            background-color: #000;
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .navbar {
+            background-color: black;
+            padding: 20px 0;
+            border-bottom: 4px solid white;
+            transition: background-color 0.3s, border-color 0.3s;
+        }
+        .navbar-brand {
+            color: white !important;
+            font-size: 24px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        .navbar-brand img {
+            height: 50px;
+            margin-right: 10px;
+        }
+        .nav-link {
+            color: white !important;
+            font-weight: 400;
+            transition: color 0.3s;
+        }
+        .btn-primary {
+            background-color: #ff0033;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #cc0029;
+        }
+        .carousel-inner {
+            position: relative;
+        }
+        .carousel-inner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), black);
+            z-index: 1;
+        }
+        .carousel-item img {
+            width: 100%;
+            height: 400px;
+            object-fit: cover;
+            position: relative;
+            z-index: 0;
+        }
+        .admin-panel {
+            padding: 40px 20px;
+        }
+        .table-dark {
+            background-color: #111;
+            color: white;
+        }
+        .table-dark th,
+        .table-dark td {
+            border-color: #444;
+        }
+        .footer {
+            background-color: #222;
+            color: white;
+            padding: 20px 0;
+            margin-top: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 15px;
+        }
+        .footer-links li {
+            display: inline;
+        }
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        .policy {
+            margin-top: 5px;
+            font-size: 12px;
+        }
+        .copy {
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        .modo-claro {
+            background-color: white !important;
+            color: black !important;
+        }
+        .modo-claro .navbar {
+            background-color: white !important;
+            border-bottom: 4px solid #ddd;
+        }
+        .modo-claro .navbar-brand,
+        .modo-claro .nav-link {
+            color: black !important;
+        }
+        .modo-claro .table-dark {
+            background-color: #f8f9fa !important;
+            color: black !important;
+        }
+        .modo-claro .table-dark th,
+        .modo-claro .table-dark td {
+            border-color: #ddd;
+        }
+        .modo-claro .footer {
+            background-color: #f8f9fa !important;
+            color: black !important;
+        }
+        .modo-claro .footer-links a {
+            color: black !important;
+        }
+        .toggle-mode {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, color 0.3s, transform 0.2s;
+            z-index: 1000;
+        }
+        .toggle-mode:hover {
+            transform: scale(1.05);
+        }
+        .consultar-section {
+            margin-top: 20px;
+        }
+        .consultar-section input {
+            margin-right: 10px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>

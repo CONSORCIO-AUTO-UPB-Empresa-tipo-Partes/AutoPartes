@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accesorios para Autos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilos generales */
+        body {
+            background-color: black;
+            color: white;
+            position: relative;
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .search-form .btn {
+            background-color: #FF335F;
+            color: white;
+            border-color: #FF335F;
+        }
+        .search-form .btn:hover {
+            background-color: #e63946;
+            border-color: #e63946;
+        }
+        .background-stripes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .stripe {
+            position: absolute;
+            width: 15%;
+            height: 180vh;
+            background: #FF335F;
+            transform: rotate(21deg);
+            opacity: 0.8;
+            transition: background-color 0.3s;
+        }
+        .stripe:nth-child(1) { right: 0; background: #FF335F; }
+        .stripe:nth-child(2) { right: 12%; background: #FF4C73; }
+        .stripe:nth-child(3) { right: 24%; background: #FF335F; }
+        .hero {
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .hero h1 span {
+            color: #e63946;
+        }
+        .login-container {
+            width: 600px;
+            height: 550px;
+            position: relative;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 2;
+            width: 500px;
+        }
+        .hero .btn {
+            background-color: white;
+            color: black;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .hero .btn:hover {
+            background-color: #e63946;
+            color: black;
+        }
+        .navbar {
+            background-color: black;
+        }
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+        .logo-principal {
+            height: 100px;
+            margin-right: 10px;
+            transition: filter 0.3s;
+        }
+        .footer {
+            background-color: #222;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .card {
+            background-color: #111;
+            color: white;
+        }
+        .email-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: white;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+        }
+        .product-box {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .product-box:hover {
+            transform: scale(1.05);
+        }
+        .product-box img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .product-box h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 15px;
+        }
+        .footer-links li {
+            display: inline;
+        }
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        .policy {
+            margin-top: 5px;
+            font-size: 12px;
+        }
+        .copy {
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        .toggle-mode {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, color 0.3s, transform 0.2s;
+        }
+        .toggle-mode:hover {
+            transform: scale(1.05);
+        }
+        .toggle-mode:hover {
+            transform: scale(1.05);
+        }
+        .modo-claro {
+            background-color: white !important;
+            color: black !important;
+        }
+        .modo-claro .stripe {
+            background-color: #007BFF !important;
+        }
+        .modo-claro .navbar {
+            background-color: white !important;
+        }
+        .modo-claro .navbar-dark .navbar-nav .nav-link {
+            color: black !important;
+        }
+        .modo-claro .footer {
+            background-color: #f8f9fa !important;
+        }
+        .modo-claro .footer a {
+            color: black !important;
+        }
+        .modo-claro .card {
+            background-color: #e9ecef !important;
+            color: black !important;
+        }
+        .modo-claro .product-box {
+            background-color: #f8f9fa !important;
+            color: black !important;
+        }
+        .modo-claro .logo-principal {
+            filter: invert(1);
+        }
+        .modo-claro .hero .btn {
+            background-color: #007BFF !important;
+            color: white !important;
+        }
+        .modo-claro .hero .btn:hover {
+            background-color: #0056b3 !important;
+        }
+        .category-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+        .category-card {
+            background-color: #111;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+            width: 250px;
+            height: 400px; /* Ajustamos la altura para que quepa toda la información */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid #333; /* Borde sutil para un look más sofisticado */
+        }
+        .category-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 51, 95, 0.3); /* Sombra roja al hacer hover */
+        }
+        .category-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .category-card h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #FF335F; /* Color rojo para el título */
+        }
+        .category-card .description {
+            font-size: 14px;
+            color: #ccc;
+            margin: 10px 0;
+            flex-grow: 1; /* Asegura que la descripción ocupe el espacio disponible */
+        }
+        .category-card .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #FF335F;
+            margin: 10px 0;
+        }
+        .product-section {
+            display: none;
+        }
+        .back-button {
+            margin-bottom: 20px;
+            cursor: pointer;
+            color: #FF335F;
+            font-weight: bold;
+        }
+        .back-button:hover {
+            text-decoration: underline;
+        }
+        .toggle-mode {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, color 0.3s, transform 0.2s;
+        }
+
+        .toggle-mode:hover {
+            transform: scale(1.05);
+        }
+
+        .modo-claro .toggle-mode {
+            background-color: #000;
+            color: #fff;
+        }
+        /* Estilos para el botón "Más información" */
+.btn-info {
+    background-color: #FF335F;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: 14px;
+}
+
+.btn-info:hover {
+    background-color: #e63946;
+}
+
+/* Estilos para el modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    width: 300px;
+    position: relative; /* Para posicionar la "X" correctamente */
+}
+
+/* Estilos para el botón de cierre (X) */
+.modal-content .close {
+    color: #aaa;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.modal-content .close:hover {
+    color: #fff;
+}
+
+/* Estilos para el botón de inicio de sesión */
+.modal-content .btn-login {
+    background-color: #FF335F;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    width: 100%; /* Ocupa todo el ancho del modal */
+}
+
+.modal-content .btn-login:hover {
+    background-color: #e63946;
+}
+
+/* Estilos para el enlace de registro */
+.modal-content .register-link {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #ccc;
+}
+
+.modal-content .register-link a {
+    color: #FF335F;
+    text-decoration: none;
+}
+
+.modal-content .register-link a:hover {
+    text-decoration: underline;
+}
+    </style>
+</head>
+<body>
+<div class="background-stripes">
+    <div class="stripe"></div>
+    <div class="stripe"></div>
+    <div class="stripe"></div>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="../IMAGENES/logo-totes0.png" alt="TOTES BGA" class="logo-principal">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <form class="d-flex search-form">
+                <input class="form-control me-2" type="search" placeholder="Buscar categoría..." aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Buscar</button>
+            </form>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="PrincipalUltimo.html">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="CatalogoPrincipal.html">Catalogo</a></li>
+                <li class="nav-item"><a class="nav-link" href="Contacto.html">Contacto</a></li>
+                <li class="nav-item"><a class="nav-link" href="InicioSesion.html">Iniciar Sesion</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Sección de categorías (visible por defecto) -->
+<div class="container mt-4" id="category-section">
+    <h2 class="text-center">Categorías de Productos</h2>
+    <div class="category-container">
+        <div class="category-card" onclick="showProducts('llantas')">
+            <img src="../IMAGENES/neumatico%20%232.jpeg" alt="Llantas">
+            <h4>Llantas</h4>
+            <p class="description">Llantas de alta calidad para todo tipo de vehículos.</p>
+            <p class="price">$150.000-250.000</p>
+        </div>
+        <div class="category-card" onclick="showProducts('tubos-escape')">
+            <img src="../IMAGENES/tuboescape%235.jpeg" alt="Tubos de escape">
+            <h4>Tubos de escape</h4>
+            <p class="description">Tubos de escape de alto rendimiento.</p>
+            <p class="price">$120.000-300.000</p>
+        </div>
+        <div class="category-card" onclick="showProducts('exploradoras')">
+            <img src="../IMAGENES/exploradoras.png" alt="Exploradoras">
+            <h4>Exploradoras</h4>
+            <p class="description">Exploradoras para todo tipo de terrenos.</p>
+            <p class="price">$200.000-400.000</p>
+        </div>
+        <div class="category-card" onclick="showProducts('camaras')">
+            <img src="../IMAGENES/camaar%20%234.jpeg" alt="Cámaras">
+            <h4>Cámaras</h4>
+            <p class="description">Cámaras de alta resolución para tu vehículo.</p>
+            <p class="price">$80.000-300.000</p>
+        </div>
+        <div class="category-card" onclick="showProducts('tapetes')">
+            <img src="../IMAGENES/tapetes%20%234.jpg" alt="Tapetes">
+            <h4>Tapetes</h4>
+            <p class="description">Tapetes resistentes y fáciles de limpiar.</p>
+            <p class="price">$50.000-120.000</p>
+        </div>
+        <div class="category-card" onclick="showProducts('estribos')">
+            <img src="../IMAGENES/ESTRIBOS%234.png" alt="Estribos">
+            <h4>Estribos</h4>
+            <p class="description">Estribos robustos para camionetas y SUV.</p>
+            <p class="price">$180.000-280.000</p>
+        </div>
+        <div class="category-card" onclick="showProducts('perillas')">
+            <img src="../IMAGENES/perillas%231.jpeg" alt="Perillas">
+            <h4>Perillas</h4>
+            <p class="description">Perillas ergonómicas y personalizadas.</p>
+            <p class="price">$30.000-180.000</p>
+        </div>
+        <div class="category-card" onclick="showProducts('spoilers')">
+            <img src="../IMAGENES/spoilers%234.jpg" alt="Spoilers">
+            <h4>Spoilers</h4>
+            <p class="description">Spoilers aerodinámicos para deportivos.</p>
+            <p class="price">$250.000-400.000</p>
+        </div>
+        <div class="category-card" onclick="showProducts('retrovisores')">
+            <img src="../IMAGENES/retrovisor%20%232.png" alt="Retrovisores">
+            <h4>Retrovisores</h4>
+            <p class="description">Retrovisores con tecnología avanzada.</p>
+            <p class="price">$90.000-250.000</p>
+        </div>
+        <div class="category-card" onclick="showProducts('repuestos')">
+            <img src="../IMAGENES/Braazo%20de%20control.png" alt="Repuestos">
+            <h4>Repuestos</h4>
+            <p class="description">Repuestos originales y de alta calidad.</p>
+            <p class="price">$70.000-220.000</p>
+        </div>
+    </div>
+</div>
+<!-- Modal para solicitar inicio de sesión -->
+<div id="loginModal" class="modal" style="display: none;">
+    <div class="modal-content">
+        <!-- Botón de cierre (X) en la esquina superior derecha -->
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h3>Iniciar Sesión o Registrarse</h3>
+        <p>Para obtener más información, debes iniciar sesión o registrarte.</p>
+        <!-- Botón de inicio de sesión -->
+        <button class="btn-login" onclick="redirectToLogin()">Iniciar Sesión</button>
+        <!-- Enlace de registro -->
+        <p class="register-link">¿No tienes una cuenta? <a href="Registro.html">Regístrate aquí</a></p>
+    </div>
+</div>
+<!-- Sección de productos de Llantas -->
+<div class="container mt-4 product-section" id="llantas-section">
+    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
+    <h2 class="text-center">Llantas</h2>
+    <div class="category-container">
+        <div class="category-card">
+            <img src="../IMAGENES/neumatico%20%234.jpeg" alt="Llanta deportiva">
+            <h4>Llanta Deportiva</h4>
+            <p class="description">Llanta de alto rendimiento para deportivos. Diseño aerodinámico.</p>
+            <p class="price">$150.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/neumatico%20%232.jpeg" alt="Llanta de aleación">
+            <h4>Llanta de Aleación</h4>
+            <p class="description">Llanta ligera y resistente, ideal para todo tipo de vehículos.</p>
+            <p class="price">$200.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/neumatico10.avif" alt="Llanta de aleación">
+            <h4>Llanta Lisas</h4>
+            <p class="description">Llanta lisa para un manejo suave y cómodo.</p>
+            <p class="price">$120.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/neumatico7.jpg" alt="Llanta de aleación">
+            <h4>Llanta Radiales</h4>
+            <p class="description">Llanta radial para mayor durabilidad y rendimiento.</p>
+            <p class="price">$180.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/neumatico8.jpg" alt="Llanta de aleación">
+            <h4>Llanta Mixtas</h4>
+            <p class="description">Llanta mixta para todo tipo de terrenos.</p>
+            <p class="price">$160.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/neumatico9.jpg" alt="Llanta de aleación">
+            <h4>Llanta Sólidas</h4>
+            <p class="description">Llanta sólida para vehículos pesados.</p>
+            <p class="price">$220.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/neumatico10.avif" alt="Llanta de aleación">
+            <h4>Llanta Estándar</h4>
+            <p class="description">Llanta estándar para uso diario.</p>
+            <p class="price">$100.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/neumatico9.jpg" alt="Llanta de aleación">
+            <h4>Llanta de Carga Extra</h4>
+            <p class="description">Llanta diseñada para soportar cargas pesadas.</p>
+            <p class="price">$250.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de productos de Tubos de escape -->
+<div class="container mt-4 product-section" id="tubos-escape-section">
+    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
+    <h2 class="text-center">Tubos de escape</h2>
+    <div class="category-container">
+        <div class="category-card">
+            <img src="../IMAGENES/tubo%20de%20escape11.jpg" alt="Tubo estándar">
+            <h4>Tubo Estándar</h4>
+            <p class="description">Tubo de escape estándar para vehículos comunes.</p>
+            <p class="price">$80.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/tubo12.jpg" alt="Tubo de escape de alto rendimiento">
+            <h4>Tubo de Alto Rendimiento</h4>
+            <p class="description">Tubo de escape diseñado para mejorar el rendimiento del motor.</p>
+            <p class="price">$150.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/tubo11.jpg" alt="Tubo para carro deportivo">
+            <h4>Tubo para Carro Deportivo</h4>
+            <p class="description">Tubo de escape especial para autos deportivos.</p>
+            <p class="price">$250.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/tubo9.jpg" alt="Tubo de escape de acero inoxidable">
+            <h4>Tubo de Acero Inoxidable</h4>
+            <p class="description">Tubo de escape resistente a la corrosión.</p>
+            <p class="price">$200.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/tuboescape%232.png" alt="Tubo de escape de doble salida">
+            <h4>Tubo de Doble Salida</h4>
+            <p class="description">Tubo de escape con doble salida para mayor potencia.</p>
+            <p class="price">$300.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/tubo13.jpg" alt="Tubo de escape estándar">
+            <h4>Tubo Estándar</h4>
+            <p class="description">Tubo de escape básico para vehículos comunes.</p>
+            <p class="price">$90.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/tubo%2014.jpg" alt="Tubo de escape estándar">
+            <h4>Tubo Estándar</h4>
+            <p class="description">Tubo de escape básico para vehículos comunes.</p>
+            <p class="price">$95.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/tubo%2015.jpg" alt="Tubo de escape estándar">
+            <h4>Tubo Estándar</h4>
+            <p class="description">Tubo de escape básico para vehículos comunes.</p>
+            <p class="price">$100.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de productos de Exploradoras -->
+<div class="container mt-4 product-section" id="exploradoras-section">
+    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
+    <h2 class="text-center">Exploradoras</h2>
+    <div class="category-container">
+        <div class="category-card">
+            <img src="../IMAGENES/exploradora%20%234.webp" alt="Exploradora estándar">
+            <h4>Exploradora Estándar</h4>
+            <p class="description">Exploradora básica para uso diario.</p>
+            <p class="price">$50.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/exploradora%233.png" alt="Exploradora deportiva">
+            <h4>Exploradora Deportiva</h4>
+            <p class="description">Exploradora diseñada para vehículos deportivos.</p>
+            <p class="price">$120.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/exploradoras%20%235.webp" alt="Exploradora de acero inoxidable">
+            <h4>Exploradora de Acero Inoxidable</h4>
+            <p class="description">Exploradora resistente a la corrosión.</p>
+            <p class="price">$180.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/explo2.jpg" alt="Exploradora de doble salida">
+            <h4>Exploradora de Doble Salida</h4>
+            <p class="description">Exploradora con doble salida para mayor potencia.</p>
+            <p class="price">$250.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/explo3.jpg" alt="Exploradora de alto rendimiento">
+            <h4>Exploradora de Alto Rendimiento</h4>
+            <p class="description">Exploradora de alto rendimiento para terrenos difíciles.</p>
+            <p class="price">$300.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/explo4.jpg" alt="Exploradora para camionetas">
+            <h4>Exploradora para Camionetas</h4>
+            <p class="description">Exploradora robusta para camionetas y SUV.</p>
+            <p class="price">$280.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/explo5.webp" alt="Exploradora personalizada">
+            <h4>Exploradora Personalizada</h4>
+            <p class="description">Exploradora con diseño personalizado.</p>
+            <p class="price">$350.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/explo7.webp" alt="Exploradora de lujo">
+            <h4>Exploradora de Lujo</h4>
+            <p class="description">Exploradora de alta gama con acabados premium.</p>
+            <p class="price">$400.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de productos de Cámaras -->
+<div class="container mt-4 product-section" id="camaras-section">
+    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
+    <h2 class="text-center">Cámaras</h2>
+    <div class="category-container">
+        <div class="category-card">
+            <img src="../IMAGENES/camaar%20%234.jpeg" alt="Cámara estándar">
+            <h4>Cámara Estándar</h4>
+            <p class="description">Cámara básica para vehículos comunes.</p>
+            <p class="price">$60.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/camaara%20%233.webp" alt="Cámara de alta resolución">
+            <h4>Cámara de Alta Resolución</h4>
+            <p class="description">Cámara con alta calidad de imagen.</p>
+            <p class="price">$100.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/camara%20%232.png" alt="Cámara deportiva">
+            <h4>Cámara Deportiva</h4>
+            <p class="description">Cámara diseñada para vehículos deportivos.</p>
+            <p class="price">$150.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/camara%20%235.webp" alt="Cámara de visión nocturna">
+            <h4>Cámara de Visión Nocturna</h4>
+            <p class="description">Cámara con visión nocturna para mayor seguridad.</p>
+            <p class="price">$200.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/camara%231.jpeg" alt="Cámara 360°">
+            <h4>Cámara 360°</h4>
+            <p class="description">Cámara con visión panorámica de 360 grados.</p>
+            <p class="price">$250.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/camara9.webp" alt="Cámara para motos">
+            <h4>Cámara para Motos</h4>
+            <p class="description">Cámara especial para motocicletas.</p>
+            <p class="price">$120.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/camara10.jpg" alt="Cámara de seguridad">
+            <h4>Cámara de Seguridad</h4>
+            <p class="description">Cámara de seguridad para vehículos.</p>
+            <p class="price">$180.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/cmara8.jpg" alt="Cámara de lujo">
+            <h4>Cámara de Lujo</h4>
+            <p class="description">Cámara de alta gama con acabados premium.</p>
+            <p class="price">$300.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de productos de Tapetes -->
+<div class="container mt-4 product-section" id="tapetes-section">
+    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
+    <h2 class="text-center">Tapetes</h2>
+    <div class="category-container">
+        <div class="category-card">
+            <img src="../IMAGENES/tapete%20baul.png" alt="Tapete estándar">
+            <h4>Tapete Estándar</h4>
+            <p class="description">Tapete básico para vehículos comunes.</p>
+            <p class="price">$30.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/tapetes%20%233.png" alt="Tapete de goma">
+            <h4>Tapete de Goma</h4>
+            <p class="description">Tapete resistente y fácil de limpiar.</p>
+            <p class="price">$50.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/tapetes%20de%20carro%20%232.jpg" alt="Tapete personalizado">
+            <h4>Tapete Personalizado</h4>
+            <p class="description">Tapete con diseño personalizado.</p>
+            <p class="price">$80.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/tapete8.webp"alt="Tapete de lujo">
+            <h4>Tapete de Lujo</h4>
+            <p class="description">Tapete de alta gama con acabados premium.</p>
+            <p class="price">$120.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/tapete6.jpg" alt="Tapete antideslizante">
+            <h4>Tapete Antideslizante</h4>
+            <p class="description">Tapete con superficie antideslizante.</p>
+            <p class="price">$70.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/Tapete5.jpg" alt="Tapete para camionetas">
+            <h4>Tapete para Camionetas</h4>
+            <p class="description">Tapete robusto para camionetas y SUV.</p>
+            <p class="price">$100.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/tapete4.avif" alt="Tapete de felpa">
+            <h4>Tapete de Felpa</h4>
+            <p class="description">Tapete suave y cómodo para el interior del vehículo.</p>
+            <p class="price">$90.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/tapete7.webp" alt="Tapete de caucho">
+            <h4>Tapete color rosa</h4>
+            <p class="description">Tapete de caucho resistente al agua y al desgaste.</p>
+            <p class="price">$110.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de productos de Estribos -->
+<div class="container mt-4 product-section" id="estribos-section">
+    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
+    <h2 class="text-center">Estribos</h2>
+    <div class="category-container">
+        <div class="category-card">
+            <img src="../IMAGENES/estribos%231.webp" alt="Estribo estándar">
+            <h4>Estribo Estándar</h4>
+            <p class="description">Estribo básico para vehículos comunes.</p>
+            <p class="price">$80.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/estribos%232.jpeg" alt="Estribo deportivo">
+            <h4>Estribo Deportivo</h4>
+            <p class="description">Estribo diseñado para vehículos deportivos.</p>
+            <p class="price">$150.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/estribo%233.jpeg" alt="Estribo de acero inoxidable">
+            <h4>Estribo de Acero Inoxidable</h4>
+            <p class="description">Estribo resistente a la corrosión.</p>
+            <p class="price">$200.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/ESTRIBOS%234.png" alt="Estribo de lujo">
+            <h4>Estribo de Lujo</h4>
+            <p class="description">Estribo de alta gama con acabados premium.</p>
+            <p class="price">$250.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/estribos%235.webp" alt="Estribo para camionetas">
+            <h4>Estribo para Camionetas</h4>
+            <p class="description">Estribo robusto para camionetas y SUV.</p>
+            <p class="price">$180.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/estribos1.jpg" alt="Estribo personalizado">
+            <h4>Estribo Personalizado</h4>
+            <p class="description">Estribo con diseño personalizado.</p>
+            <p class="price">$220.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/estribos2.webp" alt="Estribo antideslizante">
+            <h4>Estribo Antideslizante</h4>
+            <p class="description">Estribo con superficie antideslizante.</p>
+            <p class="price">$160.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/estribos3.jpg" alt="Estribo de carga extra">
+            <h4>Estribo de Carga Extra</h4>
+            <p class="description">Estribo diseñado para soportar cargas pesadas.</p>
+            <p class="price">$280.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de productos de Perillas -->
+<div class="container mt-4 product-section" id="perillas-section">
+    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
+    <h2 class="text-center">Perillas</h2>
+    <div class="category-container">
+        <div class="category-card">
+            <img src="../IMAGENES/perilla5.webp"alt="Perilla estándar">
+            <h4>Perilla Estándar</h4>
+            <p class="description">Perilla básica para vehículos comunes.</p>
+            <p class="price">$20.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/perilladepo.jpg"alt="Perilla deportiva">
+            <h4>Perilla Deportiva</h4>
+            <p class="description">Perilla diseñada para vehículos deportivos.</p>
+            <p class="price">$50.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/perillas%231.jpeg" alt="Perilla de lujo">
+            <h4>Perilla de Lujo</h4>
+            <p class="description">Perilla de alta gama con acabados premium.</p>
+            <p class="price">$80.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/perilla%20%232.png" alt="Perilla personalizada">
+            <h4>Perilla Personalizada</h4>
+            <p class="description">Perilla con diseño personalizado.</p>
+            <p class="price">$70.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/perillaanti.webp" alt="Perilla antideslizante">
+            <h4>Perilla Antideslizante</h4>
+            <p class="description">Perilla con superficie antideslizante.</p>
+            <p class="price">$60.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/perillas2.webp" alt="Perilla ergonómica">
+            <h4>Perilla Ergonómica</h4>
+            <p class="description">Perilla diseñada para mayor comodidad.</p>
+            <p class="price">$90.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/perillas3.jpg" alt="Perilla de aluminio">
+            <h4>Perilla de Aluminio</h4>
+            <p class="description">Perilla de aluminio resistente y ligera.</p>
+            <p class="price">$100.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/perillas4.webp" alt="Perilla de acero inoxidable">
+            <h4>Perilla de Acero Inoxidable</h4>
+            <p class="description">Perilla de acero inoxidable resistente a la corrosión.</p>
+            <p class="price">$120.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de productos de Spoilers -->
+<div class="container mt-4 product-section" id="spoilers-section">
+    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
+    <h2 class="text-center">Spoilers</h2>
+    <div class="category-container">
+        <div class="category-card">
+            <img src="../IMAGENES/Spoiler%231.jpg" alt="Spoiler estándar">
+            <h4>Spoiler Estándar</h4>
+            <p class="description">Spoiler básico para vehículos comunes.</p>
+            <p class="price">$100.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/spoilers%232.png" alt="Spoiler deportivo">
+            <h4>Spoiler Deportivo</h4>
+            <p class="description">Spoiler diseñado para vehículos deportivos.</p>
+            <p class="price">$200.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/spoilers%233.webp" alt="Spoiler de lujo">
+            <h4>Spoiler de Lujo</h4>
+            <p class="description">Spoiler de alta gama con acabados premium.</p>
+            <p class="price">$300.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/spoilers%20%235.jpg" alt="Spoiler personalizado">
+            <h4>Spoiler Personalizado</h4>
+            <p class="description">Spoiler con diseño personalizado.</p>
+            <p class="price">$250.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/spoi2.jpg" alt="Spoiler de fibra de carbono">
+            <h4>Spoiler de Fibra de Carbono</h4>
+            <p class="description">Spoiler ligero y resistente de fibra de carbono.</p>
+            <p class="price">$350.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/spoi3.jpg" alt="Spoiler ajustable">
+            <h4>Spoiler Ajustable</h4>
+            <p class="description">Spoiler con ángulo ajustable para mayor aerodinámica.</p>
+            <p class="price">$280.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/spoi4.webp" alt="Spoiler para camionetas">
+            <h4>Spoiler para Camionetas</h4>
+            <p class="description">Spoiler robusto para camionetas y SUV.</p>
+            <p class="price">$320.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/spoi5.jpg" alt="Spoiler de carga extra">
+            <h4>Spoiler de Carga Extra</h4>
+            <p class="description">Spoiler diseñado para soportar cargas pesadas.</p>
+            <p class="price">$400.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de productos de Retrovisores -->
+<div class="container mt-4 product-section" id="retrovisores-section">
+    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
+    <h2 class="text-center">Retrovisores</h2>
+    <div class="category-container">
+        <div class="category-card">
+            <img src="../IMAGENES/retrovisores%20%231.jpg" alt="Retrovisor estándar">
+            <h4>Retrovisor Estándar</h4>
+            <p class="description">Retrovisor básico para vehículos comunes.</p>
+            <p class="price">$50.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/retro6.jpg"alt="Retrovisor deportivo">
+            <h4>Retrovisor Deportivo</h4>
+            <p class="description">Retrovisor diseñado para vehículos deportivos.</p>
+            <p class="price">$100.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/retro2.jpg"alt="Retrovisor de lujo">
+            <h4>Retrovisor de Lujo</h4>
+            <p class="description">Retrovisor de alta gama con acabados premium.</p>
+            <p class="price">$150.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/retro3.webp"alt="Retrovisor personalizado">
+            <h4>Retrovisor Personalizado</h4>
+            <p class="description">Retrovisor con diseño personalizado.</p>
+            <p class="price">$120.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/retro4.jpg"alt="Retrovisor antideslumbrante">
+            <h4>Retrovisor Antideslumbrante</h4>
+            <p class="description">Retrovisor con función antideslumbrante.</p>
+            <p class="price">$130.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/retro5.jpg"alt="Retrovisor con cámara">
+            <h4>Retrovisor con Cámara</h4>
+            <p class="description">Retrovisor integrado con cámara de seguridad.</p>
+            <p class="price">$200.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/retro6.jpg"alt="Retrovisor para camionetas">
+            <h4>Retrovisor para Camionetas</h4>
+            <p class="description">Retrovisor robusto para camionetas y SUV.</p>
+            <p class="price">$180.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/retro8.jpg"alt="Retrovisor de carga extra">
+            <h4>Retrovisor de Carga Extra</h4>
+            <p class="description">Retrovisor diseñado para soportar cargas pesadas.</p>
+            <p class="price">$250.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+    </div>
+</div>
+
+<!-- Sección de productos de Repuestos -->
+<div class="container mt-4 product-section" id="repuestos-section">
+    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
+    <h2 class="text-center">Repuestos</h2>
+    <div class="category-container">
+        <div class="category-card">
+            <img src="../IMAGENES/repu1.jpg" alt="Repuesto estándar">
+            <h4>Repuesto Estándar</h4>
+            <p class="description">Repuesto básico para vehículos comunes.</p>
+            <p class="price">$40.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/repu2.jpg" alt="Repuesto deportivo">
+            <h4>Repuesto Deportivo</h4>
+            <p class="description">Repuesto diseñado para vehículos deportivos.</p>
+            <p class="price">$80.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/repu3.jpg" alt="Repuesto de lujo">
+            <h4>Repuesto de aceite</h4>
+            <p class="description">Repuesto de aceite para todo tipo de carro</p>
+            <p class="price">$120.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/repu4.webp" alt="Repuesto personalizado">
+            <h4>Repuesto de batería</h4>
+            <p class="description">Repuesto de baterías para carros.</p>
+            <p class="price">$100.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/repu5.jpg" alt="Repuesto para camionetas">
+            <h4>Pastillas de frenos</h4>
+            <p class="description">Repuesto robusto para camionetas y SUV.</p>
+            <p class="price">$150.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/repu6.jpg" alt="Repuesto de carga extra">
+            <h4>Repuesto de motor</h4>
+            <p class="description">Repuesto diseñado para motores de carros</p>
+            <p class="price">$200.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/repuesto7.jpg" alt="Repuesto de alta resistencia">
+            <h4>Repuesto de Alta Resistencia</h4>
+            <p class="description">Repuesto de alta resistencia para uso intensivo.</p>
+            <p class="price">$180.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+        <div class="category-card">
+            <img src="../IMAGENES/repuesto8.jpg" alt="Repuesto de acero inoxidable">
+            <h4>Repuesto de Acero Inoxidable</h4>
+            <p class="description">Repuesto de acero inoxidable resistente a la corrosión.</p>
+            <p class="price">$220.000<button class="btn-info" onclick="showLoginModal()">Más información</button></p>
+        </div>
+    </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <ul class="footer-links">
+                    <li><a href="#">TotesBGA Financiación</a></li>
+                    <li><a href="#">Cookie Settings</a></li>
+                    <li><a href="#">Acerca de</a></li>
+                    <li><a href="#">Privacidad</a></li>
+                    <li><a href="#">Nuestro Sistema</a></li>
+                </ul>
+                <p class="policy">Política de Protección De Datos Personales</p>
+                <p class="copy">&copy; 2025 TotesBGA Colombia. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
+
+<script>
+    // Función para mostrar el modal de inicio de sesión
+function showLoginModal() {
+    document.getElementById('loginModal').style.display = 'flex';
+}
+
+// Función para cerrar el modal
+function closeModal() {
+    document.getElementById('loginModal').style.display = 'none';
+}
+
+// Función para redirigir al inicio de sesión
+function redirectToLogin() {
+    window.location.href = 'login.html'; // Cambia 'login.html' por la URL de tu página de inicio de sesión
+}
+    function logout() {
+     window.location.href = 'PrincipalUltimo.html';
+ }
+
+ // Función para mostrar la sección de productos de una categoría
+    function showProducts(category) {
+        // Oculta todas las secciones
+        document.querySelectorAll('.product-section').forEach(section => {
+            section.style.display = 'none';
+        });
+        // Oculta la sección de categorías
+        document.getElementById('category-section').style.display = 'none';
+        // Muestra la sección de la categoría seleccionada
+        const sectionToShow = document.getElementById(`${category}-section`);
+        if (sectionToShow) {
+            sectionToShow.style.display = 'block';
+        } else {
+            console.error(`Sección no encontrada: ${category}-section`);
+        }
+    }
+
+ // Función para volver a la sección de categorías
+    function showCategories() {
+        // Oculta todas las secciones de productos
+        document.querySelectorAll('.product-section').forEach(section => {
+            section.style.display = 'none';
+        });
+        // Muestra la sección de categorías
+        document.getElementById('category-section').style.display = 'block';
+    }
+
+ // Función para buscar categorías
+    function searchCategory(event) {
+        event.preventDefault();
+        const searchTerm = document.getElementById('search-input').value.toLowerCase();
+        const categories = {
+            'llantas': 'llantas',
+            'tubos de escape': 'tubos-escape',
+            'exploradoras': 'exploradoras',
+            'cámaras': 'camaras',
+            'tapetes': 'tapetes',
+            'estribos': 'estribos',
+            'perillas': 'perillas',
+            'spoilers': 'spoilers',
+            'retrovisores': 'retrovisores',
+            'repuestos': 'repuestos'
+        };
+
+        if (categories[searchTerm]) {
+            showProducts(categories[searchTerm]);
+        } else {
+            alert('Categoría no encontrada');
+        }
+    }
+
+ // Función para cambiar el modo
+    function toggleMode() {
+        const body = document.body;
+        body.classList.toggle("modo-claro");
+
+        // Guardar el estado del modo en localStorage
+        if (body.classList.contains("modo-claro")) {
+            localStorage.setItem("modo", "claro");
+        } else {
+            localStorage.setItem("modo", "oscuro");
+        }
+    }
+
+ // Aplicar el modo guardado al cargar la página
+    function aplicarModoGuardado() {
+        const modoGuardado = localStorage.getItem("modo");
+        if (modoGuardado === "claro") {
+            document.body.classList.add("modo-claro");
+        }
+    }
+
+ function addToCart(productName) {
+     const isLoggedIn = false; // Cambiar a true si el usuario está logueado
+     if (!isLoggedIn) {
+         document.getElementById('loginModal').style.display = 'flex';
+     } else {
+         alert(`${productName} añadido al carrito`);
+     }
+ }
+
+ function closeModal() {
+     document.getElementById('loginModal').style.display = 'none';
+ }
+
+ // Aplicar el modo guardado al cargar la página
+ document.addEventListener("DOMContentLoaded", aplicarModoGuardado);
+
+// Llamar a la función al cargar la página
+    aplicarModoGuardado();
+</script>
+
+<button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
+</body>
+</html>

@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accesorios para Autos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* Estilos generales */
+        body {
+            background-color: black;
+            color: white;
+            position: relative;
+            overflow-x: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .search-form .btn {
+            background-color: #FF335F;
+            color: white;
+            border-color: #FF335F;
+        }
+        .search-form .btn:hover {
+            background-color: #e63946;
+            border-color: #e63946;
+        }
+        .background-stripes {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .stripe {
+            position: absolute;
+            width: 15%;
+            height: 180vh;
+            background: #FF335F;
+            transform: rotate(21deg);
+            opacity: 0.8;
+            transition: background-color 0.3s;
+        }
+        .stripe:nth-child(1) { right: 0; background: #FF335F; }
+        .stripe:nth-child(2) { right: 12%; background: #FF4C73; }
+        .stripe:nth-child(3) { right: 24%; background: #FF335F; }
+        .hero {
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .hero h1 span {
+            color: #e63946;
+        }
+        .login-container {
+            width: 600px;
+            height: 550px;
+            position: relative;
+            margin: 50px auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            z-index: 2;
+            width: 500px;
+        }
+        .hero .btn {
+            background-color: white;
+            color: black;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .hero .btn:hover {
+            background-color: #e63946;
+            color: black;
+        }
+        .navbar {
+            background-color: black;
+        }
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+        }
+        .logo-principal {
+            height: 100px;
+            margin-right: 10px;
+            transition: filter 0.3s;
+        }
+        .footer {
+            background-color: #222;
+            padding: 20px 0;
+            margin-top: 40px;
+        }
+        .footer a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+        }
+        .footer a:hover {
+            text-decoration: underline;
+        }
+        .card {
+            background-color: #111;
+            color: white;
+        }
+        .email-icon {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: white;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+            text-decoration: none;
+        }
+        .product-box {
+            background-color: #222;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .product-box:hover {
+            transform: scale(1.05);
+        }
+        .product-box img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .product-box h3 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            gap: 15px;
+        }
+        .footer-links li {
+            display: inline;
+        }
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+        .policy {
+            margin-top: 5px;
+            font-size: 12px;
+        }
+        .copy {
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        .toggle-mode {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #fff;
+            color: #000;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s, color 0.3s, transform 0.2s;
+        }
+        .toggle-mode:hover {
+            transform: scale(1.05);
+        }
+        .toggle-mode:hover {
+            transform: scale(1.05);
+        }
+        .modo-claro {
+            background-color: white !important;
+            color: black !important;
+        }
+        .modo-claro .stripe {
+            background-color: #007BFF !important;
+        }
+        .modo-claro .navbar {
+            background-color: white !important;
+        }
+        .modo-claro .navbar-dark .navbar-nav .nav-link {
+            color: black !important;
+        }
+        .modo-claro .footer {
+            background-color: #f8f9fa !important;
+        }
+        .modo-claro .footer a {
+            color: black !important;
+        }
+        .modo-claro .card {
+            background-color: #e9ecef !important;
+            color: black !important;
+        }
+        .modo-claro .product-box {
+            background-color: #f8f9fa !important;
+            color: black !important;
+        }
+        .modo-claro .logo-principal {
+            filter: invert(1);
+        }
+        .modo-claro .hero .btn {
+            background-color: #007BFF !important;
+            color: white !important;
+        }
+        .modo-claro .hero .btn:hover {
+            background-color: #0056b3 !important;
+        }
+        .category-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px 0;
+        }
+        .category-card {
+            background-color: #111;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+            width: 250px;
+            height: 400px; /* Ajustamos la altura para que quepa toda la información */
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid #333; /* Borde sutil para un look más sofisticado */
+        }
+        .category-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 51, 95, 0.3); /* Sombra roja al hacer hover */
+        }
+        .category-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+        .category-card h4 {
+            font-size: 18px;
+            margin-bottom: 10px;
+            color: #FF335F; /* Color rojo para el título */
+        }
+        .category-card .description {
+            font-size: 14px;
+            color: #ccc;
+            margin: 10px 0;
+            flex-grow: 1; /* Asegura que la descripción ocupe el espacio disponible */
+        }
+        .category-card .price {
+            font-size: 18px;
+            font-weight: bold;
+            color: #FF335F;
+            margin: 10px 0;
+        }
+        .product-section {
+            display: none;
+        }
+        .back-button {
+            margin-bottom: 20px;
+            cursor: pointer;
+            color: #FF335F;
+            font-weight: bold;
+        }
+        .back-button:hover {
+            text-decoration: underline;
+        }
+        .profile-dropdown {
+    position: relative;
+}
+
+.profile-button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.profile-button:hover {
+    color: #FF335F;
+}
+.profile-icon {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%; /* Para hacerlo redondo */
+    object-fit: cover;
+    vertical-align: middle; /* Alineación exacta */
+}
+.navbar {
+    display: flex;
+    align-items: center; /* Alinea todos los elementos verticalmente */
+    justify-content: space-between; /* Espacio entre elementos */
+    padding: 10px 20px; /* Espaciado interno */
+}
+
+
+.profile-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #222;
+    border-radius: 10px;
+    padding: 10px 0;
+    width: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.profile-dropdown-content a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.profile-dropdown-content a:hover {
+    background-color: #FF335F;
+    border-radius: 5px;
+}
+
+.profile-dropdown:hover .profile-dropdown-content {
+    display: block;
+}
+.history-container {
+            max-width: 1200px;
+            margin: 100px auto 20px;
+            padding: 20px;
+            background-color: #222;
+            border-radius: 10px;
+        }
+        .history-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #444;
+        }
+        .history-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+        .history-item-details {
+            flex-grow: 1;
+        }
+        .history-item-details h4 {
+            margin: 0;
+            font-size: 18px;
+            color: #FF335F;
+        }
+        .history-item-details p {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+<div class="background-stripes">
+    <div class="stripe"></div>
+    <div class="stripe"></div>
+    <div class="stripe"></div>
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="../IMAGENES/logo-totes0.png" alt="TOTES BGA" class="logo-principal">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <form class="d-flex search-form">
+                <input class="form-control me-2" type="search" placeholder="Buscar categoría..." aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Buscar</button>
+            </form>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="Catalogo.html">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="Contacto.html">Contacto</a></li>
+                <!-- Perfil con menú desplegable -->
+                <div class="profile-dropdown">
+                    <button class="profile-button">
+                        <img src="../IMAGENES/USUARIO.png" alt="Perfil" class="profile-icon">
+                        <!--<span>Perfil</span>-->
+                    </button>
+                    <div class="profile-dropdown-content">
+                        <a href="Perfil.html">Mi cuenta</a>
+                        <a href="Historial_Compras.html">Historial de compras</a>
+                        <a href="PrincipalUltimo.html" onclick="logout()">Salir</a>
+                    </div>
+                </div>
+
+                <a class="nav-link" href="Carrito.html" style="font-size: 27px;">🛒</a>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<script>
+    function logout() {
+      window.location.href = 'PrincipalUltimo.html';
+    }
+</script>
+
+
+<!-- Contenedor del historial de compras -->
+<div class="history-container">
+    <h3>Historial de Compras</h3>
+
+    <!-- Producto 1 -->
+    <div class="history-item">
+        <img src="../IMAGENES/tapete%20baul%20%232.png" alt="Tapete Carro Grand Prix">
+        <div class="history-item-details">
+            <h4>Tapete Carro Grand Prix Universal</h4>
+            <p class="product-description">Ajustable Caucho</p>
+            <p><strong>Fecha de compra:</strong> 10/10/2025</p>
+            <p><strong>Precio:</strong> $82,300</p>
+        </div>
+        <!-- Estado del producto -->
+        <div class="status-update">
+            <h5>Estado del Producto</h5>
+            <p><strong>Estado:</strong> Entregado</p>
+            <p><strong>Fecha de entrega:</strong> 12/10/2025</p>
+        </div>
+        <!-- Devolución del producto -->
+        <div class="return-section">
+            <h5>Devolución del Producto</h5>
+            <p>Si no estás satisfecho con el producto, puedes solicitar una devolución.</p>
+            <button class="btn-return" onclick="requestReturn('Tapete Carro Grand Prix Universal', '2025-10-12', 'Entregado')">Solicitar Devolución</button>
+        </div>
+    </div>
+
+    <!-- Producto 2 -->
+    <div class="history-item">
+        <img src="../IMAGENES/estribo%233.jpeg" alt="Estribo">
+        <div class="history-item-details">
+            <h4>Estribo para carro 4x4</h4>
+            <p class="product-description">Ajustable en 4x4</p>
+            <p><strong>Fecha de compra:</strong> 05/10/2025</p>
+            <p><strong>Precio:</strong> $50,000</p>
+        </div>
+        <!-- Estado del producto -->
+        <div class="status-update">
+            <h5>Estado del Producto</h5>
+            <p><strong>Estado:</strong> En tránsito</p>
+            <p><strong>Fecha estimada de entrega:</strong> 15/10/2025</p>
+        </div>
+        <!-- Devolución del producto -->
+        <div class="return-section">
+            <h5>Devolución del Producto</h5>
+            <p>Si no estás satisfecho con el producto, puedes solicitar una devolución.</p>
+            <button class="btn-return" onclick="requestReturn('Estribo para carro 4x4', '2025-10-15', 'En tránsito')">Solicitar Devolución</button>
+        </div>
+    </div>
+
+    <!-- Producto 3 (Fecha más actual) -->
+    <div class="history-item">
+        <img src="../IMAGENES/retrovisor%20%232.png" alt="Retrovisor">
+        <div class="history-item-details">
+            <h4>Retrovisor Universal</h4>
+            <p class="product-description">Ajustable y resistente</p>
+            <p><strong>Fecha de compra:</strong> 20/10/2025</p>
+            <p><strong>Precio:</strong> $35,000</p>
+        </div>
+        <div class="status-update">
+            <h5>Estado del Producto</h5>
+            <p><strong>Estado:</strong> Entregado</p>
+            <p><strong>Fecha de entrega:</strong> 22/10/2025</p>
+        </div>
+        <div class="return-section">
+            <h5>Devolución del Producto</h5>
+            <p>Si no estás satisfecho con el producto, puedes solicitar una devolución.</p>
+            <button class="btn-return" onclick="requestReturn('Retrovisor Universal', '2025-10-22', 'Entregado')">Solicitar Devolución</button>
+        </div>
+    </div>
+
+
+    <!-- Apartado de devoluciones realizadas -->
+    <div class="returns-container" id="returns-container">
+        <h3>Devoluciones Solicitadas</h3>
+        <div id="returns-list"></div>
+    </div>
+</div>
+
+<script>
+    // Función para solicitar devolución
+    function requestReturn(productName, deliveryDate, status) {
+        const today = new Date(); // Fecha actual
+        const delivery = new Date(deliveryDate); // Fecha de entrega
+        const daysSinceDelivery = Math.floor((today - delivery) / (1000 * 60 * 60 * 24)); // Días desde la entrega
+
+        // Verificar si el producto fue entregado
+        if (status !== "Entregado") {
+            alert("No se puede solicitar la devolución. El producto no ha sido entregado.");
+            return; // Detener la función si no está entregado
+        }
+
+        // Verificar si han pasado más de 15 días desde la entrega
+        if (daysSinceDelivery > 15) {
+            alert("No se puede solicitar la devolución. Han pasado más de 15 días desde la entrega.");
+            return; // Detener la función si no se cumple la condición
+        }
+
+        // Crear un objeto para la devolución
+        const returnRequest = {
+            productName: productName,
+            date: new Date().toLocaleDateString(),
+            status: "En proceso"
+        };
+
+        // Obtener las devoluciones existentes o inicializar un array vacío
+        let returns = JSON.parse(localStorage.getItem("returns")) || [];
+        returns.push(returnRequest); // Añadir la nueva devolución
+        localStorage.setItem("returns", JSON.stringify(returns)); // Guardar en localStorage
+
+        // Mostrar las devoluciones
+        showReturns();
+        alert(`Devolución solicitada para: ${productName}`);
+    }
+
+    // Función para mostrar las devoluciones
+    function showReturns() {
+        const returnsContainer = document.getElementById("returns-container");
+        const returnsList = document.getElementById("returns-list");
+        const returns = JSON.parse(localStorage.getItem("returns")) || [];
+
+        if (returns.length > 0) {
+            returnsContainer.style.display = "block"; // Mostrar el contenedor
+            returnsList.innerHTML = returns.map(returnItem => `
+                <div class="return-item">
+                    <h4>${returnItem.productName}</h4>
+                    <p><strong>Fecha de devolución:</strong> ${returnItem.date}</p>
+                    <p><strong>Estado:</strong> ${returnItem.status}</p>
+                </div>
+            `).join("");
+        } else {
+            returnsContainer.style.display = "none"; // Ocultar si no hay devoluciones
+        }
+    }
+
+    // Cargar las devoluciones al iniciar la página
+    document.addEventListener("DOMContentLoaded", showReturns);
+</script>
+
+<style>
+    .history-container {
+        max-width: 1200px;
+        margin: 100px auto 20px;
+        padding: 20px;
+        background-color: #222;
+        border-radius: 10px;
+    }
+    .history-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px;
+        border-bottom: 1px solid #444;
+        margin-bottom: 20px;
+    }
+    .history-item img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-right: 20px;
+    }
+    .history-item-details {
+        flex-grow: 1;
+    }
+    .history-item-details h4 {
+        margin: 0;
+        font-size: 18px;
+        color: #FF335F;
+    }
+    .history-item-details p {
+        margin: 5px 0;
+        font-size: 14px;
+    }
+    .product-description {
+        font-style: italic;
+        color: #ccc;
+    }
+    .status-update, .return-section {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #333;
+        border-radius: 10px;
+    }
+    .status-update h5, .return-section h5 {
+        color: #FF335F;
+    }
+    .status-update p, .return-section p {
+        margin: 5px 0;
+    }
+    .btn-return {
+        background-color: #FF335F;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .btn-return:hover {
+        background-color: #e63946;
+    }
+    .returns-container {
+    margin-top: 40px;
+    display: none; /* Oculto por defecto */
+}
+
+.return-item {
+    padding: 15px;
+    background-color: #444;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.return-item h4 {
+    margin: 0;
+    font-size: 16px;
+    color: #FF335F;
+}
+
+.return-item p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+</style>
+<script>
+    function updateQuantity(button, change) {
+        let item = button.closest('.cart-item');
+        let quantityElement = item.querySelector('.quantity');
+        let availableElement = item.querySelector('.available');
+        let price = parseInt(item.getAttribute('data-price'));
+        let quantity = parseInt(quantityElement.textContent);
+        let available = parseInt(availableElement.textContent);
+
+        if (change > 0 && available > 0) {
+            quantity++;
+            available--;
+        } else if (change < 0 && quantity > 1) {
+            quantity--;
+            available++;
+        }
+
+        quantityElement.textContent = quantity;
+        availableElement.textContent = available;
+        updateTotal();
+    }
+
+    function removeFromCart(button) {
+        button.closest('.cart-item').remove();
+        updateTotal();
+    }
+
+    function updateTotal() {
+        let total = 0;
+        document.querySelectorAll('.cart-item').forEach(item => {
+            let quantity = parseInt(item.querySelector('.quantity').textContent);
+            let price = parseInt(item.getAttribute('data-price'));
+            total += quantity * price;
+        });
+        document.getElementById('total-price').textContent = total > 0 ? `$${total.toLocaleString()}` : '$0';
+    }
+</script>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <ul class="footer-links">
+                    <li><a href="#">TotesBGA Financiación</a></li>
+                    <li><a href="#">Cookie Settings</a></li>
+                    <li><a href="#">Acerca de</a></li>
+                    <li><a href="#">Privacidad</a></li>
+                    <li><a href="#">Nuestro Sistema</a></li>
+                </ul>
+                <p class="policy">Política de Protección De Datos Personales</p>
+                <p class="copy">&copy; 2025 TotesBGA Colombia. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
+
+<script>
+    // Función para mostrar la sección de productos de una categoría
+    function showProducts(category) {
+        // Oculta todas las secciones
+        document.querySelectorAll('.product-section').forEach(section => {
+            section.style.display = 'none';
+        });
+        // Oculta la sección de categorías
+        document.getElementById('category-section').style.display = 'none';
+        // Muestra la sección de la categoría seleccionada
+        const sectionToShow = document.getElementById(${category}-section);
+        if (sectionToShow) {
+            sectionToShow.style.display = 'block';
+        } else {
+            console.error(Sección no encontrada: ${category}-section);
+        }
+    }
+
+    // Función para volver a la sección de categorías
+    function showCategories() {
+        // Oculta todas las secciones de productos
+        document.querySelectorAll('.product-section').forEach(section => {
+            section.style.display = 'none';
+        });
+        // Muestra la sección de categorías
+        document.getElementById('category-section').style.display = 'block';
+    }
+
+    // Función para buscar categorías
+    function searchCategory(event) {
+        event.preventDefault();
+        const searchTerm = document.getElementById('search-input').value.toLowerCase();
+        const categories = {
+            'llantas': 'llantas',
+            'tubos de escape': 'tubos-escape',
+            'exploradoras': 'exploradoras',
+            'cámaras': 'camaras',
+            'tapetes': 'tapetes',
+            'estribos': 'estribos',
+            'perillas': 'perillas',
+            'spoilers': 'spoilers',
+            'retrovisores': 'retrovisores',
+            'repuestos': 'repuestos'
+        };
+
+        if (categories[searchTerm]) {
+            showProducts(categories[searchTerm]);
+        } else {
+            alert('Categoría no encontrada');
+        }
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        function showProducts(category) {
+            document.getElementById('category-section').style.display = 'none';
+            document.getElementById(category + '-section').style.display = 'block';
+        }
+
+        function showCategories() {
+            document.querySelectorAll('.product-section').forEach(section => section.style.display = 'none');
+            document.getElementById('category-section').style.display = 'block';
+        }
+
+        window.showProducts = showProducts;
+        window.showCategories = showCategories;
+    });
+
+    function addToCart(productName) {
+        const isLoggedIn = false; // Cambiar a true si el usuario está logueado
+        if (!isLoggedIn) {
+            document.getElementById('loginModal').style.display = 'flex';
+        } else {
+            alert(`${productName} añadido al carrito`);
+        }
+    }
+
+    function closeModal() {
+        document.getElementById('loginModal').style.display = 'none';
+    }
+
+    function toggleMode() {
+        const body = document.body;
+        body.classList.toggle("modo-claro");
+
+        if (body.classList.contains("modo-claro")) {
+            localStorage.setItem("modo", "claro");
+        } else {
+            localStorage.setItem("modo", "oscuro");
+        }
+    }
+
+    function aplicarModoGuardado() {
+        const modoGuardado = localStorage.getItem("modo");
+        if (modoGuardado === "claro") {
+            document.body.classList.add("modo-claro");
+        }
+    }
+
+    aplicarModoGuardado();
+    <!-- Bootstrap JS Bundle (Popper incluido) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</script>
+
+<button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
+</body>
+</html>
