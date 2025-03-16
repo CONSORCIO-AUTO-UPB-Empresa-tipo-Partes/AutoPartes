@@ -52,23 +52,5 @@ public class ItemTypeController {
         return ResponseEntity.ok(itemTypeService.searchByName(name));
     }
 
-    /**
-     * Busca ítems por código.
-     * @param code Código o parte del código del ítem a buscar.
-     * @return Lista de ítems que coincidan con el criterio de búsqueda.
-     */
-    @GetMapping("/search/code")
-    public ResponseEntity<List<ItemType>> searchByCode(@RequestParam String code) {
-        return ResponseEntity.ok(itemTypeService.searchByCode(code));
-    }
-
-    /**
-     * Busca ítems por categoría.
-     * @param category Categoría o parte de la categoría del ítem a buscar.
-     * @return Lista de ítems que coincidan con el criterio de búsqueda.
-     */
-    @GetMapping("/search/category")
-    public ResponseEntity<List<ItemType>> searchByCategory(@RequestParam String category) {
-        return ResponseEntity.ok(itemTypeService.searchByCategory(category));
-    }
+    // ❌ Se eliminan searchByCode y searchByCategory porque no existen en ItemTypeService
 }
