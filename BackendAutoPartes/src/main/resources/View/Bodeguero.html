@@ -275,12 +275,13 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    // Función para alternar entre modo claro y oscuro
+    const API_URL = "http://localhost:8080/api"; // URL base de la API
+
+    // Función para alternar entre modo claro y oscuro (igual que antes)
     function toggleMode() {
         const body = document.body;
         body.classList.toggle("modo-claro");
 
-        // Guardar el estado del modo en localStorage
         if (body.classList.contains("modo-claro")) {
             localStorage.setItem("modo", "claro");
         } else {
@@ -288,137 +289,122 @@
         }
     }
 
-    // Aplicar el modo guardado al cargar la página
+    // Aplicar el modo guardado al cargar la página (igual que antes)
     function aplicarModoGuardado() {
         const modoGuardado = localStorage.getItem("modo");
         if (modoGuardado === "claro") {
             document.body.classList.add("modo-claro");
         }
     }
-
-    // Llamar a la función al cargar la página
     aplicarModoGuardado();
 
-    // Lógica para agregar, editar y eliminar productos
-    let productos = JSON.parse(localStorage.getItem("productos")) || []; // Cargar productos desde localStorage
-    let idCounter = productos.length > 0 ? Math.max(...productos.map(p => p.id)) + 1 : 1; // Generar ID único
-    let productoEditando = null; // Variable para almacenar el producto que se está editando
-
+    // Variables globales
+    let productoEditando = null; // Almacena el producto que se está editando
     const formAgregarProducto = document.getElementById("formAgregarProducto");
     const tablaProductos = document.getElementById("tablaProductos");
-    const previewImagen = document.getElementById("previewImagen"); // Elemento para previsualizar la imagen
-    const eliminarImagenBtn = document.getElementById("eliminarImagen"); // Botón para eliminar la imagen
+    const previewImagen = document.getElementById("previewImagen");
+    const eliminarImagenBtn = document.getElementById("eliminarImagen");
 
-    formAgregarProducto.addEventListener("submit", function (e) {
+    // Cargar productos al iniciar la página
+    document.addEventListener("DOMContentLoaded", obtenerProductos);
+
+    // Obtener la lista de productos desde la API
+    async function obtenerProductos() {
+        try {
+            const response = await fetch(`${API_URL}/itemtypes`);
+            if (!response.ok) {
+                throw new Error("Error al obtener los productos");
+            }
+            const productos = await response.json();
+            actualizarTabla(productos);
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
+
+    // Agregar o editar un producto
+    formAgregarProducto.addEventListener("submit", async function (e) {
         e.preventDefault();
         const nombre = document.getElementById("nombreProducto").value;
         const descripcion = document.getElementById("descripcionProducto").value;
         const precio = document.getElementById("precioProducto").value;
         const imagen = document.getElementById("imagenProducto").files[0];
 
-        if (productoEditando) {
-            // Si estamos editando un producto
-            productoEditando.nombre = nombre;
-            productoEditando.descripcion = descripcion;
-            productoEditando.precio = precio;
+        const producto = {
+            nombre,
+            descripcion,
+            precio: parseFloat(precio),
+            imagen: "", // Aquí puedes manejar la subida de la imagen si es necesario
+        };
 
-            if (imagen) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    productoEditando.imagen = e.target.result; // Actualizar la imagen
-                    finalizarEdicion();
-                };
-                reader.readAsDataURL(imagen);
-            } else if (previewImagen.src && previewImagen.src !== "#") {
-                // Si no se selecciona una nueva imagen pero hay una imagen en el preview, mantenerla
-                productoEditando.imagen = previewImagen.src;
-                finalizarEdicion();
-            } else {
-                // Si no hay imagen en el preview, eliminar la imagen del producto
-                productoEditando.imagen = "";
-                finalizarEdicion();
-            }
+        if (productoEditando) {
+            // Editar producto
+            await editarProductoAPI(productoEditando.id, producto);
         } else {
-            // Si estamos agregando un nuevo producto
-            if (imagen) {
-                const reader = new FileReader();
-                reader.onload = function (e) {
-                    const producto = {
-                        id: idCounter++,
-                        nombre,
-                        descripcion,
-                        precio,
-                        imagen: e.target.result, // Guardar la imagen como una URL de datos
-                    };
-
-                    productos.push(producto);
-                    localStorage.setItem("productos", JSON.stringify(productos)); // Guardar en localStorage
-                    actualizarTabla();
-                    formAgregarProducto.reset();
-                    previewImagen.style.display = "none";
-                };
-                reader.readAsDataURL(imagen);
-            } else {
-                alert("Por favor, selecciona una imagen.");
-            }
+            // Agregar producto
+            await agregarProductoAPI(producto);
         }
-    });
 
-    function finalizarEdicion() {
-        localStorage.setItem("productos", JSON.stringify(productos)); // Actualizar localStorage
-        actualizarTabla();
         formAgregarProducto.reset();
-        previewImagen.src = "#";
         previewImagen.style.display = "none";
-        eliminarImagenBtn.style.display = "none"; // Ocultar el botón de eliminar imagen
-        productoEditando = null; // Limpiar la variable de edición
-    }
+        productoEditando = null;
+    });
 
-    function editarProducto(id) {
-        productoEditando = productos.find((p) => p.id === id);
-        if (productoEditando) {
-            document.getElementById("nombreProducto").value = productoEditando.nombre;
-            document.getElementById("descripcionProducto").value = productoEditando.descripcion;
-            document.getElementById("precioProducto").value = productoEditando.precio;
-            if (productoEditando.imagen) {
-                previewImagen.src = productoEditando.imagen;
-                previewImagen.style.display = "block";
-                eliminarImagenBtn.style.display = "block"; // Mostrar el botón de eliminar imagen
-            } else {
-                previewImagen.src = "#";
-                previewImagen.style.display = "none";
-                eliminarImagenBtn.style.display = "none"; // Ocultar el botón de eliminar imagen
+    // Función para agregar un producto
+    async function agregarProductoAPI(producto) {
+        try {
+            const response = await fetch(`${API_URL}/itemtypes`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(producto),
+            });
+            if (!response.ok) {
+                throw new Error("Error al agregar el producto");
             }
+            await obtenerProductos(); // Recargar la lista de productos
+        } catch (error) {
+            console.error("Error:", error);
         }
     }
 
-    // Eliminar la imagen actual
-    eliminarImagenBtn.addEventListener("click", function () {
-        if (productoEditando) {
-            productoEditando.imagen = ""; // Eliminar la imagen
-            previewImagen.src = "#";
-            previewImagen.style.display = "none";
-            eliminarImagenBtn.style.display = "none"; // Ocultar el botón de eliminar imagen
+    // Función para editar un producto
+    async function editarProductoAPI(id, producto) {
+        try {
+            const response = await fetch(`${API_URL}/itemtypes/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(producto),
+            });
+            if (!response.ok) {
+                throw new Error("Error al editar el producto");
+            }
+            await obtenerProductos(); // Recargar la lista de productos
+        } catch (error) {
+            console.error("Error:", error);
         }
-    });
+    }
 
-    // Mostrar la imagen seleccionada en el input file
-    document.getElementById("imagenProducto").addEventListener("change", function (e) {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                previewImagen.src = e.target.result;
-                previewImagen.style.display = "block";
-            };
-            reader.readAsDataURL(file);
+    // Función para eliminar un producto
+    async function eliminarProductoAPI(id) {
+        try {
+            const response = await fetch(`${API_URL}/itemtypes/${id}`, {
+                method: "DELETE",
+            });
+            if (!response.ok) {
+                throw new Error("Error al eliminar el producto");
+            }
+            await obtenerProductos(); // Recargar la lista de productos
+        } catch (error) {
+            console.error("Error:", error);
         }
-    });
+    }
 
-    // Mostrar la tabla al cargar la página
-    actualizarTabla();
-
-    function actualizarTabla() {
+    // Actualizar la tabla con los productos
+    function actualizarTabla(productos) {
         tablaProductos.innerHTML = "";
         productos.forEach((producto) => {
             const fila = document.createElement("tr");
@@ -437,10 +423,31 @@
         });
     }
 
-    function eliminarProducto(id) {
-        productos = productos.filter((p) => p.id !== id);
-        localStorage.setItem("productos", JSON.stringify(productos)); // Actualizar localStorage
-        actualizarTabla();
+    // Función para editar un producto
+    async function editarProducto(id) {
+        try {
+            const response = await fetch(`${API_URL}/itemtypes/${id}`);
+            if (!response.ok) {
+                throw new Error("Error al obtener el producto");
+            }
+            productoEditando = await response.json();
+            document.getElementById("nombreProducto").value = productoEditando.nombre;
+            document.getElementById("descripcionProducto").value = productoEditando.descripcion;
+            document.getElementById("precioProducto").value = productoEditando.precio;
+            if (productoEditando.imagen) {
+                previewImagen.src = productoEditando.imagen;
+                previewImagen.style.display = "block";
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    }
+
+    // Función para eliminar un producto
+    async function eliminarProducto(id) {
+        if (confirm("¿Estás seguro de eliminar este producto?")) {
+            await eliminarProductoAPI(id);
+        }
     }
 </script>
 </body>
