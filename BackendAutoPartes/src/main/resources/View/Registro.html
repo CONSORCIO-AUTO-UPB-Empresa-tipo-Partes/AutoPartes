@@ -14,12 +14,7 @@
             font-family: 'Poppins', sans-serif;
             transition: background-color 0.3s, color 0.3s;
         }
-        .navbar {
-            background-color: black;
-            padding: 20px 0;
-            border-bottom: 4px solid white;
-            transition: background-color 0.3s, border-color 0.3s;
-        }
+
         .navbar-brand {
             color: white !important;
             font-size: 24px;
@@ -27,10 +22,7 @@
             display: flex;
             align-items: center;
         }
-        .navbar-brand img {
-            height: 50px;
-            margin-right: 10px;
-        }
+
         .btn-primary {
             background-color: #ff0033;
             border: none;
@@ -85,10 +77,7 @@
             background-color: white !important;
             color: black !important;
         }
-        .modo-claro .navbar {
-            background-color: white !important;
-            border-bottom: 4px solid #ddd;
-        }
+
         .modo-claro .navbar-brand {
             color: black !important;
         }
@@ -108,7 +97,6 @@
         .form-column {
             flex: 1; /* Cada columna ocupa el mismo espacio */
         }
-        <style>
         /* Estilos generales */
         body {
             background-color: black;
@@ -331,7 +319,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="PrincipalUltimo.html">Inicio</a></li>
                 <li class="nav-item"><a class="nav-link" href="CatalogoPrincipal.html">Catalogo</a></li>
                 <li class="nav-item"><a class="nav-link" href="Contacto.html">Contacto</a></li>
                 <li class="nav-item"><a class="nav-link" href="InicioSesion.html">Iniciar Sesion</a></li>
@@ -404,9 +392,29 @@
 <script>
     let usuarios = []; // Array para almacenar los usuarios registrados
 
+    // Función para cambiar el modo
     function toggleMode() {
-        document.body.classList.toggle('modo-claro');
+        const body = document.body;
+        body.classList.toggle("modo-claro");
+
+        // Guardar el estado del modo en localStorage
+        if (body.classList.contains("modo-claro")) {
+            localStorage.setItem("modo", "claro");
+        } else {
+            localStorage.setItem("modo", "oscuro");
+        }
     }
+
+    // Aplicar el modo guardado al cargar la página
+    function aplicarModoGuardado() {
+        const modoGuardado = localStorage.getItem("modo");
+        if (modoGuardado === "claro") {
+            document.body.classList.add("modo-claro");
+        }
+    }
+
+    // Llamar a la función al cargar la página
+    aplicarModoGuardado();
 
     document.getElementById("formRegistroUsuario").addEventListener("submit", function (event) {
         event.preventDefault();
@@ -439,7 +447,7 @@
         alert("Usuario registrado con éxito!");
         document.getElementById("formRegistroUsuario").reset();
         // Redirigir a la página de inicio de sesión
-    window.location.href = "index.html"; // Coloca esta línea aquí
+    window.location.href = "InicioSesion.html"; // Coloca esta línea aquí
 });
 </script>
 </body>

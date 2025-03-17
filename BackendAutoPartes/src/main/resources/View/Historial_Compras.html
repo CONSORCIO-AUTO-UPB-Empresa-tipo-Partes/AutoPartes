@@ -286,6 +286,38 @@
     position: relative;
 }
 
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background-color: black; /* Fondo del menú responsivo */
+        padding: 10px; /* Espaciado interno */
+        border-radius: 10px; /* Bordes redondeados */
+    }
+
+    .navbar-nav {
+        flex-direction: column; /* Apila los elementos verticalmente */
+        align-items: flex-start; /* Alinea los elementos a la izquierda */
+    }
+
+    .profile-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 8; /* Alinea el menú desplegable a la derecha */
+    background-color: #222;
+    border-radius: 10px;
+    padding: 10px 0;
+    width: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+    .profile-dropdown-content a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    transition: background-color 0.3s;
+}
+}
 .profile-button {
     background-color: transparent;
     border: none;
@@ -295,6 +327,7 @@
     gap: 10px;
     font-size: 14px;
     cursor: pointer;
+
 }
 
 .profile-button:hover {
@@ -307,6 +340,7 @@
     object-fit: cover;
     vertical-align: middle; /* Alineación exacta */
 }
+
 .navbar {
     display: flex;
     align-items: center; /* Alinea todos los elementos verticalmente */
@@ -318,7 +352,7 @@
 .profile-dropdown-content {
     display: none;
     position: absolute;
-    right: 0;
+    right: 8; /* Alinea el menú desplegable a la derecha */
     background-color: #222;
     border-radius: 10px;
     padding: 10px 0;
@@ -376,7 +410,91 @@
             margin: 5px 0;
             font-size: 14px;
         }
+
+    .history-container {
+        max-width: 1200px;
+        margin: 100px auto 20px;
+        padding: 20px;
+        background-color: #222;
+        border-radius: 10px;
+    }
+    .history-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px;
+        border-bottom: 1px solid #444;
+        margin-bottom: 20px;
+    }
+    .history-item img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-right: 20px;
+    }
+    .history-item-details {
+        flex-grow: 1;
+    }
+    .history-item-details h4 {
+        margin: 0;
+        font-size: 18px;
+        color: #FF335F;
+    }
+    .history-item-details p {
+        margin: 5px 0;
+        font-size: 14px;
+    }
+    .product-description {
+        font-style: italic;
+        color: #ccc;
+    }
+    .status-update, .return-section {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 10px;
+    }
+    .status-update h5, .return-section h5 {
+        color: #FF335F;
+    }
+    .status-update p, .return-section p {
+        margin: 5px 0;
+    }
+    .btn-return {
+        background-color: #FF335F;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .btn-return:hover {
+        background-color: #e63946;
+    }
+    .returns-container {
+    margin-top: 40px;
+    display: none; /* Oculto por defecto */
+}
+
+.return-item {
+    padding: 15px;
+    background-color: #444;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.return-item h4 {
+    margin: 0;
+    font-size: 16px;
+    color: #FF335F;
+}
+
+.return-item p {
+    margin: 5px 0;
+    font-size: 14px;
+}
     </style>
+
 </head>
 <body>
 <div class="background-stripes">
@@ -400,7 +518,6 @@
             </form>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="Catalogo.html">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link" href="Contacto.html">Contacto</a></li>
                 <!-- Perfil con menú desplegable -->
                 <div class="profile-dropdown">
                     <button class="profile-button">
@@ -414,7 +531,10 @@
                     </div>
                 </div>
 
-                <a class="nav-link" href="Carrito.html" style="font-size: 27px;">🛒</a>
+                <!-- Icono del carrito -->
+                <li class="nav-item">
+                    <a class="nav-link" href="Carrito.html" style="font-size: 27px;">🛒</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -506,7 +626,67 @@
     </div>
 </div>
 
+
+
+
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8">
+                <ul class="footer-links">
+                    <li><a href="#">TotesBGA Financiación</a></li>
+                    <li><a href="#">Cookie Settings</a></li>
+                    <li><a href="#">Acerca de</a></li>
+                    <li><a href="#">Privacidad</a></li>
+                    <li><a href="#">Nuestro Sistema</a></li>
+                </ul>
+                <p class="policy">Política de Protección De Datos Personales</p>
+                <p class="copy">&copy; 2025 TotesBGA Colombia. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
+
 <script>
+    function updateQuantity(button, change) {
+        let item = button.closest('.cart-item');
+        let quantityElement = item.querySelector('.quantity');
+        let availableElement = item.querySelector('.available');
+        let price = parseInt(item.getAttribute('data-price'));
+        let quantity = parseInt(quantityElement.textContent);
+        let available = parseInt(availableElement.textContent);
+
+        if (change > 0 && available > 0) {
+            quantity++;
+            available--;
+        } else if (change < 0 && quantity > 1) {
+            quantity--;
+            available++;
+        }
+
+        quantityElement.textContent = quantity;
+        availableElement.textContent = available;
+        updateTotal();
+    }
+
+    function removeFromCart(button) {
+        button.closest('.cart-item').remove();
+        updateTotal();
+    }
+
+    function updateTotal() {
+        let total = 0;
+        document.querySelectorAll('.cart-item').forEach(item => {
+            let quantity = parseInt(item.querySelector('.quantity').textContent);
+            let price = parseInt(item.getAttribute('data-price'));
+            total += quantity * price;
+        });
+        document.getElementById('total-price').textContent = total > 0 ? `$${total.toLocaleString()}` : '$0';
+    }
     // Función para solicitar devolución
     function requestReturn(productName, deliveryDate, status) {
         const today = new Date(); // Fecha actual
@@ -564,153 +744,7 @@
 
     // Cargar las devoluciones al iniciar la página
     document.addEventListener("DOMContentLoaded", showReturns);
-</script>
 
-<style>
-    .history-container {
-        max-width: 1200px;
-        margin: 100px auto 20px;
-        padding: 20px;
-        background-color: #222;
-        border-radius: 10px;
-    }
-    .history-item {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        padding: 15px;
-        border-bottom: 1px solid #444;
-        margin-bottom: 20px;
-    }
-    .history-item img {
-        width: 100px;
-        height: 100px;
-        object-fit: cover;
-        border-radius: 10px;
-        margin-right: 20px;
-    }
-    .history-item-details {
-        flex-grow: 1;
-    }
-    .history-item-details h4 {
-        margin: 0;
-        font-size: 18px;
-        color: #FF335F;
-    }
-    .history-item-details p {
-        margin: 5px 0;
-        font-size: 14px;
-    }
-    .product-description {
-        font-style: italic;
-        color: #ccc;
-    }
-    .status-update, .return-section {
-        margin-top: 20px;
-        padding: 15px;
-        background-color: #333;
-        border-radius: 10px;
-    }
-    .status-update h5, .return-section h5 {
-        color: #FF335F;
-    }
-    .status-update p, .return-section p {
-        margin: 5px 0;
-    }
-    .btn-return {
-        background-color: #FF335F;
-        color: white;
-        border: none;
-        padding: 5px 10px;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-    .btn-return:hover {
-        background-color: #e63946;
-    }
-    .returns-container {
-    margin-top: 40px;
-    display: none; /* Oculto por defecto */
-}
-
-.return-item {
-    padding: 15px;
-    background-color: #444;
-    border-radius: 10px;
-    margin-bottom: 15px;
-}
-
-.return-item h4 {
-    margin: 0;
-    font-size: 16px;
-    color: #FF335F;
-}
-
-.return-item p {
-    margin: 5px 0;
-    font-size: 14px;
-}
-</style>
-<script>
-    function updateQuantity(button, change) {
-        let item = button.closest('.cart-item');
-        let quantityElement = item.querySelector('.quantity');
-        let availableElement = item.querySelector('.available');
-        let price = parseInt(item.getAttribute('data-price'));
-        let quantity = parseInt(quantityElement.textContent);
-        let available = parseInt(availableElement.textContent);
-
-        if (change > 0 && available > 0) {
-            quantity++;
-            available--;
-        } else if (change < 0 && quantity > 1) {
-            quantity--;
-            available++;
-        }
-
-        quantityElement.textContent = quantity;
-        availableElement.textContent = available;
-        updateTotal();
-    }
-
-    function removeFromCart(button) {
-        button.closest('.cart-item').remove();
-        updateTotal();
-    }
-
-    function updateTotal() {
-        let total = 0;
-        document.querySelectorAll('.cart-item').forEach(item => {
-            let quantity = parseInt(item.querySelector('.quantity').textContent);
-            let price = parseInt(item.getAttribute('data-price'));
-            total += quantity * price;
-        });
-        document.getElementById('total-price').textContent = total > 0 ? `$${total.toLocaleString()}` : '$0';
-    }
-</script>
-
-<!-- Footer -->
-<footer class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <ul class="footer-links">
-                    <li><a href="#">TotesBGA Financiación</a></li>
-                    <li><a href="#">Cookie Settings</a></li>
-                    <li><a href="#">Acerca de</a></li>
-                    <li><a href="#">Privacidad</a></li>
-                    <li><a href="#">Nuestro Sistema</a></li>
-                </ul>
-                <p class="policy">Política de Protección De Datos Personales</p>
-                <p class="copy">&copy; 2025 TotesBGA Colombia. Todos los derechos reservados.</p>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
-
-<script>
     // Función para mostrar la sección de productos de una categoría
     function showProducts(category) {
         // Oculta todas las secciones
@@ -813,7 +847,8 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </script>
-
+<!-- Bootstrap JS (necesario para el menú responsivo) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
 </body>
 </html>
