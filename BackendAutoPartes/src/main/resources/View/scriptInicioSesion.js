@@ -1,14 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const loginButton = document.getElementById("loginButton");
+    const loginForm = document.getElementById("loginForm");
+    const errorMensaje = document.getElementById("errorMensaje");
 
-    loginButton.addEventListener("click", function () {
+    loginForm.addEventListener("submit", function (event) {
+        event.preventDefault(); // Evita recargar la página
+
         const email = document.getElementById("email").value.trim();
         const password = document.getElementById("password").value.trim();
-
-        if (email === "" || password === "") {
-            alert("Por favor, ingresa tu correo y contraseña.");
-            return;
-        }
 
         fetch("http://localhost:8080/api/auth/login", {
             method: "POST",
@@ -25,10 +23,12 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(data => {
                 alert(data.message); // Mensaje de éxito
+                localStorage.setItem("token", data.token); // Guardar el token en localStorage
                 window.location.href = data.redirect; // Redirige a la página del catálogo
             })
             .catch(error => {
-                alert(error.message); // Mensaje de error
+                errorMensaje.textContent = error.message;
+                errorMensaje.style.display = "block"; // Muestra mensaje de error
             });
     });
 });

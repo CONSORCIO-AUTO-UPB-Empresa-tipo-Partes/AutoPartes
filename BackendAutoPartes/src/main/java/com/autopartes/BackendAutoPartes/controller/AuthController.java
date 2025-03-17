@@ -6,10 +6,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auth")
-@CrossOrigin(origins = "http://127.0.0.1:5500") // Permite el acceso desde el frontend local
+@CrossOrigin(origins = "http://localhost:5500")
 public class AuthController {
     private final UserService userService;
 
@@ -19,11 +20,12 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest request) {
-        boolean authenticated = userService.authenticate(request.getEmail(), request.getPassword());
+        Optional<String> token = userService.authenticate(request.getEmail(), request.getPassword());
 
-        if (authenticated) {
+        if (token.isPresent()) {
             return ResponseEntity.ok(Map.of(
                     "message", "Inicio de sesión exitoso",
+                    "token", token.get(),
                     "redirect", "Catalogo.html"
             ));
         } else {
