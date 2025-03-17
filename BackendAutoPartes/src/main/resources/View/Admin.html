@@ -172,7 +172,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="#">
-            <img src="../assets/IMAGENES/Logo%20blanco.png" alt="Logo">
+            <img src="../assets/IMAGENES/logo-totes0.png" alt="Logo">
             Totes BGA - Administrador
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -218,32 +218,30 @@
     <!-- Sección de Agregar Empleado -->
     <div id="agregarEmpleado">
         <h4 class="mt-4">Agregar empleado</h4>
-        <form id="formAgregarempleado">
+        <form id="formAgregarProducto">
             <div class="mb-3">
                 <label class="form-label">Nombre del empleado</label>
                 <input type="text" class="form-control" id="nombreProducto" required>
             </div>
-            <form id="formAgregarempleado">
-                <div class="mb-3">
-                    <label class="form-label">Apellido del empleado</label>
-                    <input type="text" class="form-control" id="nombreProducto" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Rol</label>
-                    <select class="form-control" id="rolUsuario" required>
-                        <option value="admin">Administrador</option>
-                        <option value="secretaria">Secretaria</option>
-                        <option value="empleado">Empleado</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">ID</label>
-                    <input type="number" class="form-control" id="precioProducto" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Agregar empleado</button>
-            </form>
+            <div class="mb-3">
+                <label class="form-label">Apellido del empleado</label>
+                <input type="text" class="form-control" id="apellidoProducto" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Rol</label>
+                <select class="form-control" id="rolUsuario" required>
+                    <option value="admin">Administrador</option>
+                    <option value="secretaria">Secretaria</option>
+                    <option value="empleado">Empleado</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">ID</label>
+                <input type="number" class="form-control" id="precioProducto" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Agregar empleado</button>
+        </form>
     </div>
-
 
     <!-- Sección de Consultar Empleado por ID -->
     <div id="consultarEmpleado" class="consultar-section hidden">
@@ -264,8 +262,9 @@
             <tr>
                 <th>ID</th>
                 <th>Nombres</th>
-                <th>Permiso</th>
-                <th>ID-empleado</th>
+                <th>Apellidos</th>
+                <th>Rol</th>
+                <th>Acciones</th>
             </tr>
             </thead>
             <tbody id="tablaProductos">
@@ -300,7 +299,8 @@
         event.preventDefault();
 
         let nombre = document.getElementById("nombreProducto").value;
-        let permiso = document.getElementById("descripcionProducto").value;
+        let apellido = document.getElementById("apellidoProducto").value;
+        let rol = document.getElementById("rolUsuario").value; // Obtener el valor del rol
         let id = document.getElementById("precioProducto").value;
 
         if (empleados.some(emp => emp.id === id)) {
@@ -308,7 +308,7 @@
             return;
         }
 
-        let nuevoEmpleado = { id, nombre, permiso };
+        let nuevoEmpleado = { id, nombre, apellido, rol }; // Incluir el rol
         empleados.push(nuevoEmpleado);
         actualizarTabla();
 
@@ -320,16 +320,61 @@
         let tabla = document.getElementById("tablaProductos");
         tabla.innerHTML = "";
         empleados.forEach(emp => {
-            let fila = <tr>
+            let fila = `<tr>
                             <td>${emp.id}</td>
                             <td>${emp.nombre}</td>
-                            <td>${emp.permiso}</td>
+                            <td>${emp.apellido}</td>
+                            <td>${emp.rol}</td> <!-- Mostrar el rol -->
                             <td>
+                                <button class="btn btn-warning btn-sm" onclick="editarEmpleado('${emp.id}')">Editar</button>
                                 <button class="btn btn-danger btn-sm" onclick="eliminarEmpleado('${emp.id}')">Eliminar</button>
                             </td>
-                        </tr>;
+                        </tr>`;
             tabla.innerHTML += fila;
         });
+    }
+
+    function editarEmpleado(id) {
+        let empleado = empleados.find(emp => emp.id === id);
+        if (empleado) {
+            // Llenar el formulario con los datos del empleado
+            document.getElementById("nombreProducto").value = empleado.nombre;
+            document.getElementById("apellidoProducto").value = empleado.apellido;
+            document.getElementById("rolUsuario").value = empleado.rol; // Llenar el campo de rol
+            document.getElementById("precioProducto").value = empleado.id;
+
+            // Cambiar el texto del botón a "Actualizar"
+            let boton = document.querySelector("#formAgregarProducto button");
+            boton.textContent = "Actualizar empleado";
+            boton.onclick = function (event) {
+                event.preventDefault();
+                actualizarEmpleado(id);
+            };
+        }
+    }
+
+    function actualizarEmpleado(id) {
+        let nombre = document.getElementById("nombreProducto").value;
+        let apellido = document.getElementById("apellidoProducto").value;
+        let rol = document.getElementById("rolUsuario").value; // Obtener el valor del rol
+
+        let empleado = empleados.find(emp => emp.id === id);
+        if (empleado) {
+            empleado.nombre = nombre;
+            empleado.apellido = apellido;
+            empleado.rol = rol; // Actualizar el rol
+            actualizarTabla();
+
+            // Restaurar el formulario y el botón
+            document.getElementById("formAgregarProducto").reset();
+            let boton = document.querySelector("#formAgregarProducto button");
+            boton.textContent = "Agregar empleado";
+            boton.onclick = null;
+            document.getElementById("formAgregarProducto").addEventListener("submit", function (event) {
+                event.preventDefault();
+                agregarEmpleado();
+            });
+        }
     }
 
     function consultarEmpleado() {
@@ -338,14 +383,15 @@
         let resultado = document.getElementById("resultadoConsulta");
 
         if (empleado) {
-            resultado.innerHTML = <div class="alert alert-success">
+            resultado.innerHTML = `<div class="alert alert-success">
                                       <strong>Empleado encontrado:</strong><br>
                                       <b>ID:</b> ${empleado.id}<br>
                                       <b>Nombre:</b> ${empleado.nombre}<br>
-                                      <b>Permiso:</b> ${empleado.permiso}
-                                   </div>;
+                                      <b>Apellido:</b> ${empleado.apellido}<br>
+                                      <b>Rol:</b> ${empleado.rol}
+                                   </div>`;
         } else {
-            resultado.innerHTML = <div class="alert alert-danger">No se encontró un empleado con ese ID.</div>;
+            resultado.innerHTML = `<div class="alert alert-danger">No se encontró un empleado con ese ID.</div>`;
         }
     }
 
@@ -363,3 +409,10 @@
         document.getElementById("agregarEmpleado").classList.remove("hidden");
         document.getElementById("consultarEmpleado").classList.add("hidden");
     }
+
+    function toggleMode() {
+        document.body.classList.toggle("modo-claro");
+    }
+</script>
+</body>
+</html>
