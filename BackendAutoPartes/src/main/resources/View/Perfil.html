@@ -79,6 +79,17 @@
             display: flex;
             align-items: center;
         }
+        .navbar-collapse {
+    justify-content: flex-end; /* Alinea el menú a la derecha */
+}
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 0; /* Elimina márgenes innecesarios */
+    padding: 0; /* Elimina rellenos innecesarios */
+}
         .logo-principal {
             height: 100px;
             margin-right: 10px;
@@ -284,8 +295,40 @@
         }
         .profile-dropdown {
     position: relative;
+    }
+
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background-color: black; /* Fondo del menú responsivo */
+        padding: 10px; /* Espaciado interno */
+        border-radius: 10px; /* Bordes redondeados */
+    }
+
+    .navbar-nav {
+        flex-direction: column; /* Apila los elementos verticalmente */
+        align-items: flex-start; /* Alinea los elementos a la izquierda */
+    }
+
+    .profile-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 8; /* Alinea el menú desplegable a la derecha */
+    background-color: #222;
+    border-radius: 10px;
+    padding: 10px 0;
+    width: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 100;
 }
 
+    .profile-dropdown-content a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    transition: background-color 0.3s;
+}
+}
 .profile-button {
     background-color: transparent;
     border: none;
@@ -295,6 +338,7 @@
     gap: 10px;
     font-size: 14px;
     cursor: pointer;
+
 }
 
 .profile-button:hover {
@@ -307,6 +351,7 @@
     object-fit: cover;
     vertical-align: middle; /* Alineación exacta */
 }
+
 .navbar {
     display: flex;
     align-items: center; /* Alinea todos los elementos verticalmente */
@@ -318,7 +363,7 @@
 .profile-dropdown-content {
     display: none;
     position: absolute;
-    right: 0;
+    right: 8; /* Alinea el menú desplegable a la derecha */
     background-color: #222;
     border-radius: 10px;
     padding: 10px 0;
@@ -355,6 +400,16 @@ body { background-color: black; color: white; font-family: Arial, sans-serif; }
     .cart-summary p { margin: 5px 0; font-size: 16px; }
     .cart-summary button { background-color: #FF335F; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; width: 100%; margin-top: 15px; }
     .cart-summary button:hover { background-color: #e63946; }
+
+        .cart-item {
+    display: flex;
+    align-items: center; /* Centra verticalmente los elementos */
+    justify-content: space-between; /* Distribuye el espacio entre los elementos */
+    padding: 15px;
+    border-bottom: 1px solid #444;
+}
+
+
     </style>
 </head>
 <body>
@@ -379,8 +434,9 @@ body { background-color: black; color: white; font-family: Arial, sans-serif; }
             </form>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="Catalogo.html">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link" href="Contacto.html">Contacto</a></li>
+
                 <!-- Perfil con menú desplegable -->
+                <li class="nav-item">
                 <div class="profile-dropdown">
                     <button class="profile-button">
                         <img src="../assets/IMAGENES/USUARIO.png" alt="Perfil" class="profile-icon">
@@ -393,7 +449,10 @@ body { background-color: black; color: white; font-family: Arial, sans-serif; }
                     </div>
                 </div>
 
-                <a class="nav-link" href="Carrito.html" style="font-size: 27px;">🛒</a>
+                    <!-- Icono del carrito -->
+                <li class="nav-item">
+                    <a class="nav-link" href="Carrito.html" style="font-size: 27px;">🛒</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -502,210 +561,213 @@ body { background-color: black; color: white; font-family: Arial, sans-serif; }
 
 <script>
     // Función para cambiar el modo
-    function toggleMode() {
-        const body = document.body;
-        body.classList.toggle("modo-claro");
+   function toggleMode() {
+       const body = document.body;
+       body.classList.toggle("modo-claro");
 
-        // Guardar el estado del modo en localStorage
-        if (body.classList.contains("modo-claro")) {
-            localStorage.setItem("modo", "claro");
-        } else {
-            localStorage.setItem("modo", "oscuro");
-        }
-    }
+       // Guardar el estado del modo en localStorage
+       if (body.classList.contains("modo-claro")) {
+           localStorage.setItem("modo", "claro");
+       } else {
+           localStorage.setItem("modo", "oscuro");
+       }
+   }
 
-    // Aplicar el modo guardado al cargar la página
-    function aplicarModoGuardado() {
-        const modoGuardado = localStorage.getItem("modo");
-        if (modoGuardado === "claro") {
-            document.body.classList.add("modo-claro");
-        }
-    }
+   // Aplicar el modo guardado al cargar la página
+   function aplicarModoGuardado() {
+       const modoGuardado = localStorage.getItem("modo");
+       if (modoGuardado === "claro") {
+           document.body.classList.add("modo-claro");
+       }
+   }
 
-    // Llamar a la función al cargar la página
-    aplicarModoGuardado();
+   // Llamar a la función al cargar la página
+   aplicarModoGuardado();
 
-    // Manejar el envío del formulario
-    document.getElementById('profileForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        alert('Cambios guardados correctamente');
-        // Aquí puedes agregar la lógica para guardar los cambios en el servidor
-    });
-    <script>
-    // Función para validar el formulario
-    function validateForm() {
-        const form = document.getElementById('profileForm');
-        const email = document.getElementById('email').value;
+   // Manejar el envío del formulario
+   document.getElementById('profileForm').addEventListener('submit', function(event) {
+       event.preventDefault();
+       alert('Cambios guardados correctamente');
+       // Aquí puedes agregar la lógica para guardar los cambios en el servidor
+   });
 
-        // Verificar si el correo tiene un @
-        if (!email.includes('@')) {
-            alert('El correo electrónico debe contener un "@".');
-            return false;
-        }
+   // Función para validar el formulario
+   function validateForm() {
+       const form = document.getElementById('profileForm');
+       const email = document.getElementById('email').value;
 
-        // Verificar si todos los campos requeridos están llenos
-        if (!form.checkValidity()) {
-            form.classList.add('was-validated'); // Muestra los mensajes de error
-            return false;
-        }
+       // Verificar si el correo tiene un @
+       if (!email.includes('@')) {
+           alert('El correo electrónico debe contener un "@".');
+           return false;
+       }
 
-        return true; // El formulario es válido
-    }
+       // Verificar si todos los campos requeridos están llenos
+       if (!form.checkValidity()) {
+           form.classList.add('was-validated'); // Muestra los mensajes de error
+           return false;
+       }
 
-    // Función para manejar el envío del formulario
-    document.getElementById('profileForm').addEventListener('submit', function (event) {
-        event.preventDefault(); // Evita el envío automático
+       return true; // El formulario es válido
+   }
 
-        if (validateForm()) {
-            // Simular el guardado de cambios (puedes reemplazar esto con una llamada a tu backend)
-            setTimeout(() => {
-                // Mostrar mensaje de confirmación
-                document.getElementById('confirmationMessage').style.display = 'block';
+   // Función para manejar el envío del formulario
+   document.getElementById('profileForm').addEventListener('submit', function (event) {
+       event.preventDefault(); // Evita el envío automático
 
-                // Ocultar el mensaje después de 3 segundos
-                setTimeout(() => {
-                    document.getElementById('confirmationMessage').style.display = 'none';
-                }, 3000);
-            }, 1000); // Simula un retraso de 1 segundo
-        }
-    });
-    <script>
-    // Función para enviar datos al backend
-    async function saveDataToBackend() {
-        const formData = {
-            name: document.getElementById('name').value,
-            lastname: document.getElementById('lastname').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
-            address: document.getElementById('address').value,
-            documentType: document.getElementById('documentType').value,
-            document: document.getElementById('document').value,
-            password: document.getElementById('password').value,
-        };
+       if (validateForm()) {
+           // Simular el guardado de cambios (puedes reemplazar esto con una llamada a tu backend)
+           setTimeout(() => {
+               // Mostrar mensaje de confirmación
+               document.getElementById('confirmationMessage').style.display = 'block';
 
-        try {
-            const response = await fetch('/api/save-profile', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
+               // Ocultar el mensaje después de 3 segundos
+               setTimeout(() => {
+                   document.getElementById('confirmationMessage').style.display = 'none';
+               }, 3000);
+           }, 1000); // Simula un retraso de 1 segundo
+       }
+   });
+   <script>
+   // Función para enviar datos al backend
+   async function saveDataToBackend() {
+       const formData = {
+           name: document.getElementById('name').value,
+           lastname: document.getElementById('lastname').value,
+           email: document.getElementById('email').value,
+           phone: document.getElementById('phone').value,
+           address: document.getElementById('address').value,
+           documentType: document.getElementById('documentType').value,
+           document: document.getElementById('document').value,
+           password: document.getElementById('password').value,
+       };
 
-            if (response.ok) {
-                document.getElementById('confirmationMessage').style.display = 'block';
-                setTimeout(() => {
-                    document.getElementById('confirmationMessage').style.display = 'none';
-                }, 3000);
-            } else {
-                alert('Error al guardar los datos.');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            alert('Error al conectar con el servidor.');
-        }
-    }
+       try {
+           const response = await fetch('/api/save-profile', {
+               method: 'POST',
+               headers: {
+                   'Content-Type': 'application/json',
+               },
+               body: JSON.stringify(formData),
+           });
 
-    // Función para guardar los datos en localStorage
-    function saveDataToLocalStorage() {
-        const formData = {
-            name: document.getElementById('name').value,
-            lastname: document.getElementById('lastname').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
-            address: document.getElementById('address').value,
-            documentType: document.getElementById('documentType').value,
-            document: document.getElementById('document').value,
-            password: document.getElementById('password').value,
-        };
-        localStorage.setItem('profileData', JSON.stringify(formData)); // Guardar datos en localStorage
-    }
+           if (response.ok) {
+               document.getElementById('confirmationMessage').style.display = 'block';
+               setTimeout(() => {
+                   document.getElementById('confirmationMessage').style.display = 'none';
+               }, 3000);
+           } else {
+               alert('Error al guardar los datos.');
+           }
+       } catch (error) {
+           console.error('Error:', error);
+           alert('Error al conectar con el servidor.');
+       }
+   }
 
-    // Función para cargar los datos desde localStorage
-    function loadDataFromLocalStorage() {
-        const savedData = localStorage.getItem('profileData');
-        if (savedData) {
-            const formData = JSON.parse(savedData);
-            document.getElementById('name').value = formData.name;
-            document.getElementById('lastname').value = formData.lastname;
-            document.getElementById('email').value = formData.email;
-            document.getElementById('phone').value = formData.phone;
-            document.getElementById('address').value = formData.address;
-            document.getElementById('documentType').value = formData.documentType;
-            document.getElementById('document').value = formData.document;
-            document.getElementById('password').value = formData.password;
-        }
-    }
+   // Función para guardar los datos en localStorage
+   function saveDataToLocalStorage() {
+       const formData = {
+           name: document.getElementById('name').value,
+           lastname: document.getElementById('lastname').value,
+           email: document.getElementById('email').value,
+           phone: document.getElementById('phone').value,
+           address: document.getElementById('address').value,
+           documentType: document.getElementById('documentType').value,
+           document: document.getElementById('document').value,
+           password: document.getElementById('password').value,
+       };
+       localStorage.setItem('profileData', JSON.stringify(formData)); // Guardar datos en localStorage
+   }
 
-    // Función para validar el formulario
-    function validateForm() {
-        const form = document.getElementById('profileForm');
-        const email = document.getElementById('email').value;
+   // Función para cargar los datos desde localStorage
+   function loadDataFromLocalStorage() {
+       const savedData = localStorage.getItem('profileData');
+       if (savedData) {
+           const formData = JSON.parse(savedData);
+           document.getElementById('name').value = formData.name;
+           document.getElementById('lastname').value = formData.lastname;
+           document.getElementById('email').value = formData.email;
+           document.getElementById('phone').value = formData.phone;
+           document.getElementById('address').value = formData.address;
+           document.getElementById('documentType').value = formData.documentType;
+           document.getElementById('document').value = formData.document;
+           document.getElementById('password').value = formData.password;
+       }
+   }
 
-        if (!email.includes('@')) {
-            alert('El correo electrónico debe contener un "@".');
-            return false;
-        }
+   // Función para validar el formulario
+   function validateForm() {
+       const form = document.getElementById('profileForm');
+       const email = document.getElementById('email').value;
 
-        if (!form.checkValidity()) {
-            form.classList.add('was-validated');
-            return false;
-        }
+       if (!email.includes('@')) {
+           alert('El correo electrónico debe contener un "@".');
+           return false;
+       }
 
-        return true;
-    }
+       if (!form.checkValidity()) {
+           form.classList.add('was-validated');
+           return false;
+       }
 
-    // Función para manejar el envío del formulario
-    document.getElementById('profileForm').addEventListener('submit', function (event) {
-        event.preventDefault();
+       return true;
+   }
 
-        if (validateForm()) {
-            saveDataToLocalStorage(); // Guardar datos en localStorage
-            document.getElementById('confirmationMessage').style.display = 'block';
+   // Función para manejar el envío del formulario
+   document.getElementById('profileForm').addEventListener('submit', function (event) {
+       event.preventDefault();
 
-            setTimeout(() => {
-                document.getElementById('confirmationMessage').style.display = 'none';
-            }, 3000);
-        }
-    });
+       if (validateForm()) {
+           saveDataToLocalStorage(); // Guardar datos en localStorage
+           document.getElementById('confirmationMessage').style.display = 'block';
 
-    // Cargar datos al iniciar la página
-    window.addEventListener('load', loadDataFromLocalStorage);
+           setTimeout(() => {
+               document.getElementById('confirmationMessage').style.display = 'none';
+           }, 3000);
+       }
+   });
 
-    // Función para cargar datos desde el backend
-    async function loadDataFromBackend() {
-        try {
-            const response = await fetch('/api/get-profile');
-            if (response.ok) {
-                const formData = await response.json();
-                document.getElementById('name').value = formData.name;
-                document.getElementById('lastname').value = formData.lastname;
-                document.getElementById('email').value = formData.email;
-                document.getElementById('phone').value = formData.phone;
-                document.getElementById('address').value = formData.address;
-                document.getElementById('documentType').value = formData.documentType;
-                document.getElementById('document').value = formData.document;
-                document.getElementById('password').value = formData.password;
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-    }
+   // Cargar datos al iniciar la página
+   window.addEventListener('load', loadDataFromLocalStorage);
 
-    // Función para manejar el envío del formulario
-    document.getElementById('profileForm').addEventListener('submit', function (event) {
-        event.preventDefault();
+   // Función para cargar datos desde el backend
+   async function loadDataFromBackend() {
+       try {
+           const response = await fetch('/api/get-profile');
+           if (response.ok) {
+               const formData = await response.json();
+               document.getElementById('name').value = formData.name;
+               document.getElementById('lastname').value = formData.lastname;
+               document.getElementById('email').value = formData.email;
+               document.getElementById('phone').value = formData.phone;
+               document.getElementById('address').value = formData.address;
+               document.getElementById('documentType').value = formData.documentType;
+               document.getElementById('document').value = formData.document;
+               document.getElementById('password').value = formData.password;
+           }
+       } catch (error) {
+           console.error('Error:', error);
+       }
+   }
 
-        if (validateForm()) {
-            saveDataToBackend(); // Guardar datos en el backend
-        }
-    });
+   // Función para manejar el envío del formulario
+   document.getElementById('profileForm').addEventListener('submit', function (event) {
+       event.preventDefault();
 
-    // Cargar datos al iniciar la página
-    window.addEventListener('load', loadDataFromBackend);
+       if (validateForm()) {
+           saveDataToBackend(); // Guardar datos en el backend
+       }
+   });
+   document.getElementById('modo-btn').addEventListener('click', () => {
+    document.body.classList.toggle('modo-claro');
+});
+
+   // Cargar datos al iniciar la página
+   window.addEventListener('load', loadDataFromBackend);
 </script>
-</script>
-</script>
+<!-- Bootstrap JS (necesario para el menú responsivo) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
 </body>

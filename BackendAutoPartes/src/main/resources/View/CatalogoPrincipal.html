@@ -1195,5 +1195,12 @@ function redirectToLogin() {
 </script>
 
 <button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
+<!-- Bootstrap JS (necesario para el menú responsivo) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+    <script>
+        function toggleMode() {
+            document.body.classList.toggle('modo-claro');
+        }
+</script>
 </body>
 </html>

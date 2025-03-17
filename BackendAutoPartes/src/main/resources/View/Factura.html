@@ -286,6 +286,38 @@
     position: relative;
 }
 
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background-color: black; /* Fondo del menú responsivo */
+        padding: 10px; /* Espaciado interno */
+        border-radius: 10px; /* Bordes redondeados */
+    }
+
+    .navbar-nav {
+        flex-direction: column; /* Apila los elementos verticalmente */
+        align-items: flex-start; /* Alinea los elementos a la izquierda */
+    }
+
+    .profile-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 8; /* Alinea el menú desplegable a la derecha */
+    background-color: #222;
+    border-radius: 10px;
+    padding: 10px 0;
+    width: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+    .profile-dropdown-content a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    transition: background-color 0.3s;
+}
+}
 .profile-button {
     background-color: transparent;
     border: none;
@@ -295,6 +327,7 @@
     gap: 10px;
     font-size: 14px;
     cursor: pointer;
+
 }
 
 .profile-button:hover {
@@ -307,6 +340,7 @@
     object-fit: cover;
     vertical-align: middle; /* Alineación exacta */
 }
+
 .navbar {
     display: flex;
     align-items: center; /* Alinea todos los elementos verticalmente */
@@ -318,7 +352,7 @@
 .profile-dropdown-content {
     display: none;
     position: absolute;
-    right: 0;
+    right: 8; /* Alinea el menú desplegable a la derecha */
     background-color: #222;
     border-radius: 10px;
     padding: 10px 0;
@@ -485,6 +519,13 @@
         .modal-content button:hover {
             background-color: #e63946;
         }
+        .cart-item img {
+    width: 150px; /* Tamaño fijo para todas las imágenes */
+    height: 150px; /* Tamaño fijo para todas las imágenes */
+    object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsionarse */
+    border-radius: 10px; /* Bordes redondeados */
+    margin-right: 20px; /* Espacio a la derecha de la imagen */
+}
     </style>
 </head>
 <body>
@@ -509,21 +550,23 @@
             </form>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="Catalogo.html">Inicio</a></li>
-                <li class="nav-item"><a class="nav-link" href="Contacto.html">Contacto</a></li>
-                <!-- Perfil con menú desplegable -->
-                <div class="profile-dropdown">
-                    <button class="profile-button">
-                        <img src="../assets/IMAGENES/USUARIO.png" alt="Perfil" class="profile-icon">
-                        <!--<span>Perfil</span>-->
-                    </button>
-                    <div class="profile-dropdown-content">
-                        <a href="Perfil.html">Mi cuenta</a>
-                        <a href="Historial_Compras.html">Historial de compras</a>
-                        <a href="PrincipalUltimo.html" onclick="logout()">Salir</a>
+                <!-- Menú desplegable del perfil -->
+                <li class="nav-item">
+                    <div class="profile-dropdown">
+                        <button class="profile-button">
+                            <img src="../assets/IMAGENES/USUARIO.png" alt="Perfil" class="profile-icon">
+                        </button>
+                        <div class="profile-dropdown-content">
+                            <a href="Perfil.html">Mi cuenta</a>
+                            <a href="Historial_Compras.html">Historial de compras</a>
+                            <a href="PrincipalUltimo.html" onclick="logout()">Salir</a>
+                        </div>
                     </div>
-                </div>
-
-                <a class="nav-link" href="Carrito.html" style="font-size: 27px;">🛒</a>
+                </li>
+                <!-- Icono del carrito -->
+                <li class="nav-item">
+                    <a class="nav-link" href="Carrito.html" style="font-size: 27px;">🛒</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -692,5 +735,7 @@
 </footer>
 
 <button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
+<!-- Bootstrap JS (necesario para el menú responsivo) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

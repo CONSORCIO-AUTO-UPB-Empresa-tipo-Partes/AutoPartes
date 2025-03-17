@@ -264,7 +264,7 @@
 <div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
     <div class="login-container">
         <h2>Iniciar Sesión</h2>
-        <img src="/assets/IMAGENES/USUARIO.png" width="80" alt="Usuario">
+        <img src="../assets/IMAGENES/USUARIO.png" width="80" alt="Usuario">
         <input type="text" placeholder="Usuario">
         <input type="password" placeholder="Contraseña">
         <button onclick="window.location.href='Bodeguero.html'">Ingresar</button>
@@ -299,7 +299,8 @@
 
 <!-- Botón de cambio de modo -->
 <button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
-
+<!-- Bootstrap JS (necesario para el menú responsivo) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
 <script>
     // Función para cambiar el modo
     function toggleMode() {
@@ -325,5 +326,7 @@
     // Llamar a la función al cargar la página
     aplicarModoGuardado();
 </script>
+<!-- Bootstrap JS (necesario para el menú responsivo) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
