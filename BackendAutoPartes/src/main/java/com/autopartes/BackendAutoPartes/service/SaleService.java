@@ -10,6 +10,10 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+//Parar mirar la fecha me sirve para el reporte del mes
+import java.time.LocalDate;
+import java.time.YearMonth;
+
 @Service
 public class SaleService {
     private final BillRepository billRepository;
@@ -86,5 +90,5 @@ public class SaleService {
         billHasBatchRepository.saveAll(billHasBatches);
 
         return bill;
-    }
+    }//createBill
 }
