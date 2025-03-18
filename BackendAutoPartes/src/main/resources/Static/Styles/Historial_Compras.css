@@ -369,152 +369,156 @@
 .profile-dropdown:hover .profile-dropdown-content {
     display: block;
 }
-.invoice-container {
+.history-container {
             max-width: 1200px;
             margin: 100px auto 20px;
             padding: 20px;
             background-color: #222;
             border-radius: 10px;
         }
-        .invoice-summary {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #333;
-            border-radius: 10px;
+        .history-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #444;
         }
-        .invoice-summary h3 {
-            margin: 0 0 15px;
-            font-size: 20px;
+        .history-item img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-right: 20px;
+        }
+        .history-item-details {
+            flex-grow: 1;
+        }
+        .history-item-details h4 {
+            margin: 0;
+            font-size: 18px;
             color: #FF335F;
         }
-        .invoice-summary p {
+        .history-item-details p {
             margin: 5px 0;
-            font-size: 16px;
+            font-size: 14px;
         }
-        .invoice-summary button {
-            background-color: #FF335F;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 15px;
-        }
-        .invoice-summary button:hover {
-            background-color: #e63946;
-        }
-        .payment-methods {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #333;
-            border-radius: 10px;
-        }
-        .payment-methods h3 {
-            margin: 0 0 15px;
-            font-size: 20px;
-            color: #FF335F;
-        }
-        .payment-methods label {
-            display: block;
-            margin: 10px 0;
-            font-size: 16px;
-        }
-        .footer {
-            background-color: #222;
-            padding: 20px 0;
-            margin-top: 40px;
-            text-align: left;
-        }
-        .footer a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        .footer a:hover {
-            text-decoration: underline;
-        }
-        .modo-claro {
-            background-color: white !important;
-            color: black !important;
-        }
-        .modo-claro .top-bar {
-            background-color: white !important;
-        }
-        .modo-claro .invoice-container,
-        .modo-claro .invoice-summary,
-        .modo-claro .payment-methods,
-        .modo-claro .profile-dropdown-content {
-            background-color: #f8f9fa !important;
-            color: black !important;
-        }
-        .modo-claro .invoice-summary h3,
-        .modo-claro .payment-methods h3 {
-            color: #007BFF !important;
-        }
-        .modo-claro .footer {
-            background-color: #e9ecef !important;
-        }
-        .modo-claro .footer a {
-            color: black !important;
-        }
-        .modo-claro .top-right-buttons button,
-        .modo-claro .search-bar button {
-            background-color: #007BFF !important;
-            color: white !important;
-        }
-        .modo-claro .top-right-buttons button:hover,
-        .modo-claro .search-bar button:hover {
-            background-color: #0056b3 !important;
-        }
-        .modo-claro .search-bar input {
-            background-color: #e9ecef !important;
-            color: black !important;
-        }
-        .modo-claro .search-bar input:focus {
-            background-color: #ddd !important;
-        }
-        /* Estilos para el modal de pago exitoso */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1001;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-        .modal-content {
-            background-color: #222;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        .modal-content h2 {
-            color: #FF335F;
-        }
-        .modal-content button {
-            background-color: #FF335F;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        .modal-content button:hover {
-            background-color: #e63946;
-        }
-        .cart-item img {
-    width: 150px; /* Tamaño fijo para todas las imágenes */
-    height: 150px; /* Tamaño fijo para todas las imágenes */
-    object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsionarse */
-    border-radius: 10px; /* Bordes redondeados */
-    margin-right: 20px; /* Espacio a la derecha de la imagen */
+
+    .history-container {
+        max-width: 1200px;
+        margin: 100px auto 20px;
+        padding: 20px;
+        background-color: #222;
+        border-radius: 10px;
+    }
+    .history-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px;
+        border-bottom: 1px solid #444;
+        margin-bottom: 20px;
+    }
+    .history-item img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-right: 20px;
+    }
+    .history-item-details {
+        flex-grow: 1;
+    }
+    .history-item-details h4 {
+        margin: 0;
+        font-size: 18px;
+        color: #FF335F;
+    }
+    .history-item-details p {
+        margin: 5px 0;
+        font-size: 14px;
+    }
+    .product-description {
+        font-style: italic;
+        color: #ccc;
+    }
+    .status-update, .return-section {
+        margin-top: 20px;
+        padding: 15px;
+        border-radius: 10px;
+    }
+    .status-update h5, .return-section h5 {
+        color: #FF335F;
+    }
+    .status-update p, .return-section p {
+        margin: 5px 0;
+    }
+    .btn-return {
+        background-color: #FF335F;
+        color: white;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .btn-return:hover {
+        background-color: #e63946;
+    }
+    .returns-container {
+    margin-top: 40px;
+    display: none; /* Oculto por defecto */
+}
+
+.return-item {
+    padding: 15px;
+    background-color: #444;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.return-item h4 {
+    margin: 0;
+    font-size: 16px;
+    color: #FF335F;
+}
+
+.return-item p {
+    margin: 5px 0;
+    font-size: 14px;
+}
+
+/* ============================================= */
+/* Estilos específicos para el contenedor del historial de compras y devoluciones en modo claro */
+/* ============================================= */
+
+.modo-claro .history-container,
+.modo-claro .returns-container {
+    background-color: #f8f9fa !important; /* Fondo más claro en modo claro */
+    color: black !important; /* Texto negro en modo claro */
+    border: 1px solid #ddd !important; /* Borde sutil */
+}
+
+.modo-claro .history-item,
+.modo-claro .return-item {
+    background-color: #e9ecef !important; /* Fondo más claro para los ítems */
+    color: black !important; /* Texto negro */
+    border-bottom: 1px solid #ccc !important; /* Borde más claro */
+}
+
+.modo-claro .history-item-details h4,
+.modo-claro .return-item h4 {
+    color: #007BFF !important; /* Color azul para los títulos */
+}
+
+.modo-claro .history-item-details p,
+.modo-claro .return-item p {
+    color: #333 !important; /* Texto gris oscuro */
+}
+
+.modo-claro .btn-return {
+    background-color: #007BFF !important; /* Botón azul en modo claro */
+    color: white !important;
+}
+
+.modo-claro .btn-return:hover {
+    background-color: #0056b3 !important; /* Botón azul oscuro al hacer hover */
 }

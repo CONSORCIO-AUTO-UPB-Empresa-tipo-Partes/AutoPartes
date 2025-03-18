@@ -5,213 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accesorios para Autos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
-        /* Estilos generales */
-        body {
-            background-color: black;
-            color: white;
-            position: relative;
-            overflow-x: hidden;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .background-stripes {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-        .stripe {
-            position: absolute;
-            width: 15%;
-            height: 180vh;
-            background: #FF335F;
-            transform: rotate(21deg);
-            opacity: 0.8;
-            transition: background-color 0.3s;
-        }
-        .stripe:nth-child(1) { right: 0; background: #FF335F; }
-        .stripe:nth-child(2) { right: 12%; background: #FF4C73; }
-        .stripe:nth-child(3) { right: 24%; background: #FF335F; }
-        .hero {
-            padding: 80px 20px;
-            text-align: center;
-        }
-        .hero h1 span {
-            color: #e63946;
-        }
-        .login-container {
-            width: 600px;
-            height: 550px;
-            position: relative;
-            margin: 50px auto;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            z-index: 2;
-            width: 500px;
-        }
-        .hero .btn {
-            background-color: white;
-            color: black;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-        .hero .btn:hover {
-            background-color: #e63946;
-            color: black;
-        }
-        .navbar {
-            background-color: black;
-        }
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-        }
-        .logo-principal {
-            height: 100px;
-            margin-right: 10px;
-            transition: filter 0.3s;
-        }
-        .footer {
-            background-color: #222;
-            padding: 20px 0;
-            margin-top: 40px;
-        }
-        .footer a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        .footer a:hover {
-            text-decoration: underline;
-        }
-        .card {
-            background-color: #111;
-            color: white;
-        }
-        .email-icon {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: white;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-            text-decoration: none;
-        }
-        .product-box {
-            background-color: #222;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            margin: 20px;
-            transition: transform 0.3s ease-in-out;
-        }
-        .product-box:hover {
-            transform: scale(1.05);
-        }
-        .product-box img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
-        .product-box h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-        .footer-links {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            gap: 15px;
-        }
-        .footer-links li {
-            display: inline;
-        }
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-        }
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
-        .policy {
-            margin-top: 5px;
-            font-size: 12px;
-        }
-        .copy {
-            font-size: 12px;
-            margin-top: 10px;
-        }
-        .toggle-mode {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #fff;
-            color: #000;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 14px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s, color 0.3s, transform 0.2s;
-        }
-        .toggle-mode:hover {
-            transform: scale(1.05);
-        }
-        .modo-claro {
-            background-color: white !important;
-            color: black !important;
-        }
-        .modo-claro .stripe {
-            background-color: #007BFF !important; /* Rayas azules en modo claro */
-        }
-        .modo-claro .navbar {
-            background-color: white !important;
+    <link rel="stylesheet" href="Styles/PrincipalUltimo.css">
 
-        }
-        .modo-claro .navbar-dark .navbar-nav .nav-link {
-            color: black !important; /* Enlaces del navbar en negro */
-        }
-        .modo-claro .footer {
-            background-color: #DEDEDE !important;
-        }
-        .modo-claro .footer a {
-            color: black !important; /* Enlaces del footer en negro */
-        }
-        .modo-claro .card {
-            background-color: #e9ecef !important;
-            color: black !important;
-        }
-        .modo-claro .product-box {
-            background-color: #f8f9fa !important;
-            color: black !important;
-        }
-        .modo-claro .logo-principal {
-            filter: invert(1); /* Invierte el color del logo */
-        }
-        .modo-claro .hero .btn {
-            background-color: #007BFF !important; /* Botones azules */
-            color: white !important;
-        }
-        .modo-claro .hero .btn:hover {
-            background-color: #0056b3 !important; /* Azul más oscuro al hacer hover */
-        }
-    </style>
 </head>
 <body>
 <div class="background-stripes">
@@ -233,7 +28,7 @@
                 <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
                 <li class="nav-item"><a class="nav-link" href="CatalogoPrincipal.html">Catalogo</a></li>
                 <li class="nav-item"><a class="nav-link" href="Contacto.html">Contacto</a></li>
-                <li class="nav-item"><a class="nav-link" href="InicioSesion.html">Iniciar Sesion</a></li>
+                <li class="nav-item"><a class="nav-link" href="InicioSesionCliente.html">Iniciar Sesion</a></li>
             </ul>
         </div>
     </div>
@@ -244,7 +39,7 @@
         <h1>Encuentra las <span>mejores partes</span> para tu auto</h1>
         <p>Calidad, precio y garantía en todos nuestros accesorios y repuestos.</p>
         <a href="CatalogoPrincipal.html" class="btn btn-light">Explora Ahora</a>
-        <a href="InicioSesion.html" class="btn btn-danger">Iniciar Sesión</a>
+        <a href="InicioSesionCliente.html" class="btn btn-danger">Iniciar Sesión</a>
     </div>
 </div>
 
@@ -299,32 +94,9 @@
 
 <button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
 
-<script>
-    // Función para cambiar el modo
-    function toggleMode() {
-        const body = document.body;
-        body.classList.toggle("modo-claro");
 
-        // Guardar el estado del modo en localStorage
-        if (body.classList.contains("modo-claro")) {
-            localStorage.setItem("modo", "claro");
-        } else {
-            localStorage.setItem("modo", "oscuro");
-        }
-    }
-
-    // Aplicar el modo guardado al cargar la página
-    function aplicarModoGuardado() {
-        const modoGuardado = localStorage.getItem("modo");
-        if (modoGuardado === "claro") {
-            document.body.classList.add("modo-claro");
-        }
-    }
-
-    // Llamar a la función al cargar la página
-    aplicarModoGuardado();
-</script>
 <!-- Bootstrap JS (necesario para el menú responsivo) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="Js/PrincipalUltimo.js"></script>
 </body>
 </html>

@@ -1,5 +1,4 @@
-<style>
-        /* Estilos generales */
+/* Estilos generales */
         body {
             background-color: black;
             color: white;
@@ -215,6 +214,17 @@
         .modo-claro .hero .btn:hover {
             background-color: #0056b3 !important;
         }
+        /* Estilos específicos para el contenedor del carrito en modo claro */
+        .modo-claro .cart-container {
+            background-color: #f8f9fa !important; /* Color de fondo más claro en modo claro */
+            color: black !important; /* Color del texto en modo claro */
+            border: 1px solid #ddd !important; /* Borde opcional */
+        }
+        .modo-claro .cart-summary {
+            background-color: #e9ecef !important; /* Color de fondo más claro en modo claro */
+            color: black !important; /* Color del texto en modo claro */
+            border: 1px solid #ddd !important; /* Borde opcional para resaltar el contenedor */
+        }
         .category-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -308,10 +318,15 @@
 }
 
 
+.profile-dropdown {
+    position: relative;
+    display: inline-block; /* Asegura que el menú no se desplace */
+}
+
 .profile-dropdown-content {
     display: none;
     position: absolute;
-    right: 0;
+    right: 8; /* Alinea el menú desplegable a la derecha */
     background-color: #222;
     border-radius: 10px;
     padding: 10px 0;
@@ -336,6 +351,7 @@
 .profile-dropdown:hover .profile-dropdown-content {
     display: block;
 }
+
 body { background-color: black; color: white; font-family: Arial, sans-serif; }
     .cart-container { max-width: 1200px; margin: 100px auto 20px; padding: 20px; background-color: #222; border-radius: 10px; }
     .cart-item { display: flex; align-items: center; justify-content: space-between; padding: 15px; border-bottom: 1px solid #444; }
@@ -373,4 +389,3 @@ body { background-color: black; color: white; font-family: Arial, sans-serif; }
     display: flex;
     gap: 10px; /* Espacio entre los botones */
 }
-    </style>
