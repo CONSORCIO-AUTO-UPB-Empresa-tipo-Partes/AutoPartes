@@ -1,102 +1,102 @@
+// Función para alternar entre modo claro y oscuro
+    function toggleMode() {
+        const body = document.body;
+        body.classList.toggle("modo-claro");
 
-    let empleados = [];
-    let editando = false;
-    let empleadoEditando = null;
-
-    document.getElementById("formAgregarEmpleado").addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    let nombre = document.getElementById("nombreEmpleado").value;
-    let apellido = document.getElementById("apellidoEmpleado").value;
-    let rol = document.getElementById("rolUsuario").value;
-    let id = document.getElementById("idEmpleado").value;
-
-    if (editando) {
-        // Actualizar el empleado existente
-        empleadoEditando.nombre = nombre;
-        empleadoEditando.apellido = apellido;
-        empleadoEditando.rol = rol;
-        editando = false; // Salir del modo edición
-        empleadoEditando = null; // Limpiar la referencia al empleado en edición
-        document.querySelector("#formAgregarEmpleado button[type='submit']").textContent = "Agregar empleado";
-    } else {
-        // Agregar un nuevo empleado
-        if (empleados.some(emp => emp.id === id)) {
-            alert("El ID ya existe. Intente con otro.");
-            return;
+        // Guardar el estado del modo en localStorage
+        if (body.classList.contains("modo-claro")) {
+            localStorage.setItem("modo", "claro");
+        } else {
+            localStorage.setItem("modo", "oscuro");
         }
-
-        let nuevoEmpleado = { id, nombre, apellido, rol };
-        empleados.push(nuevoEmpleado);
     }
 
-    actualizarTabla();
-    document.getElementById("formAgregarEmpleado").reset();
-});
+    // Aplicar el modo guardado al cargar la página
+    function aplicarModoGuardado() {
+        const modoGuardado = localStorage.getItem("modo");
+        if (modoGuardado === "claro") {
+            document.body.classList.add("modo-claro");
+        }
+    }
 
-    function actualizarTabla() {
-        let tabla = document.getElementById("tablaEmpleadosBody");
-        tabla.innerHTML = "";
-        empleados.forEach(emp => {
-            let fila = `<tr>
-                            <td>${emp.id}</td>
-                            <td>${emp.nombre}</td>
-                            <td>${emp.apellido}</td>
-                            <td>${emp.rol}</td>
-                            <td>
-                                <button class="btn btn-warning btn-sm" onclick="editarEmpleado('${emp.id}')">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="eliminarEmpleado('${emp.id}')">Eliminar</button>
-                            </td>
-                        </tr>`;
-            tabla.innerHTML += fila;
+    // Llamar a la función al cargar la página
+    aplicarModoGuardado();
+
+    // Lógica para agregar, editar y eliminar lotes
+    let lotes = [];
+    let idCounter = 1;
+
+    const formAgregarLote = document.getElementById("formAgregarLote");
+    const tablaLotes = document.getElementById("tablaLotes");
+
+    formAgregarLote.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const lote = {
+            idBatch: document.getElementById("idBatch").value,
+            date: document.getElementById("date").value,
+            supplier: document.getElementById("supplier").value,
+            quantity: document.getElementById("quantity").value,
+            idItemType: document.getElementById("idItemType").value,
+            purchasePrice: parseFloat(document.getElementById("purchasePrice").value),
+            sellingPrice: parseFloat(document.getElementById("sellingPrice").value),
+            haveWarranty: document.getElementById("haveWarranty").value === "true",
+            warrantyInDays: document.getElementById("warrantyInDays").value,
+            description: document.getElementById("description").value,
+            unitPurchasePrice: parseFloat(document.getElementById("unitPurchasePrice").value),
+            unitSellingPrice: parseFloat(document.getElementById("unitSellingPrice").value),
+        };
+
+        lotes.push(lote);
+        actualizarTablaLotes();
+        formAgregarLote.reset();
+    });
+
+    function actualizarTablaLotes() {
+        tablaLotes.innerHTML = "";
+        lotes.forEach((lote) => {
+            const fila = document.createElement("tr");
+            fila.innerHTML = `
+                <td>${lote.idBatch}</td>
+                <td>${lote.date}</td>
+                <td>${lote.supplier}</td>
+                <td>${lote.quantity}</td>
+                <td>${lote.idItemType}</td>
+                <td>$${lote.purchasePrice.toFixed(2)}</td>
+                <td>$${lote.sellingPrice.toFixed(2)}</td>
+                <td>${lote.haveWarranty ? "Sí" : "No"}</td>
+                <td>${lote.warrantyInDays}</td>
+                <td>${lote.description}</td>
+                <td>$${lote.unitPurchasePrice.toFixed(2)}</td>
+                <td>$${lote.unitSellingPrice.toFixed(2)}</td>
+                <td>
+                    <button class="btn btn-primary btn-sm" onclick="editarLote(${lote.idBatch})">Editar</button>
+                    <button class="btn btn-danger btn-sm" onclick="eliminarLote(${lote.idBatch})">Eliminar</button>
+                </td>
+            `;
+            tablaLotes.appendChild(fila);
         });
     }
 
-    function editarEmpleado(id) {
-    empleadoEditando = empleados.find(emp => emp.id === id);
-    if (empleadoEditando) {
-        document.getElementById("nombreEmpleado").value = empleadoEditando.nombre;
-        document.getElementById("apellidoEmpleado").value = empleadoEditando.apellido;
-        document.getElementById("rolUsuario").value = empleadoEditando.rol;
-        document.getElementById("idEmpleado").value = empleadoEditando.id;
-        editando = true;
-        document.querySelector("#formAgregarEmpleado button[type='submit']").textContent = "Guardar cambios";
-    }
-}
-
-    function consultarEmpleado() {
-        let idConsulta = document.getElementById("idConsultar").value;
-        let empleado = empleados.find(emp => emp.id === idConsulta);
-        let resultado = document.getElementById("resultadoConsulta");
-
-        if (empleado) {
-            resultado.innerHTML = `<div class="alert alert-success">
-                                      <strong>Empleado encontrado:</strong><br>
-                                      <b>ID:</b> ${empleado.id}<br>
-                                      <b>Nombre:</b> ${empleado.nombre}<br>
-                                      <b>Apellido:</b> ${empleado.apellido}<br>
-                                      <b>Rol:</b> ${empleado.rol}
-                                   </div>`;
-        } else {
-            resultado.innerHTML = `<div class="alert alert-danger">No se encontró un empleado con ese ID.</div>`;
+    function editarLote(idBatch) {
+        const lote = lotes.find((l) => l.idBatch === idBatch);
+        if (lote) {
+            document.getElementById("idBatch").value = lote.idBatch;
+            document.getElementById("date").value = lote.date;
+            document.getElementById("supplier").value = lote.supplier;
+            document.getElementById("quantity").value = lote.quantity;
+            document.getElementById("idItemType").value = lote.idItemType;
+            document.getElementById("purchasePrice").value = lote.purchasePrice;
+            document.getElementById("sellingPrice").value = lote.sellingPrice;
+            document.getElementById("haveWarranty").value = lote.haveWarranty ? "true" : "false";
+            document.getElementById("warrantyInDays").value = lote.warrantyInDays;
+            document.getElementById("description").value = lote.description;
+            document.getElementById("unitPurchasePrice").value = lote.unitPurchasePrice;
+            document.getElementById("unitSellingPrice").value = lote.unitSellingPrice;
+            eliminarLote(idBatch);
         }
     }
 
-    function eliminarEmpleado(id) {
-        empleados = empleados.filter(emp => emp.id !== id);
-        actualizarTabla();
-    }
-
-    function mostrarConsultar() {
-        document.getElementById("consultarEmpleado").classList.remove("hidden");
-        document.getElementById("agregarEmpleado").classList.add("hidden");
-    }
-
-    function mostrarAgregar() {
-        document.getElementById("agregarEmpleado").classList.remove("hidden");
-        document.getElementById("consultarEmpleado").classList.add("hidden");
-    }
-
-    function toggleMode() {
-        document.body.classList.toggle("modo-claro");
+    function eliminarLote(idBatch) {
+        lotes = lotes.filter((l) => l.idBatch !== idBatch);
+        actualizarTablaLotes();
     }
