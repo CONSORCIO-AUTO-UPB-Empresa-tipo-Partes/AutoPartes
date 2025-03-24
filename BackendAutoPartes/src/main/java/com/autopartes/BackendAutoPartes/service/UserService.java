@@ -8,7 +8,7 @@ import java.util.Optional;
 
 /**
  * Servicio para la gestión de usuarios.
- *
+ * <p>
  * Proporciona métodos para registrar usuarios, buscar por email y buscar por identificador único.
  * Además, valida que el ID ingresado tenga el formato correcto.
  */

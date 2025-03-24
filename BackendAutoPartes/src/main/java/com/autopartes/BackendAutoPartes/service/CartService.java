@@ -22,7 +22,8 @@ public class CartService {
 
     /**
      * Método para agregar un ítem al carrito.
-     * @param batchId Identificador del lote del producto.
+     *
+     * @param batchId  Identificador del lote del producto.
      * @param quantity Cantidad del producto a agregar.
      * @return El objeto CartItem guardado en la base de datos.
      */
@@ -46,6 +47,7 @@ public class CartService {
 
     /**
      * Método para obtener todos los ítems del carrito.
+     *
      * @return Lista de ítems en el carrito.
      */
     public List<CartItem> getCartItems() {

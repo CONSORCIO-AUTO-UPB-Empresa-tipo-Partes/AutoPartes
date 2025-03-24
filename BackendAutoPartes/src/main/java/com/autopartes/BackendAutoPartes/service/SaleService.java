@@ -1,7 +1,13 @@
 package com.autopartes.BackendAutoPartes.service;
 
-import com.autopartes.BackendAutoPartes.model.*;
-import com.autopartes.BackendAutoPartes.repository.*;
+import com.autopartes.BackendAutoPartes.model.Batch;
+import com.autopartes.BackendAutoPartes.model.Bill;
+import com.autopartes.BackendAutoPartes.model.BillHasBatch;
+import com.autopartes.BackendAutoPartes.model.Person;
+import com.autopartes.BackendAutoPartes.repository.BatchRepository;
+import com.autopartes.BackendAutoPartes.repository.BillHasBatchRepository;
+import com.autopartes.BackendAutoPartes.repository.BillRepository;
+import com.autopartes.BackendAutoPartes.repository.PersonRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -9,10 +15,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-//Parar mirar la fecha me sirve para el reporte del mes
-import java.time.LocalDate;
-import java.time.YearMonth;
 
 @Service
 public class SaleService {

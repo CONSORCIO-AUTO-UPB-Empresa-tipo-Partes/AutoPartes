@@ -1,9 +1,12 @@
 package com.autopartes.BackendAutoPartes.service;
 
-import com.autopartes.BackendAutoPartes.model.*;
-import com.autopartes.BackendAutoPartes.repository.InventoryMovementRepository;
+import com.autopartes.BackendAutoPartes.model.Batch;
+import com.autopartes.BackendAutoPartes.model.InventoryMovement;
+import com.autopartes.BackendAutoPartes.model.MovementType;
 import com.autopartes.BackendAutoPartes.repository.BatchRepository;
+import com.autopartes.BackendAutoPartes.repository.InventoryMovementRepository;
 import org.springframework.stereotype.Service;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -13,7 +16,6 @@ public class InventoryService {
     private final InventoryMovementRepository inventoryMovementRepository;
     private final BatchRepository batchRepository;
     private volatile double lowStockThreshold = 0.15; // umbral de Stock bajo 15% por defecto
-
 
 
     public InventoryService(InventoryMovementRepository inventoryMovementRepository, BatchRepository batchRepository) {

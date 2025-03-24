@@ -2,20 +2,21 @@ package com.autopartes.BackendAutoPartes.controller;
 
 import com.autopartes.BackendAutoPartes.model.Supplier;
 import com.autopartes.BackendAutoPartes.service.SupplierService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Controller for handling supplier-related API requests.
  */
 @RestController
 @RequestMapping("/api/suppliers")
+@AllArgsConstructor
 public class SupplierController {
     private final SupplierService supplierService;
-
-    public SupplierController(SupplierService supplierService) {
-        this.supplierService = supplierService;
-    }
 
     /**
      * Registers a new supplier.

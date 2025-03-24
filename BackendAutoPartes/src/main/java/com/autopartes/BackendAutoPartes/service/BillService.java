@@ -42,7 +42,7 @@ public class BillService {
      * Se comunica con el repositorio para ejecutar la consulta.
      *
      * @param startDate Fecha de inicio del rango.
-     * @param endDate Fecha de fin del rango.
+     * @param endDate   Fecha de fin del rango.
      * @return Lista de facturas dentro del rango.
      */
     public List<Bill> getBillsByDateRange(LocalDate startDate, LocalDate endDate) {

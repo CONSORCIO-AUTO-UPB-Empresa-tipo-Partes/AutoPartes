@@ -1,23 +1,24 @@
 package com.autopartes.BackendAutoPartes.controller;
 
-import com.autopartes.BackendAutoPartes.dto.SaleRequest;
 import com.autopartes.BackendAutoPartes.dto.SaleItem;
+import com.autopartes.BackendAutoPartes.dto.SaleRequest;
 import com.autopartes.BackendAutoPartes.model.Bill;
 import com.autopartes.BackendAutoPartes.service.SaleService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/sales")
+@AllArgsConstructor
 public class SaleController {
     private final SaleService saleService;
-
-    public SaleController(SaleService saleService) {
-        this.saleService = saleService;
-    }
 
     @PostMapping("/create")
     public ResponseEntity<Bill> createBill(@RequestBody SaleRequest saleRequest) {
