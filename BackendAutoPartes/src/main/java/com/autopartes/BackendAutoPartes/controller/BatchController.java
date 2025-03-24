@@ -2,6 +2,7 @@ package com.autopartes.BackendAutoPartes.controller;
 
 import com.autopartes.BackendAutoPartes.model.Batch;
 import com.autopartes.BackendAutoPartes.service.BatchService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,18 +11,9 @@ import org.springframework.web.bind.annotation.*;
  */
 @RestController
 @RequestMapping("/api/lots")
+@AllArgsConstructor
 public class BatchController {
     private final BatchService batchService;
-
-    /**
-     * Constructor del controlador que inyecta el servicio de lotes.
-     *
-     * @param batchService Servicio que maneja la lógica de negocio de los lotes.
-     */
-    public BatchController(BatchService batchService) {
-        this.batchService = batchService;
-    }
-
     /**
      * Crea un nuevo lote con los datos proporcionados.
      *
@@ -61,6 +53,4 @@ public class BatchController {
             return ResponseEntity.badRequest().body(null); // Devuelve un error 400 si confirm es false
         }
     }//calculateFinalPrice
-
-    //listo aqui ya se corrigio el error
 }

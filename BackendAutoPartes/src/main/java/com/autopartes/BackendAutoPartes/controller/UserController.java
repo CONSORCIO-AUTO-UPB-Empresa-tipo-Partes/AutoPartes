@@ -2,6 +2,7 @@ package com.autopartes.BackendAutoPartes.controller;
 
 import com.autopartes.BackendAutoPartes.model.User;
 import com.autopartes.BackendAutoPartes.service.UserService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,13 +14,9 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api/users")
+@AllArgsConstructor
 public class UserController {
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
     /**
      * Endpoint para registrar un nuevo usuario.
      *

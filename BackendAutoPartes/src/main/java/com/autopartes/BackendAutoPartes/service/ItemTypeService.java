@@ -3,6 +3,7 @@ package com.autopartes.BackendAutoPartes.service;
 import com.autopartes.BackendAutoPartes.model.ItemType;
 import com.autopartes.BackendAutoPartes.repository.ItemTypeRepository;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 
 /**
@@ -32,23 +33,5 @@ public class ItemTypeService {
      */
     public List<ItemType> searchByName(String name) {
         return itemTypeRepository.findByNameContainingIgnoreCase(name);
-    }
-
-    /**
-     * Busca tipos de ítems por código.
-     * @param code Código o fragmento del código del ítem a buscar.
-     * @return Lista de ítems que coincidan con el código.
-     */
-    public List<ItemType> searchByCode(String code) {
-        return itemTypeRepository.findByCodeContainingIgnoreCase(code);
-    }
-
-    /**
-     * Busca tipos de ítems por categoría.
-     * @param category Categoría o fragmento del nombre de la categoría a buscar.
-     * @return Lista de ítems de la categoría indicada.
-     */
-    public List<ItemType> searchByCategory(String category) {
-        return itemTypeRepository.findByCategoryContainingIgnoreCase(category);
     }
 }

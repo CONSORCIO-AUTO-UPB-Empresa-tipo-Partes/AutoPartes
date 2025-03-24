@@ -2,18 +2,17 @@ package com.autopartes.BackendAutoPartes.controller;
 
 import com.autopartes.BackendAutoPartes.model.CartItem;
 import com.autopartes.BackendAutoPartes.service.CartService;
+import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/cart")
+@AllArgsConstructor
 public class CartController {
     private final CartService cartService;
-
-    public CartController(CartService cartService) {
-        this.cartService = cartService;
-    }
 
     /**
      * Añade un producto al carrito.

@@ -19,18 +19,4 @@ public interface ItemTypeRepository extends JpaRepository<ItemType, Long> {
      * @return Lista de ítems que coincidan con el criterio de búsqueda.
      */
     List<ItemType> findByNameContainingIgnoreCase(String name);
-
-    /**
-     * Busca los tipos de ítems cuyo código contenga el valor especificado (sin distinguir mayúsculas o minúsculas).
-     * @param code Código o fragmento del código del ítem a buscar.
-     * @return Lista de ítems que coincidan con el criterio de búsqueda.
-     */
-    List<ItemType> findByCodeContainingIgnoreCase(String code);
-
-    /**
-     * Busca los tipos de ítems cuya categoría contenga el valor especificado (sin distinguir mayúsculas o minúsculas).
-     * @param category Categoría o fragmento de la categoría del ítem a buscar.
-     * @return Lista de ítems que coincidan con el criterio de búsqueda.
-     */
-    List<ItemType> findByCategoryContainingIgnoreCase(String category);
 }
