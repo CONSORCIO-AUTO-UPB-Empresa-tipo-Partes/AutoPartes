@@ -1,100 +1,137 @@
 package com.autopartes.BackendAutoPartes.service;
 
-import com.autopartes.BackendAutoPartes.model.Batch;
-import com.autopartes.BackendAutoPartes.model.Bill;
-import com.autopartes.BackendAutoPartes.model.BillHasBatch;
+import com.autopartes.BackendAutoPartes.model.dto.Bill;
+import com.autopartes.BackendAutoPartes.model.dto.Person;
+import com.autopartes.BackendAutoPartes.model.dto.request.BillCreateRequest;
 import com.autopartes.BackendAutoPartes.repository.BillRepository;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.YearMonth;
+import java.math.BigDecimal;
+import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Service for managing Bill entities.
+ */
 @Service
 public class BillService {
+
+    /**
+     * The repository for managing Bill entities.
+     */
     private final BillRepository billRepository;
 
-    public BillService(BillRepository billRepository) {
+    private final PersonService personRespository;
+
+    /**
+     * Constructor.
+     *
+     * @param billRepository The repository for managing Bill entities.
+     */
+    public BillService(BillRepository billRepository, PersonService personRespository) {
         this.billRepository = billRepository;
+        this.personRespository = personRespository;
     }
 
-    public List<Bill> getAllBills() {
+    /**
+     * Finds all bills.
+     *
+     * @return List containing all bills.
+     */
+    public List<Bill> findAll() {
         return billRepository.findAll();
     }
 
-    public Bill saveBill(Bill bill) {
-        return billRepository.save(bill);
-    }
-
-    public void deleteBill(Long id) {
-        billRepository.deleteById(id);
-    }
-
-    public Optional<Bill> getBillById(Long id) {
+    /**
+     * Finds a bill by id.
+     *
+     * @param id The bill's id.
+     * @return Optional containing the found bill or empty if not found.
+     */
+    public Optional<Bill> findById(Integer id) {
         return billRepository.findById(id);
     }
 
     /**
-     * Método para obtener todas las facturas dentro de un rango de fechas.
-     * Se comunica con el repositorio para ejecutar la consulta.
+     * Saves a bill.
      *
-     * @param startDate Fecha de inicio del rango.
-     * @param endDate Fecha de fin del rango.
-     * @return Lista de facturas dentro del rango.
+     * @param bill The bill to save.
+     * @return The saved bill.
      */
-    public List<Bill> getBillsByDateRange(LocalDate startDate, LocalDate endDate) {
-        LocalDateTime startDateTime = startDate.atStartOfDay(); // 00:00:00 del inicio
-        LocalDateTime endDateTime = endDate.atTime(23, 59, 59); // 23:59:59 del final
-
-        return billRepository.findByDateBetween(startDateTime, endDateTime);
-    }//getBillsByDateRange
+    public Bill save(Bill bill) {
+        return billRepository.save(bill);
+    }
 
     /**
-     * Método para calcular las ganancias del mes.
-     * Busca todas las facturas del mes y calcula la ganancia de cada producto vendido
-     * restando el precio de compra al precio de venta, luego suma las ganancias de todos los productos.
+     * Deletes a bill by id.
+     *
+     * @param id The bill's id.
      */
-    @Transactional(readOnly = true)
-    public double getMonthlyProfit() {
-        // Obtener el primer y último día del mes actual
-        LocalDate firstDayOfMonth = YearMonth.now().atDay(1);
-        LocalDate lastDayOfMonth = YearMonth.now().atEndOfMonth();
+    public void deleteById(Integer id) {
+        billRepository.deleteById(id);
+    }
 
-        // Obtener todas las facturas dentro del mes actual
-        List<Bill> bills = billRepository.findByDateBetween(
-                firstDayOfMonth.atStartOfDay(),
-                lastDayOfMonth.atTime(23, 59, 59)
-        );
+    /**
+     * Finds bills by customer document, sorted by date in descending order.
+     *
+     * @param document The customer's document number.
+     * @return List of bills associated with the given customer document, sorted by date.
+     */
+    public List<Bill> findBillsByCustomerDocument(String document) {
+        return billRepository.findAll().stream()
+                .filter(bill -> bill.getPersonIddocument().getIddocument().equals(document))
+                .sorted((b1, b2) -> b2.getBilldate().compareTo(b1.getBilldate()))
+                .toList();
+    }
 
-        double totalProfit = 0.0;
-
-        // Recorrer cada factura para calcular la ganancia por producto vendido
-        for (Bill bill : bills) {
-            for (BillHasBatch billHasBatch : bill.getBillHasBatches()) {
-                Batch batch = billHasBatch.getBatch();
-                int cantidadVendida = billHasBatch.getAmountSold();
-                double precioVenta = Optional.ofNullable(batch.getSalePrice()).orElse(0.0);
-                double precioCompra = Optional.ofNullable(batch.getPurchasePrice()).orElse(0.0);
-
-                // Calcular la ganancia por unidad y luego multiplicar por la cantidad vendida
-                double profitPerUnit = precioVenta - precioCompra;
-                totalProfit += profitPerUnit * cantidadVendida;
-            }
+    /**
+     * Calculates the total sum of bills for a specific month and year without tax.
+     *
+     * @param year The year to filter by.
+     * @param month The month to filter by (1-12).
+     * @return The total sum of all bills in the specified month.
+     * @throws IllegalArgumentException if month is not between 1 and 12
+     */
+    public BigDecimal getTotalPriceByMonthWithOutTax(int year, int month) {
+        if (month < 1 || month > 12) {
+            throw new IllegalArgumentException("Month must be between 1 and 12");
         }
 
-        return totalProfit;
+        return billRepository.findAll().stream()
+                .filter(bill -> {
+                    var billDate = bill.getBilldate()
+                            .atZone(ZoneId.systemDefault());
+                    return billDate.getYear() == year &&
+                            billDate.getMonthValue() == month;
+                })
+                .map(Bill::getTotalpricewithouttax)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+    }
 
-        /**
-         Obtiene el primer y último día del mes actual.
-         Busca todas las facturas que se emitieron dentro de ese mes.
-         Recorre cada factura para revisar los productos vendidos.
-         Para cada producto vendido, obtiene su precio de compra y venta.
-         Calcula la ganancia por unidad restando el precio de compra al precio de venta.
-         Multiplica la ganancia por la cantidad vendida para obtener la ganancia total.
-         Retorna la ganancia total del mes sumando las ganancias de todos los productos vendidos.
-         */
-    }//getMonthlyProfit
+    /**
+     * Creates a new bill.
+     *
+     * @param request The bill request.
+     * @return Optional containing the created bill or empty if the customer was not found.
+     */
+    public Optional<Bill> createBill(@Valid BillCreateRequest request) {
+        Optional<Person> personOpt = personRespository.findById(request.getCustomerDocument());
+        if (personOpt.isEmpty()) return Optional.empty();
+
+        Bill bill = new Bill();
+        bill.setPersonIddocument(personOpt.get());
+        bill.setTotalprice(request.getTotalPrice());
+
+        // Lógica para calcular impuestos (ejemplo)
+        BigDecimal tax = request.getTotalPrice().multiply(new BigDecimal("0.19"));
+        BigDecimal priceWithoutTax = request.getTotalPrice().subtract(tax);
+
+        bill.setTax(tax);
+        bill.setTotalpricewithouttax(priceWithoutTax);
+        bill.setBilldate(request.getDate().atZone(ZoneId.systemDefault()).toInstant());
+
+        return Optional.of(billRepository.save(bill));
+    }
 }
