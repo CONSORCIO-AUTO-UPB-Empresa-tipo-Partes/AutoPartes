@@ -13,7 +13,11 @@ public class BatchResponse {
     private BigDecimal purchaseprice;
     private BigDecimal unitpurchaseprice;
     private BigDecimal unitsaleprice;
+    private Integer monthsofwarranty;
     private String itemdescription;
     private String itemName;
     private String providerName;
+    private String warrantyindays;
+    private Boolean havewarranty;
+    private Integer initialquantity;
 }

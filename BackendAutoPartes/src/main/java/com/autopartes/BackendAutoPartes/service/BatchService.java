@@ -117,9 +117,13 @@ public class BatchService {
         response.setPurchaseprice(batch.getPurchaseprice());
         response.setUnitpurchaseprice(batch.getUnitpurchaseprice());
         response.setUnitsaleprice(batch.getUnitsaleprice());
+        response.setMonthsofwarranty(batch.getMonthsofwarranty());
         response.setItemdescription(batch.getItemdescription());
         response.setItemName(batch.getItemIditem().getItemname());
         response.setProviderName(batch.getProviderIdprovider().getName());
+        response.setWarrantyindays(batch.getWarrantyindays());
+        response.setHavewarranty(batch.getHavewarranty());
+        response.setInitialquantity(batch.getInitialquantity());
         return response;
     }
 
