@@ -1,7 +1,7 @@
 package com.autopartes.BackendAutoPartes.controller;
 
-import com.autopartes.BackendAutoPartes.model.dto.Batch;
 import com.autopartes.BackendAutoPartes.model.dto.request.BatchRequest;
+import com.autopartes.BackendAutoPartes.model.dto.response.BatchResponse;
 import com.autopartes.BackendAutoPartes.service.BatchService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -19,25 +19,33 @@ public class BatchController {
         this.batchService = batchService;
     }
 
-    @GetMapping("/allbatches")
-    public ResponseEntity<List<Batch>> getAllBatches() {
+    @GetMapping
+    public ResponseEntity<List<BatchResponse>> getAllBatches() {
         return ResponseEntity.ok(batchService.findAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Batch> getBatchById(@PathVariable Integer id) {
+    public ResponseEntity<BatchResponse> getBatchById(@PathVariable Integer id) {
         return batchService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/batch")
-    public ResponseEntity<Batch> createBatch(@Valid @RequestBody BatchRequest request) {
-        return batchService.createFromRequest(request)
+    @PostMapping
+    public ResponseEntity<BatchResponse> createBatch(@Valid @RequestBody BatchRequest request) {
+        return batchService.createBatch(request)
                 .map(batch -> ResponseEntity.status(201).body(batch))
                 .orElse(ResponseEntity.badRequest().build());
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<BatchResponse> updateBatch(
+            @PathVariable Integer id,
+            @Valid @RequestBody BatchRequest request) {
+        return batchService.updateBatch(id, request)
+                .map(batch -> ResponseEntity.ok(batch))
+                .orElse(ResponseEntity.notFound().build());
+    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBatch(@PathVariable Integer id) {
@@ -46,15 +54,8 @@ public class BatchController {
     }
 
     @GetMapping("/itemtype/{name}")
-    public ResponseEntity<List<Batch>> getBatchesByItemTypeName(@PathVariable String name) {
+    public ResponseEntity<List<BatchResponse>> getBatchesByItemTypeName(@PathVariable String name) {
         return ResponseEntity.ok(batchService.findAllByItemTypeNameSortedByDate(name));
-    }
-
-    @PutMapping("/{id}/quantity/{quantity}")
-    public ResponseEntity<Batch> updateQuantity(@PathVariable Integer id, @PathVariable Integer quantity) {
-        return batchService.updateQuantityById(id, quantity)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
     }
 
     @GetMapping("/total/{year}/{month}")

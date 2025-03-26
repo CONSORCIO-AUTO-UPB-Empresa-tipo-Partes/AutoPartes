@@ -231,7 +231,7 @@ public class UserService {
         person.setPersonaddress(request.getPersonaddress());
         person.setPersontype(request.getPersontype());
 
-        personRepository.save(person); // ✅ GUARDAR primero
+        personRepository.save(person);
 
         Usertype usertype = new Usertype();
         usertype.setId(request.getUsertypeId());
