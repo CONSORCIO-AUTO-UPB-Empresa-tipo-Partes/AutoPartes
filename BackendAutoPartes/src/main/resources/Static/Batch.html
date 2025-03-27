@@ -88,21 +88,6 @@
             <input type="number" step="0.01" class="form-control" id="purchasePrice" required>
         </div>
         <div class="mb-3">
-            <label class="form-label">Precio de Venta</label>
-            <input type="number" step="0.01" class="form-control" id="sellingPrice" required>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">¿Tiene Garantía?</label>
-            <select class="form-control" id="haveWarranty" required>
-                <option value="true">Sí</option>
-                <option value="false">No</option>
-            </select>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Días de Garantía</label>
-            <input type="number" class="form-control" id="warrantyInDays">
-        </div>
-        <div class="mb-3">
             <label class="form-label">Descripción</label>
             <textarea class="form-control" id="description" required></textarea>
         </div>
@@ -116,6 +101,10 @@
         </div>
         <button type="submit" class="btn btn-primary">Agregar Lote</button>
     </form>
+    <p class="text-muted fst-italic mt-3">
+        Nota: Todos los productos tienen una garantía de 6 meses a partir de la fecha de compra.
+        Conserve su comprobante para hacer válida la garantía.
+    </p>
 
     <h4 class="mt-4">Lista de Lotes</h4>
     <table class="table table-dark table-striped">
