@@ -1,315 +1,336 @@
 /* Estilos generales */
-        body {
-            background-color: black;
-            color: white;
-            position: relative;
-            overflow-x: hidden;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .search-form .btn {
-            background-color: #FF335F;
-            color: white;
-            border-color: #FF335F;
-        }
-        .search-form .btn:hover {
-            background-color: #e63946;
-            border-color: #e63946;
-        }
-        .background-stripes {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
-        }
-        .stripe {
-            position: absolute;
-            width: 15%;
-            height: 180vh;
-            background: #FF335F;
-            transform: rotate(21deg);
-            opacity: 0.8;
-            transition: background-color 0.3s;
-        }
-        .stripe:nth-child(1) { right: 0; background: #FF335F; }
-        .stripe:nth-child(2) { right: 12%; background: #FF4C73; }
-        .stripe:nth-child(3) { right: 24%; background: #FF335F; }
-        .hero {
-            padding: 80px 20px;
-            text-align: center;
-        }
-        .hero h1 span {
-            color: #e63946;
-        }
-        .login-container {
-            width: 600px;
-            height: 550px;
-            position: relative;
-            margin: 50px auto;
-            background: rgba(255, 255, 255, 0.1);
-            padding: 30px;
-            border-radius: 10px;
-            text-align: center;
-            z-index: 2;
-            width: 500px;
-        }
-        .hero .btn {
-            background-color: white;
-            color: black;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-        .hero .btn:hover {
-            background-color: #e63946;
-            color: black;
-        }
-        .navbar {
-            background-color: black;
-        }
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-        }
-        .logo-principal {
-            height: 100px;
-            margin-right: 10px;
-            transition: filter 0.3s;
-        }
-        .footer {
-            background-color: #222;
-            padding: 20px 0;
-            margin-top: 40px;
-        }
-        .footer a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        .footer a:hover {
-            text-decoration: underline;
-        }
-        .card {
-            background-color: #111;
-            color: white;
-        }
-        .email-icon {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: white;
-            color: white;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 30px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
-            text-decoration: none;
-        }
-        .product-box {
-            background-color: #222;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: center;
-            margin: 20px;
-            transition: transform 0.3s ease-in-out;
-        }
-        .product-box:hover {
-            transform: scale(1.05);
-        }
-        .product-box img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin-bottom: 10px;
-        }
-        .product-box h3 {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-        .footer-links {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            gap: 15px;
-        }
-        .footer-links li {
-            display: inline;
-        }
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-        }
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
-        .policy {
-            margin-top: 5px;
-            font-size: 12px;
-        }
-        .copy {
-            font-size: 12px;
-            margin-top: 10px;
-        }
-        .toggle-mode {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #fff;
-            color: #000;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 14px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s, color 0.3s, transform 0.2s;
-        }
-        .toggle-mode:hover {
-            transform: scale(1.05);
-        }
-        .toggle-mode:hover {
-            transform: scale(1.05);
-        }
-        .modo-claro {
-            background-color: white !important;
-            color: black !important;
-        }
-        .modo-claro .stripe {
-            background-color: #007BFF !important;
-        }
-        .modo-claro .navbar {
-            background-color: white !important;
-        }
-        .modo-claro .navbar-dark .navbar-nav .nav-link {
-            color: black !important;
-        }
-        .modo-claro .footer {
-            background-color: #f8f9fa !important;
-        }
-        .modo-claro .footer a {
-            color: black !important;
-        }
-        .modo-claro .card {
-            background-color: #e9ecef !important;
-            color: black !important;
-        }
-        .modo-claro .product-box {
-            background-color: #f8f9fa !important;
-            color: black !important;
-        }
-        .modo-claro .logo-principal {
-            filter: invert(1);
-        }
-        .modo-claro .hero .btn {
-            background-color: #007BFF !important;
-            color: white !important;
-        }
-        .modo-claro .hero .btn:hover {
-            background-color: #0056b3 !important;
-        }
-        .category-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 20px 0;
-        }
-        .category-card {
-            background-color: #111;
-            border-radius: 10px;
-            padding: 15px;
-            text-align: center;
-            cursor: pointer;
-            transition: transform 0.3s;
-            width: 250px;
-            height: 400px; /* Ajustamos la altura para que quepa toda la información */
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            border: 1px solid #333; /* Borde sutil para un look más sofisticado */
-        }
-        .category-card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(255, 51, 95, 0.3); /* Sombra roja al hacer hover */
-        }
-        .category-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 5px;
-            margin-bottom: 10px;
-        }
-        .category-card h4 {
-            font-size: 18px;
-            margin-bottom: 10px;
-            color: #FF335F; /* Color rojo para el título */
-        }
-        .category-card .description {
-            font-size: 14px;
-            color: #ccc;
-            margin: 10px 0;
-            flex-grow: 1; /* Asegura que la descripción ocupe el espacio disponible */
-        }
-        .category-card .price {
-            font-size: 18px;
-            font-weight: bold;
-            color: #FF335F;
-            margin: 10px 0;
-        }
-        .product-section {
-            display: none;
-        }
-        .back-button {
-            margin-bottom: 20px;
-            cursor: pointer;
-            color: #FF335F;
-            font-weight: bold;
-        }
-        .back-button:hover {
-            text-decoration: underline;
-        }
-        .profile-dropdown {
+body {
+    background-color: black;
+    color: white;
     position: relative;
+    overflow-x: hidden;
+    transition: background-color 0.3s, color 0.3s;
 }
 
+.search-form .btn {
+    background-color: #FF335F;
+    color: white;
+    border-color: #FF335F;
+    transition: all 0.3s;
+}
+
+.search-form .btn:hover {
+    background-color: #e63946;
+    border-color: #e63946;
+}
+
+.background-stripes {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.stripe {
+    position: absolute;
+    width: 15%;
+    height: 180vh;
+    background: #FF335F;
+    transform: rotate(21deg);
+    opacity: 0.8;
+    transition: background-color 0.3s;
+}
+
+.stripe:nth-child(1) { right: 0; background: #FF335F; }
+.stripe:nth-child(2) { right: 12%; background: #FF4C73; }
+.stripe:nth-child(3) { right: 24%; background: #FF335F; }
+
+.hero {
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.hero h1 span {
+    color: #FF335F;
+    transition: color 0.3s;
+}
+
+.login-container {
+    width: 500px;
+    height: 550px;
+    position: relative;
+    margin: 50px auto;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 2;
+}
+
+.hero .btn {
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    margin-right: 10px;
+    transition: all 0.3s;
+}
+
+.hero .btn:hover {
+    background-color: #e63946;
+    color: black;
+}
+
+.navbar {
+    background-color: black;
+    transition: background-color 0.3s;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.logo-principal {
+    height: 100px;
+    margin-right: 10px;
+    transition: filter 0.3s;
+}
+
+.footer {
+    background-color: #222;
+    padding: 20px 0;
+    margin-top: 40px;
+    transition: background-color 0.3s;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.card {
+    background-color: #111;
+    color: white;
+    transition: all 0.3s;
+}
+
+.email-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: white;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+}
+
+.product-box {
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 20px;
+    transition: transform 0.3s ease-in-out, background-color 0.3s, color 0.3s;
+}
+
+.product-box:hover {
+    transform: scale(1.05);
+}
+
+.product-box img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.product-box h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+}
+
+.footer-links li {
+    display: inline;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.policy {
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+.copy {
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.toggle-mode {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+    z-index: 1000;
+}
+
+.toggle-mode:hover {
+    transform: scale(1.05);
+}
+
+/* Modo claro */
+.modo-claro {
+    background-color: white !important;
+    color: black !important;
+}
+
+.modo-claro .stripe {
+    background-color: #007BFF !important;
+}
+
+.modo-claro .navbar {
+    background-color: white !important;
+}
+
+.modo-claro .navbar-dark .navbar-nav .nav-link {
+    color: black !important;
+}
+
+.modo-claro .footer {
+    background-color: #f8f9fa !important;
+}
+
+.modo-claro .footer a {
+    color: black !important;
+}
+
+.modo-claro .card {
+    background-color: #e9ecef !important;
+    color: black !important;
+}
+
+.modo-claro .product-box {
+    background-color: #f8f9fa !important;
+    color: black !important;
+}
+
+.modo-claro .logo-principal {
+    filter: invert(1);
+}
+
+.modo-claro .hero .btn {
+    background-color: #007BFF !important;
+    color: white !important;
+}
+
+.modo-claro .hero .btn:hover {
+    background-color: #0056b3 !important;
+}
+
+/* Elementos que cambian de rojo a azul en modo claro */
+.modo-claro .hero h1 span,
+.modo-claro .category-card h4,
+.modo-claro .category-card .price,
+.modo-claro .back-button,
+.modo-claro .search-form .btn,
+.modo-claro .invoice-summary h3,
+.modo-claro .payment-methods h3,
+.modo-claro .profile-dropdown-content a:hover {
+    color: #007BFF !important;
+}
+
+.modo-claro .search-form .btn,
+.modo-claro .invoice-summary button,
+.modo-claro .modal-content button,
+.modo-claro .profile-dropdown-content a:hover {
+    background-color: #007BFF !important;
+    border-color: #007BFF !important;
+}
+
+.modo-claro .search-form .btn:hover,
+.modo-claro .invoice-summary button:hover,
+.modo-claro .modal-content button:hover {
+    background-color: #0056b3 !important;
+    border-color: #0056b3 !important;
+}
+
+.modo-claro .category-card:hover {
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3) !important;
+}
+
+/* Estilos responsivos */
 @media (max-width: 991.98px) {
     .navbar-collapse {
-        background-color: black; /* Fondo del menú responsivo */
-        padding: 10px; /* Espaciado interno */
-        border-radius: 10px; /* Bordes redondeados */
+        background-color: black;
+        padding: 10px;
+        border-radius: 10px;
     }
 
     .navbar-nav {
-        flex-direction: column; /* Apila los elementos verticalmente */
-        align-items: flex-start; /* Alinea los elementos a la izquierda */
+        flex-direction: column;
+        align-items: flex-start;
     }
 
     .profile-dropdown-content {
-    display: none;
-    position: absolute;
-    right: 8; /* Alinea el menú desplegable a la derecha */
-    background-color: #222;
-    border-radius: 10px;
-    padding: 10px 0;
-    width: 150px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    z-index: 100;
-}
+        position: static;
+        background-color: transparent;
+        box-shadow: none;
+    }
 
     .profile-dropdown-content a {
+        padding: 5px 10px;
+    }
+}
+
+.nav-link {
     color: white;
     text-decoration: none;
-    padding: 10px 15px;
-    display: block;
-    transition: background-color 0.3s;
+    font-size: 16px;
+    transition: color 0.3s;
 }
+
+.nav-link:hover {
+    color: #FF335F;
 }
+
+.profile-dropdown {
+    position: relative;
+}
+
 .profile-button {
     background-color: transparent;
     border: none;
@@ -319,38 +340,45 @@
     gap: 10px;
     font-size: 14px;
     cursor: pointer;
-
+    transition: color 0.3s;
 }
 
 .profile-button:hover {
     color: #FF335F;
 }
+
 .profile-icon {
     width: 25px;
     height: 25px;
-    border-radius: 50%; /* Para hacerlo redondo */
+    border-radius: 50%;
     object-fit: cover;
-    vertical-align: middle; /* Alineación exacta */
+    vertical-align: middle;
+    transition: filter 0.3s;
 }
 
-.navbar {
-    display: flex;
-    align-items: center; /* Alinea todos los elementos verticalmente */
-    justify-content: space-between; /* Espacio entre elementos */
-    padding: 10px 20px; /* Espaciado interno */
+.modo-claro .profile-icon {
+    filter: brightness(0) invert(0);
 }
 
+.modo-claro .profile-button {
+    color: black !important;
+}
+
+.modo-claro .profile-button:hover {
+    color: #007BFF !important;
+}
 
 .profile-dropdown-content {
     display: none;
     position: absolute;
-    right: 8; /* Alinea el menú desplegable a la derecha */
+    right: 0;
     background-color: #222;
     border-radius: 10px;
     padding: 10px 0;
     width: 150px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
     z-index: 100;
+    transition: all 0.3s;
 }
 
 .profile-dropdown-content a {
@@ -366,155 +394,148 @@
     border-radius: 5px;
 }
 
+.modo-claro .profile-dropdown-content {
+    background-color: #f8f9fa !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.modo-claro .profile-dropdown-content a {
+    color: black !important;
+}
+
 .profile-dropdown:hover .profile-dropdown-content {
     display: block;
 }
+
+/* Estilos para el carrito y factura */
 .invoice-container {
-            max-width: 1200px;
-            margin: 100px auto 20px;
-            padding: 20px;
-            background-color: #222;
-            border-radius: 10px;
-        }
-        .invoice-summary {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #333;
-            border-radius: 10px;
-        }
-        .invoice-summary h3 {
-            margin: 0 0 15px;
-            font-size: 20px;
-            color: #FF335F;
-        }
-        .invoice-summary p {
-            margin: 5px 0;
-            font-size: 16px;
-        }
-        .invoice-summary button {
-            background-color: #FF335F;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 15px;
-        }
-        .invoice-summary button:hover {
-            background-color: #e63946;
-        }
-        .payment-methods {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: #333;
-            border-radius: 10px;
-        }
-        .payment-methods h3 {
-            margin: 0 0 15px;
-            font-size: 20px;
-            color: #FF335F;
-        }
-        .payment-methods label {
-            display: block;
-            margin: 10px 0;
-            font-size: 16px;
-        }
-        .footer {
-            background-color: #222;
-            padding: 20px 0;
-            margin-top: 40px;
-            text-align: left;
-        }
-        .footer a {
-            color: white;
-            text-decoration: none;
-            margin: 0 10px;
-        }
-        .footer a:hover {
-            text-decoration: underline;
-        }
-        .modo-claro {
-            background-color: white !important;
-            color: black !important;
-        }
-        .modo-claro .top-bar {
-            background-color: white !important;
-        }
-        .modo-claro .invoice-container,
-        .modo-claro .invoice-summary,
-        .modo-claro .payment-methods,
-        .modo-claro .profile-dropdown-content {
-            background-color: #f8f9fa !important;
-            color: black !important;
-        }
-        .modo-claro .invoice-summary h3,
-        .modo-claro .payment-methods h3 {
-            color: #007BFF !important;
-        }
-        .modo-claro .footer {
-            background-color: #e9ecef !important;
-        }
-        .modo-claro .footer a {
-            color: black !important;
-        }
-        .modo-claro .top-right-buttons button,
-        .modo-claro .search-bar button {
-            background-color: #007BFF !important;
-            color: white !important;
-        }
-        .modo-claro .top-right-buttons button:hover,
-        .modo-claro .search-bar button:hover {
-            background-color: #0056b3 !important;
-        }
-        .modo-claro .search-bar input {
-            background-color: #e9ecef !important;
-            color: black !important;
-        }
-        .modo-claro .search-bar input:focus {
-            background-color: #ddd !important;
-        }
-        /* Estilos para el modal de pago exitoso */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1001;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.5);
-        }
-        .modal-content {
-            background-color: #222;
-            margin: 15% auto;
-            padding: 20px;
-            border: 1px solid #888;
-            width: 80%;
-            max-width: 500px;
-            border-radius: 10px;
-            text-align: center;
-        }
-        .modal-content h2 {
-            color: #FF335F;
-        }
-        .modal-content button {
-            background-color: #FF335F;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 20px;
-        }
-        .modal-content button:hover {
-            background-color: #e63946;
-        }
-        .cart-item img {
-    width: 150px; /* Tamaño fijo para todas las imágenes */
-    height: 150px; /* Tamaño fijo para todas las imágenes */
-    object-fit: cover; /* Asegura que la imagen cubra el espacio sin distorsionarse */
-    border-radius: 10px; /* Bordes redondeados */
-    margin-right: 20px; /* Espacio a la derecha de la imagen */
+    max-width: 1200px;
+    margin: 100px auto 20px;
+    padding: 20px;
+    background-color: #222;
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.invoice-summary {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.invoice-summary h3 {
+    margin: 0 0 15px;
+    font-size: 20px;
+    color: #FF335F;
+    transition: color 0.3s;
+}
+
+.invoice-summary p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.invoice-summary button {
+    background-color: #FF335F;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+    transition: all 0.3s;
+}
+
+.invoice-summary button:hover {
+    background-color: #e63946;
+}
+
+.payment-methods {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.payment-methods h3 {
+    margin: 0 0 15px;
+    font-size: 20px;
+    color: #FF335F;
+    transition: color 0.3s;
+}
+
+.payment-methods label {
+    display: block;
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.cart-item img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+/* Modal de pago */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #222;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.modal-content h2 {
+    color: #FF335F;
+    transition: color 0.3s;
+}
+
+.modal-content button {
+    background-color: #FF335F;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s;
+}
+
+.modal-content button:hover {
+    background-color: #e63946;
+}
+
+/* Modo claro para elementos específicos */
+.modo-claro .invoice-container,
+.modo-claro .invoice-summary,
+.modo-claro .payment-methods,
+.modo-claro .modal-content {
+    background-color: #f8f9fa !important;
+    color: black !important;
+}
+
+.modo-claro .modal-content h2 {
+    color: #007BFF !important;
 }
