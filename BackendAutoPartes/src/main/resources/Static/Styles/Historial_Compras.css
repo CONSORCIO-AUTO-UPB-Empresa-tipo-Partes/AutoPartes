@@ -522,3 +522,29 @@
 .modo-claro .btn-return:hover {
     background-color: #0056b3 !important; /* Botón azul oscuro al hacer hover */
 }
+.modo-claro .status-update h5,
+.modo-claro .return-section h5 {
+    color: #007BFF !important; /* Azul en modo claro */
+}
+.modo-claro .profile-icon {
+    filter: invert(1);
+}
+
+.modo-claro .profile-dropdown-content {
+    background-color: #f8f9fa;
+}
+.modo-claro .profile-dropdown-content a {
+    color: black;
+}
+.modo-claro .profile-dropdown-content a:hover {
+    background-color: #007BFF;
+    color: white;
+}
+.modo-claro .profile-button {
+    color: black;
+}
+.modo-claro .profile-button:hover {
+    color: #007BFF;
+}
+
+
