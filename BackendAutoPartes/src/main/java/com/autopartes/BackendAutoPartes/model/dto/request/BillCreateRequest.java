@@ -13,7 +13,6 @@ public class BillCreateRequest {
     @NotNull
     private String customerDocument;
 
-    @NotNull
     private BigDecimal totalPrice;
 
     private boolean hasDiscount;

@@ -2,6 +2,7 @@ package com.autopartes.BackendAutoPartes.controller;
 
 import com.autopartes.BackendAutoPartes.model.dto.Bill;
 import com.autopartes.BackendAutoPartes.model.dto.request.BillCreateRequest;
+import com.autopartes.BackendAutoPartes.model.dto.response.BillResponse;
 import com.autopartes.BackendAutoPartes.service.BillService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -19,19 +20,19 @@ public class BillController {
         this.billService = billService;
     }
 
-    @GetMapping
-    public ResponseEntity<List<Bill>> getAllBills() {
-        return ResponseEntity.ok(billService.findAll());
+    @GetMapping("/bills")
+    public ResponseEntity<List<BillResponse>> getAllBills() {
+        return ResponseEntity.ok(billService.findAllBills());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Bill> getBillById(@PathVariable Integer id) {
-        return billService.findById(id)
+    public ResponseEntity<BillResponse> getBillById(@PathVariable Integer id) {
+        return billService.findBillById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    @PostMapping("/bill")
+    @PostMapping
     public ResponseEntity<?> createBill(@Valid @RequestBody BillCreateRequest request) {
         return billService.createBill(request)
                 .map(saved -> ResponseEntity.status(201).body("Factura creada"))
