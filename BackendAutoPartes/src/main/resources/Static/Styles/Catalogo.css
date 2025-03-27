@@ -1,159 +1,503 @@
-        /* Tus estilos CSS originales... */
-        body {
-            background-color: #000;
-            color: white;
-            font-family: 'Poppins', sans-serif;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .navbar {
-            background-color: black;
-            padding: 20px 0;
-            border-bottom: 4px solid white;
-            transition: background-color 0.3s, border-color 0.3s;
-        }
-        .navbar-brand {
-            color: white !important;
-            font-size: 24px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-        }
-        .navbar-brand img {
-            height: 50px;
-            margin-right: 10px;
-        }
-        .nav-link {
-            color: white !important;
-            font-weight: 400;
-            transition: color 0.3s;
-        }
-        .btn-primary {
-            background-color: #ff0033;
-            border: none;
-        }
-        .btn-primary:hover {
-            background-color: #cc0029;
-        }
-        .carousel-inner {
-            position: relative;
-        }
-        .carousel-inner::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6), black);
-            z-index: 1;
-        }
-        .carousel-item img {
-            width: 100%;
-            height: 400px;
-            object-fit: cover;
-            position: relative;
-            z-index: 0;
-        }
-        .admin-panel {
-            padding: 40px 20px;
-        }
-        .table-dark {
-            background-color: #111;
-            color: white;
-        }
-        .table-dark th,
-        .table-dark td {
-            border-color: #444;
-        }
-        .footer {
-            background-color: #222;
-            color: white;
-            padding: 20px 0;
-            margin-top: 20px;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        .footer-links {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            gap: 15px;
-        }
-        .footer-links li {
-            display: inline;
-        }
-        .footer-links a {
-            color: white;
-            text-decoration: none;
-            font-size: 14px;
-            transition: color 0.3s;
-        }
-        .footer-links a:hover {
-            text-decoration: underline;
-        }
-        .policy {
-            margin-top: 5px;
-            font-size: 12px;
-        }
-        .copy {
-            font-size: 12px;
-            margin-top: 10px;
-        }
-        .modo-claro {
-            background-color: white !important;
-            color: black !important;
-        }
-        .modo-claro .navbar {
-            background-color: white !important;
-            border-bottom: 4px solid #ddd;
-        }
-        .modo-claro .navbar-brand,
-        .modo-claro .nav-link {
-            color: black !important;
-        }
-        /* Estilos para el modo claro */
-.modo-claro .navbar-brand img {
-    filter: invert(1); /* Invierte el color del logo en modo claro */
+/* Estilos generales */
+body {
+    background-color: black;
+    color: white;
+    position: relative;
+    overflow-x: hidden;
+    transition: background-color 0.3s, color 0.3s;
 }
-        .modo-claro .table-dark {
-            background-color: #f8f9fa !important;
-            color: black !important;
-        }
-        .modo-claro .table-dark th,
-        .modo-claro .table-dark td {
-            border-color: #ddd;
-        }
-        .modo-claro .footer {
-            background-color: #f8f9fa !important;
-            color: black !important;
-        }
-        .modo-claro .footer-links a {
-            color: black !important;
-        }
-        .toggle-mode {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background-color: #fff;
-            color: #000;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-weight: bold;
-            font-size: 12px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s, color 0.3s, transform 0.2s;
-            z-index: 1000;
-        }
-        .toggle-mode:hover {
-            transform: scale(1.05);
-        }
-        .consultar-section {
-            margin-top: 20px;
-        }
-        .consultar-section input {
-            margin-right: 10px;
-        }
-        .hidden {
-            display: none;
-        }
+
+/* Estilos para el botón de búsqueda */
+.search-form .btn {
+    background-color: #FF335F;  /* Rojo en modo oscuro */
+    color: white;
+    border-color: #FF335F;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.search-form .btn:hover {
+    background-color: #e63946;  /* Rojo oscuro al hacer hover */
+    border-color: #e63946;
+}
+
+/* Modo claro - cambia a azul */
+.modo-claro .search-form .btn {
+    background-color: #007BFF !important;  /* Azul en modo claro */
+    border-color: #007BFF !important;
+}
+
+.modo-claro .search-form .btn:hover {
+    background-color: #0056b3 !important;  /* Azul oscuro al hacer hover */
+    border-color: #0056b3 !important;
+}
+
+.search-form .btn:hover {
+    background-color: #e63946;
+    border-color: #e63946;
+}
+
+.background-stripes {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.stripe {
+    position: absolute;
+    width: 15%;
+    height: 180vh;
+    background: #FF335F;
+    transform: rotate(21deg);
+    opacity: 0.8;
+    transition: background-color 0.3s;
+}
+
+.stripe:nth-child(1) {
+    right: 0;
+    background: #FF335F;
+}
+
+.stripe:nth-child(2) {
+    right: 12%;
+    background: #FF4C73;
+}
+
+.stripe:nth-child(3) {
+    right: 24%;
+    background: #FF335F;
+}
+
+.hero {
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.hero h1 span {
+    color: white;
+}
+
+.login-container {
+    width: 600px;
+    height: 550px;
+    position: relative;
+    margin: 50px auto;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 2;
+    width: 500px;
+}
+
+.hero .btn {
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.hero .btn:hover {
+    background-color: #e63946;
+    color: black;
+}
+
+.navbar {
+    background-color: black;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.logo-principal {
+    height: 100px;
+    margin-right: 10px;
+    transition: filter 0.3s;
+}
+
+.footer {
+    background-color: #222;
+    padding: 20px 0;
+    margin-top: 40px;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.card {
+    background-color: #111;
+    color: white;
+}
+
+.email-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: white;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+}
+
+.product-box {
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 20px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.product-box:hover {
+    transform: scale(1.05);
+}
+
+.product-box img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.product-box h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+}
+
+.footer-links li {
+    display: inline;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.policy {
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+.copy {
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.toggle-mode {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s, color 0.3s, transform 0.2s;
+}
+
+.toggle-mode:hover {
+    transform: scale(1.05);
+}
+
+/* Modo claro */
+.modo-claro {
+    background-color: white !important;
+    color: black !important;
+}
+
+.modo-claro .stripe {
+    background-color: #007BFF !important;
+}
+
+.modo-claro .navbar {
+    background-color: white !important;
+}
+
+.modo-claro .navbar-dark .navbar-nav .nav-link {
+    color: black !important;
+}
+
+.modo-claro .footer {
+    background-color: #f8f9fa !important;
+}
+
+.modo-claro .footer a {
+    color: black !important;
+}
+
+.modo-claro .card {
+    background-color: #e9ecef !important;
+    color: black !important;
+}
+
+.modo-claro .product-box {
+    background-color: #f8f9fa !important;
+    color: black !important;
+}
+
+.modo-claro .logo-principal {
+    filter: invert(1);
+}
+
+.modo-claro .hero .btn {
+    background-color: #007BFF !important;
+    color: white !important;
+}
+
+.modo-claro .hero .btn:hover {
+    background-color: #0056b3 !important;
+}
+
+.modo-claro .hero h1 span {
+    color: white !important;
+}
+
+/* Estilos para categorías */
+.category-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.category-card {
+    background-color: #111;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s;
+    width: 250px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    border: 1px solid #333;
+}
+
+.category-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 15px rgba(255, 51, 95, 0.3);
+}
+
+.category-card img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.category-card h4 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.category-card .description {
+    font-size: 14px;
+    color: #ccc;
+    margin: 10px 0;
+    flex-grow: 1;
+}
+
+.category-card .price {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+    margin: 10px 0;
+}
+
+.modo-claro .category-card h4,
+.modo-claro .category-card .price {
+    color: white !important;
+}
+
+.product-section {
+    display: none;
+}
+
+.back-button {
+    margin-bottom: 20px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+}
+
+.back-button:hover {
+    text-decoration: underline;
+}
+
+.modo-claro .back-button {
+    color: white !important;
+}
+
+/* Estilos para el botón "Añadir al carrito" */
+.btn-primary {
+    background-color: #FF335F !important;
+    border-color: #FF335F !important;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #e63946 !important;
+    border-color: #e63946 !important;
+}
+
+.modo-claro .btn-primary {
+    background-color: #007BFF !important;
+    border-color: #007BFF !important;
+}
+
+.modo-claro .btn-primary:hover {
+    background-color: #0056b3 !important;
+    border-color: #0056b3 !important;
+}
+
+/* Estilos del navbar responsivo */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background-color: black;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .profile-dropdown-content {
+        position: static;
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    .profile-dropdown-content a {
+        padding: 5px 10px;
+    }
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.nav-link:hover {
+    color: #FF335F;
+}
+
+.profile-dropdown {
+    position: relative;
+}
+
+.profile-button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.profile-button:hover {
+    color: #FF335F;
+}
+
+.profile-icon {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    object-fit: cover;
+    vertical-align: middle;
+    transition: filter 0.3s;
+}
+
+.modo-claro .profile-icon {
+    filter: brightness(0) invert(0);
+}
+
+.modo-claro .profile-button {
+    color: black !important;
+}
+
+.modo-claro .profile-button:hover {
+    color: #007BFF !important;
+}
+
+.profile-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 8;
+    background-color: #222;
+    border-radius: 10px;
+    padding: 10px 0;
+    width: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.profile-dropdown-content a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.profile-dropdown-content a:hover {
+    background-color: #FF335F;
+    border-radius: 5px;
+}
+
+.modo-claro .profile-dropdown-content {
+    background-color: #f8f9fa !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.modo-claro .profile-dropdown-content a {
+    color: black !important;
+}
+
+.modo-claro .profile-dropdown-content a:hover {
+    background-color: #007BFF !important;
+    color: white !important;
+}
