@@ -1,6 +1,6 @@
 package com.autopartes.BackendAutoPartes.controller;
 
-import com.autopartes.BackendAutoPartes.model.dto.AuthResponse;
+import com.autopartes.BackendAutoPartes.model.dto.response.AuthResponse;
 import com.autopartes.BackendAutoPartes.model.dto.request.LoginRequest;
 import com.autopartes.BackendAutoPartes.model.dto.request.RegisterRequest;
 import com.autopartes.BackendAutoPartes.service.UserService;

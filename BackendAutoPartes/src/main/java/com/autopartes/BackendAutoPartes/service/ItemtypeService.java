@@ -1,93 +1,111 @@
 package com.autopartes.BackendAutoPartes.service;
 
-     import com.autopartes.BackendAutoPartes.model.dto.Itemtype;
-     import com.autopartes.BackendAutoPartes.model.dto.request.ItemtypeRequest;
-     import com.autopartes.BackendAutoPartes.repository.ItemtypeRepository;
-     import com.autopartes.BackendAutoPartes.utils.ReusableServices;
-     import org.springframework.stereotype.Service;
-     import org.springframework.transaction.annotation.Transactional;
+         import com.autopartes.BackendAutoPartes.model.dto.Itemtype;
+         import com.autopartes.BackendAutoPartes.model.dto.request.ItemtypeRequest;
+         import com.autopartes.BackendAutoPartes.repository.ItemtypeRepository;
+         import com.autopartes.BackendAutoPartes.utils.ReusableServices;
+         import org.springframework.stereotype.Service;
+         import org.springframework.transaction.annotation.Transactional;
 
-     import java.util.List;
-     import java.util.Optional;
-
-     /**
-      * Service for managing Itemtype entities.
-      */
-     @Service
-     public class ItemtypeService {
+         import java.util.List;
+         import java.util.Optional;
 
          /**
-          * The repository for managing Itemtype entities.
+          * Service for managing Itemtype entities.
           */
-         private final ItemtypeRepository itemtypeRepository;
+         @Service
+         public class ItemtypeService {
 
-         /**
-          * Constructor.
-          *
-          * @param itemtypeRepository The repository for managing Itemtype entities.
-          */
-         public ItemtypeService(ItemtypeRepository itemtypeRepository) {
-             this.itemtypeRepository = itemtypeRepository;
-         }
+             /**
+              * The repository for managing Itemtype entities.
+              */
+             private final ItemtypeRepository itemtypeRepository;
 
-         /**
-          * Finds all itemtypes.
-          *
-          * @return List containing all itemtypes.
-          */
-         public List<Itemtype> findAll() {
-             return itemtypeRepository.findAll();
-         }
+             /**
+              * Constructor.
+              *
+              * @param itemtypeRepository The repository for managing Itemtype entities.
+              */
+             public ItemtypeService(ItemtypeRepository itemtypeRepository) {
+                 this.itemtypeRepository = itemtypeRepository;
+             }
 
-         /**
-          * Finds an itemtype by id.
-          *
-          * @param id The itemtype's id.
-          * @return Optional containing the found itemtype or empty if not found.
-          */
-         public Optional<Itemtype> findById(Integer id) {
-             return itemtypeRepository.findById(id).map(this::mapToDto);
-         }
+             /**
+              * Finds all itemtypes.
+              *
+              * @return List containing all itemtypes.
+              */
+             public List<Itemtype> findAll() {
+                 return itemtypeRepository.findAll();
+             }
 
-         /**
-          * Saves an itemtype.
-          *
-          * @param itemtypeRequest The itemtype to save.
-          * @return The saved itemtype.
-          */
-         @Transactional
-         public Itemtype save(ItemtypeRequest itemtypeRequest) {
-             Itemtype entity = new Itemtype();
-             entity.setItemname(itemtypeRequest.getItemname());
-             entity.setImagepath(itemtypeRequest.getImagepath());
-             return mapToDto(itemtypeRepository.save(entity));
-         }
+             /**
+              * Finds an itemtype by id.
+              *
+              * @param id The itemtype's id.
+              * @return Optional containing the found itemtype or empty if not found.
+              */
+             public Optional<Itemtype> findById(Integer id) {
+                 return itemtypeRepository.findById(id).map(this::mapToDto);
+             }
 
-         /**
-          * Deletes an itemtype by id.
-          *
-          * @param id The itemtype's id.
-          */
-         @Transactional
-         public void deleteById(Integer id) {
-             itemtypeRepository.deleteById(id);
-         }
+             /**
+              * Saves an itemtype.
+              *
+              * @param itemtypeRequest The itemtype to save.
+              * @return The saved itemtype.
+              */
+             @Transactional
+             public Itemtype save(ItemtypeRequest itemtypeRequest) {
+                 Itemtype entity = new Itemtype();
+                 entity.setItemname(itemtypeRequest.getItemname());
+                 entity.setImagepath(itemtypeRequest.getImagepath());
+                 return mapToDto(itemtypeRepository.save(entity));
+             }
 
-         /**
-          * Finds an itemtype by name.
-          *
-          * @param name The itemtype's name.
-          * @return Optional containing the found itemtype or empty if not found.
-          */
-         public Optional<Itemtype> findByName(String name) {
-             return ReusableServices.findByName("itemtype_name", findAll(), Itemtype::getItemname);
-         }
+             /**
+              * Deletes an itemtype by id.
+              *
+              * @param id The itemtype's id.
+              */
+             @Transactional
+             public void deleteById(Integer id) {
+                 itemtypeRepository.deleteById(id);
+             }
 
-         private Itemtype mapToDto(Itemtype entity) {
-             Itemtype dto = new Itemtype();
-             dto.setId(entity.getId());
-             dto.setItemname(entity.getItemname());
-             dto.setImagepath(entity.getImagepath());
-             return dto;
+             /**
+              * Finds an itemtype by name.
+              *
+              * @param name The itemtype's name.
+              * @return Optional containing the found itemtype or empty if not found.
+              */
+             public Optional<Itemtype> findByName(String name) {
+                 return ReusableServices.findByName("itemtype_name", findAll(), Itemtype::getItemname);
+             }
+
+             private Itemtype mapToDto(Itemtype entity) {
+                 Itemtype dto = new Itemtype();
+                 dto.setId(entity.getId());
+                 dto.setItemname(entity.getItemname());
+                 dto.setImagepath(entity.getImagepath());
+                 return dto;
+             }
+
+             /**
+              * Updates an itemtype.
+              *
+              * @param id The itemtype's id.
+              * @param request The itemtype to update.
+              * @return The updated itemtype.
+              */
+             public Itemtype update(Integer id, ItemtypeRequest request) {
+                 return findById(id).map(itemtype -> {
+                     itemtype.setItemname(request.getItemname());
+                     itemtype.setImagepath(request.getImagepath());
+                     ItemtypeRequest updatedRequest = new ItemtypeRequest();
+                     updatedRequest.setItemname(itemtype.getItemname());
+                     updatedRequest.setImagepath(itemtype.getImagepath());
+                     return save(updatedRequest);
+                 }).orElseThrow(() -> new RuntimeException("Itemtype not found"));
+             }
          }
-     }

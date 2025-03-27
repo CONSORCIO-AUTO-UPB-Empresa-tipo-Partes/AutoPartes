@@ -1,4 +1,4 @@
-package com.autopartes.BackendAutoPartes.model.dto;
+package com.autopartes.BackendAutoPartes.model.dto.response;
 
 import java.time.Instant;
 

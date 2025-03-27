@@ -4,10 +4,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class PageController {
+public class BodegueroController {
 
-    @GetMapping("/bodeguero")
-    public String bodeguero() {
-        return "Bodeguero";
+    @GetMapping("/Bodeguero")
+    public String bodegueroPage() {
+        return "Bodeguero"; // nombre del archivo .html sin extensión
     }
 }
