@@ -1,5 +1,6 @@
 package com.autopartes.BackendAutoPartes.model.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.*;
 import lombok.Data;
 
@@ -9,7 +10,7 @@ import java.time.Instant;
 @Data
 public class BatchRequest {
 
-    @NotNull
+    @JsonIgnore
     private Instant datearrival;
 
     @NotNull
