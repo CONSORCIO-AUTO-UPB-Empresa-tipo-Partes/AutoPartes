@@ -1,74 +1,61 @@
 // Función para alternar entre modo claro y oscuro
-function toggleMode() {
-    const body = document.body;
-    body.classList.toggle("modo-claro");
+    function toggleMode() {
+        const body = document.body;
+        body.classList.toggle("modo-claro");
 
-    // Guardar el estado del modo en localStorage
-    if (body.classList.contains("modo-claro")) {
-        localStorage.setItem("modo", "claro");
-    } else {
-        localStorage.setItem("modo", "oscuro");
-    }
-}
-
-// Aplicar el modo guardado al cargar la página
-function aplicarModoGuardado() {
-    const modoGuardado = localStorage.getItem("modo");
-    if (modoGuardado === "claro") {
-        document.body.classList.add("modo-claro");
-    }
-}
-
-// Llamar a la función al cargar la página
-aplicarModoGuardado();
-
-// Lógica para agregar, editar y eliminar lotes
-let lotes = [];
-let editando = false;
-let loteEditandoId = null;
-
-const formAgregarLote = document.getElementById("formAgregarLote");
-const tablaLotes = document.getElementById("tablaLotes");
-
-formAgregarLote.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const lote = {
-        idBatch: document.getElementById("idBatch").value,
-        date: document.getElementById("date").value,
-        supplier: document.getElementById("supplier").value,
-        quantity: document.getElementById("quantity").value,
-        idItemType: document.getElementById("idItemType").value,
-        purchasePrice: parseFloat(document.getElementById("purchasePrice").value),
-        sellingPrice: parseFloat(document.getElementById("sellingPrice").value),
-        haveWarranty: document.getElementById("haveWarranty").value === "true",
-        warrantyInDays: document.getElementById("warrantyInDays").value,
-        description: document.getElementById("description").value,
-        unitPurchasePrice: parseFloat(document.getElementById("unitPurchasePrice").value),
-        unitSellingPrice: parseFloat(document.getElementById("unitSellingPrice").value),
-    };
-
-    if (editando) {
-        // Actualizar el lote existente
-        const index = lotes.findIndex(l => l.idBatch === loteEditandoId);
-        if (index !== -1) {
-            lotes[index] = lote;
+        // Guardar el estado del modo en localStorage
+        if (body.classList.contains("modo-claro")) {
+            localStorage.setItem("modo", "claro");
+        } else {
+            localStorage.setItem("modo", "oscuro");
         }
-        editando = false;
-        loteEditandoId = null;
-    } else {
-        // Agregar nuevo lote
-        lotes.push(lote);
     }
 
-    actualizarTablaLotes();
-    formAgregarLote.reset();
-});
+    // Aplicar el modo guardado al cargar la página
+    function aplicarModoGuardado() {
+        const modoGuardado = localStorage.getItem("modo");
+        if (modoGuardado === "claro") {
+            document.body.classList.add("modo-claro");
+        }
+    }
 
-function actualizarTablaLotes() {
-    tablaLotes.innerHTML = "";
-    lotes.forEach((lote) => {
-        const fila = document.createElement("tr");
-        fila.innerHTML = `
+    // Llamar a la función al cargar la página
+    aplicarModoGuardado();
+
+    // Lógica para agregar, editar y eliminar lotes
+    let lotes = [];
+    let idCounter = 1;
+
+    const formAgregarLote = document.getElementById("formAgregarLote");
+    const tablaLotes = document.getElementById("tablaLotes");
+
+    formAgregarLote.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const lote = {
+            idBatch: document.getElementById("idBatch").value,
+            date: document.getElementById("date").value,
+            supplier: document.getElementById("supplier").value,
+            quantity: document.getElementById("quantity").value,
+            idItemType: document.getElementById("idItemType").value,
+            purchasePrice: parseFloat(document.getElementById("purchasePrice").value),
+            sellingPrice: parseFloat(document.getElementById("sellingPrice").value),
+            haveWarranty: document.getElementById("haveWarranty").value === "true",
+            warrantyInDays: document.getElementById("warrantyInDays").value,
+            description: document.getElementById("description").value,
+            unitPurchasePrice: parseFloat(document.getElementById("unitPurchasePrice").value),
+            unitSellingPrice: parseFloat(document.getElementById("unitSellingPrice").value),
+        };
+
+        lotes.push(lote);
+        actualizarTablaLotes();
+        formAgregarLote.reset();
+    });
+
+    function actualizarTablaLotes() {
+        tablaLotes.innerHTML = "";
+        lotes.forEach((lote) => {
+            const fila = document.createElement("tr");
+            fila.innerHTML = `
                 <td>${lote.idBatch}</td>
                 <td>${lote.date}</td>
                 <td>${lote.supplier}</td>
@@ -82,46 +69,34 @@ function actualizarTablaLotes() {
                 <td>$${lote.unitPurchasePrice.toFixed(2)}</td>
                 <td>$${lote.unitSellingPrice.toFixed(2)}</td>
                 <td>
-                    <button class="btn btn-primary btn-sm" onclick="editarLote('${lote.idBatch}')">Editar</button>
-                    <button class="btn btn-danger btn-sm" onclick="eliminarLote('${lote.idBatch}')">Eliminar</button>
+                    <button class="btn btn-primary btn-sm" onclick="editarLote(${lote.idBatch})">Editar</button>
+                    <button class="btn btn-danger btn-sm" onclick="eliminarLote(${lote.idBatch})">Eliminar</button>
                 </td>
             `;
-        tablaLotes.appendChild(fila);
-    });
-}
-
-function editarLote(idBatch) {
-    const lote = lotes.find((l) => l.idBatch == idBatch); // Usar == en lugar de === para comparación flexible
-    if (lote) {
-        document.getElementById("idBatch").value = lote.idBatch;
-        document.getElementById("date").value = lote.date;
-        document.getElementById("supplier").value = lote.supplier;
-        document.getElementById("quantity").value = lote.quantity;
-        document.getElementById("idItemType").value = lote.idItemType;
-        document.getElementById("purchasePrice").value = lote.purchasePrice;
-        document.getElementById("sellingPrice").value = lote.sellingPrice;
-        document.getElementById("haveWarranty").value = lote.haveWarranty ? "true" : "false";
-        document.getElementById("warrantyInDays").value = lote.warrantyInDays;
-        document.getElementById("description").value = lote.description;
-        document.getElementById("unitPurchasePrice").value = lote.unitPurchasePrice;
-        document.getElementById("unitSellingPrice").value = lote.unitSellingPrice;
-
-        // Configurar estado de edición
-        editando = true;
-        loteEditandoId = idBatch;
+            tablaLotes.appendChild(fila);
+        });
     }
-}
 
-function eliminarLote(idBatch) {
-    if (confirm("¿Estás seguro de que deseas eliminar este lote?")) {
-        lotes = lotes.filter((l) => l.idBatch != idBatch); // Usar != en lugar de !==
-        actualizarTablaLotes();
-
-        // Si estamos editando el lote que se eliminó, resetear el estado
-        if (editando && loteEditandoId == idBatch) {
-            editando = false;
-            loteEditandoId = null;
-            formAgregarLote.reset();
+    function editarLote(idBatch) {
+        const lote = lotes.find((l) => l.idBatch === idBatch);
+        if (lote) {
+            document.getElementById("idBatch").value = lote.idBatch;
+            document.getElementById("date").value = lote.date;
+            document.getElementById("supplier").value = lote.supplier;
+            document.getElementById("quantity").value = lote.quantity;
+            document.getElementById("idItemType").value = lote.idItemType;
+            document.getElementById("purchasePrice").value = lote.purchasePrice;
+            document.getElementById("sellingPrice").value = lote.sellingPrice;
+            document.getElementById("haveWarranty").value = lote.haveWarranty ? "true" : "false";
+            document.getElementById("warrantyInDays").value = lote.warrantyInDays;
+            document.getElementById("description").value = lote.description;
+            document.getElementById("unitPurchasePrice").value = lote.unitPurchasePrice;
+            document.getElementById("unitSellingPrice").value = lote.unitSellingPrice;
+            eliminarLote(idBatch);
         }
     }
-}
+
+    function eliminarLote(idBatch) {
+        lotes = lotes.filter((l) => l.idBatch !== idBatch);
+        actualizarTablaLotes();
+    }

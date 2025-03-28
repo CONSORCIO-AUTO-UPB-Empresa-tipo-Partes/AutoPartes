@@ -9,6 +9,7 @@ import com.autopartes.BackendAutoPartes.repository.BatchRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
@@ -52,6 +53,8 @@ public class BatchService {
                     }
 
                     Batch batch = new Batch();
+                    batch.setDatearrival(Instant.now());
+
                     updateBatchFromRequest(batch, req);
                     batch.setInitialquantity(req.getQuantity());
                     batch.setProviderIdprovider(providerOpt.get());
@@ -98,7 +101,6 @@ public class BatchService {
     }
 
     private void updateBatchFromRequest(Batch batch, BatchRequest request) {
-        batch.setDatearrival(request.getDatearrival());
         batch.setQuantity(request.getQuantity());
         batch.setPurchaseprice(request.getPurchaseprice());
         batch.setUnitpurchaseprice(request.getUnitpurchaseprice());

@@ -1,5 +1,6 @@
 package com.autopartes.BackendAutoPartes.model.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 import java.math.BigDecimal;
@@ -8,6 +9,7 @@ import java.time.Instant;
 @Data
 public class BatchResponse {
     private Integer id;
+    @JsonIgnore
     private Instant datearrival;
     private Integer quantity;
     private BigDecimal purchaseprice;
