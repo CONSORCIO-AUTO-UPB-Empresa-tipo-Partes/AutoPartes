@@ -52,17 +52,13 @@ package com.autopartes.BackendAutoPartes.controller;
       */
      @GetMapping("/itemtypes-with-batches")
      public ResponseEntity<List<ItemtypeWithBatchesResponse>> getItemTypesWithBatches() {
-         // Get all item types
          List<Itemtype> itemTypes = itemtypeService.findAll();
 
-         // Get all batches in the catalog
          List<BatchResponse> allBatches = catalogObserver.getCurrentCatalog();
 
-         // Group batches by item type name
          Map<String, List<BatchResponse>> batchesByItemTypeName = allBatches.stream()
                  .collect(Collectors.groupingBy(BatchResponse::getItemName));
 
-         // Create response objects
          List<ItemtypeWithBatchesResponse> response = itemTypes.stream()
                  .map(itemType -> {
                      List<BatchResponse> batches = batchesByItemTypeName.getOrDefault(itemType.getItemname(), new ArrayList<>());

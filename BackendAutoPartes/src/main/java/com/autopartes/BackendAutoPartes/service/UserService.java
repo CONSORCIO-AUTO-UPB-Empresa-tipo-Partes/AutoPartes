@@ -253,4 +253,29 @@ public class UserService {
         return Optional.of(userRepository.save(user));
     }
 
+    /**
+     * Get user information by token.
+     *
+     * @param token The authentication token.
+     * @return Optional containing the user or empty if token invalid.
+     */
+    public Optional<User> getUserByToken(String token) {
+        return tokenRepository.findByToken(token)
+                .filter(t -> t.getExpiresat().isAfter(Instant.now()))
+                .flatMap(t -> userRepository.findByUsertokensIdtokens(t));
+    }
+
+    /**
+     * Invalidate a token.
+     *
+     * @param token The token to invalidate.
+     */
+    public void invalidateToken(String token) {
+        tokenRepository.findByToken(token)
+                .ifPresent(t -> {
+                    t.setExpiresat(Instant.now());
+                    tokenRepository.save(t);
+                });
+    }
+
 }

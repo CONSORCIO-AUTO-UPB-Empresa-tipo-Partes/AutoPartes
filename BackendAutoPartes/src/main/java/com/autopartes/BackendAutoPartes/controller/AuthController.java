@@ -8,6 +8,8 @@ import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 
 /**
  * Controller for handling authentication requests.
@@ -84,6 +86,31 @@ public class AuthController {
     @ExceptionHandler
     public ResponseEntity<?> handleException(Exception ex) {
         return ResponseEntity.badRequest().body("Error: " + ex.getMessage());
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<?> getUserInfo(@RequestParam String token) {
+        return userService.getUserByToken(token)
+                .map(user -> ResponseEntity.ok().body(
+                    Map.of(
+                        "email", user.getEmail(),
+                        "userType", user.getUsertypeIdtypeuser().getUsertypename()
+                    )
+                ))
+                .orElse(ResponseEntity.status(401).build());
+    }
+
+    /**
+     * Logout a user by invalidating their token
+     */
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(@RequestHeader("Authorization") String authHeader) {
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
+            String token = authHeader.substring(7);
+            userService.invalidateToken(token);
+            return ResponseEntity.ok().build();
+        }
+        return ResponseEntity.badRequest().build();
     }
 
 }
