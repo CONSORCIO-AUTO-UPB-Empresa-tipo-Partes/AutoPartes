@@ -7,6 +7,23 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../static/css/Catalogo.css">
     <style>
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .pagination {
+            justify-content: center;
+            margin-top: 20px;
+        }
+        .page-item.active .page-link {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+        .page-link {
+            color: #007bff;
+        }
     </style>
 </head>
 <body>
@@ -25,13 +42,15 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <form class="d-flex search-form" onsubmit="searchCategory(event)">
-                <input class="form-control me-2" type="search" id="search-input" placeholder="Buscar categoría..." aria-label="Search">
+            <form class="d-flex search-form">
+                <input class="form-control me-2" type="search" placeholder="Buscar categoría..." aria-label="Search">
                 <button class="btn btn-outline-success" type="submit">Buscar</button>
             </form>
-
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="Catalogo.html">Inicio</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Catalogo.html">Inicio</a>
+                </li>
+
                 <!-- Menú desplegable del perfil -->
                 <li class="nav-item">
                     <div class="profile-dropdown">
@@ -55,631 +74,19 @@
     </div>
 </nav>
 
-<!-- Sección de categorías (visible por defecto) -->
-<div class="container mt-4" id="category-section">
-    <h2 class="text-center">Categorías de Productos</h2>
-    <div class="category-container">
-        <div class="category-card" onclick="showProducts('llantas')">
-            <img src="../assets/IMAGENES/neumatico%20%232.jpeg" alt="Llantas">
-            <h4>Llantas</h4>
-            <p class="description">Llantas de alta calidad para todo tipo de vehículos.</p>
-            <p class="price">$150.000-250.000</p>
-        </div>
-        <div class="category-card" onclick="showProducts('tubos-escape')">
-            <img src="../assets/IMAGENES/tubo%20de%20escape11.jpg" alt="Tubos de escape">
-            <h4>Tubos de escape</h4>
-            <p class="description">Tubos de escape de alto rendimiento.</p>
-            <p class="price">$120.000-300.000</p>
-        </div>
-        <div class="category-card" onclick="showProducts('exploradoras')">
-            <img src="../static/img/exploradoras.png" alt="Exploradoras">
-            <h4>Exploradoras</h4>
-            <p class="description">Exploradoras para todo tipo de terrenos.</p>
-            <p class="price">$200.000-400.000</p>
-        </div>
-        <div class="category-card" onclick="showProducts('camaras')">
-            <img src="../assets/IMAGENES/camaar%20%234.jpeg" alt="Cámaras">
-            <h4>Cámaras</h4>
-            <p class="description">Cámaras de alta resolución para tu vehículo.</p>
-            <p class="price">$80.000-300.000</p>
-        </div>
-        <div class="category-card" onclick="showProducts('tapetes')">
-            <img src="../assets/IMAGENES/tapetes%20%234.jpg" alt="Tapetes">
-            <h4>Tapetes</h4>
-            <p class="description">Tapetes resistentes y fáciles de limpiar.</p>
-            <p class="price">$50.000-120.000</p>
-        </div>
-        <div class="category-card" onclick="showProducts('estribos')">
-            <img src="../assets/IMAGENES/ESTRIBOS%234.png" alt="Estribos">
-            <h4>Estribos</h4>
-            <p class="description">Estribos robustos para camionetas y SUV.</p>
-            <p class="price">$180.000-280.000</p>
-        </div>
-        <div class="category-card" onclick="showProducts('perillas')">
-            <img src="../static/img/Perillas1.avif" alt="Perillas">
-            <h4>Perillas</h4>
-            <p class="description">Perillas ergonómicas y personalizadas.</p>
-            <p class="price">$30.000-180.000</p>
-        </div>
-        <div class="category-card" onclick="showProducts('spoilers')">
-            <img src="../assets/IMAGENES/spoilers%234.jpg" alt="Spoilers">
-            <h4>Spoilers</h4>
-            <p class="description">Spoilers aerodinámicos para deportivos.</p>
-            <p class="price">$250.000-400.000</p>
-        </div>
-        <div class="category-card" onclick="showProducts('retrovisores')">
-            <img src="../assets/IMAGENES/retrovisor%20%232.png" alt="Retrovisores">
-            <h4>Retrovisores</h4>
-            <p class="description">Retrovisores con tecnología avanzada.</p>
-            <p class="price">$90.000-250.000</p>
-        </div>
-        <div class="category-card" onclick="showProducts('repuestos')">
-            <img src="../assets/IMAGENES/Braazo%20de%20control.png" alt="Repuestos">
-            <h4>Repuestos</h4>
-            <p class="description">Repuestos originales y de alta calidad.</p>
-            <p class="price">$70.000-220.000</p>
-        </div>
+<!-- Contenedor de productos -->
+<div class="container mt-4">
+    <h2 class="text-center">Todos nuestros productos</h2>
+    <div id="product-container" class="product-grid">
+        <!-- Los productos se cargarán aquí con JavaScript -->
     </div>
-</div>
 
-<!-- Sección de productos de Llantas -->
-<div class="container mt-4 product-section" id="llantas-section">
-    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
-    <h2 class="text-center">Llantas</h2>
-    <div class="category-container">
-        <div class="category-card">
-            <img src="../assets/IMAGENES/neumatico%20%234.jpeg" alt="Llanta deportiva">
-            <h4>Llanta Deportiva</h4>
-            <p class="description">Llanta de alto rendimiento para deportivos. Diseño aerodinámico.</p>
-            <button class="btn btn-primary" onclick="addToCart('Llanta Deportiva', 150000, '../assets/IMAGENES/neumatico%20%234.jpeg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/neumatico%20%232.jpeg" alt="Llanta de aleación">
-            <h4>Llanta de Aleación</h4>
-            <p class="description">Llanta ligera y resistente, ideal para todo tipo de vehículos.</p>
-            <button class="btn btn-primary" onclick="addToCart('Llanta de Aleación', 200000, '../assets/IMAGENES/neumatico%20%232.jpeg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/neumatico10.avif" alt="Llanta de aleación">
-            <h4>Llanta Lisas</h4>
-            <p class="description">Llanta lisa para un manejo suave y cómodo.</p>
-            <button class="btn btn-primary" onclick="addToCart('Llanta Lisas', 120000, '../assets/IMAGENES/neumatico10.avif')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/neumatico7.jpg" alt="Llanta de aleación">
-            <h4>Llanta Radiales</h4>
-            <p class="description">Llanta radial para mayor durabilidad y rendimiento.</p>
-            <button class="btn btn-primary" onclick="addToCart('Llanta Radiales', 180000, '../assets/IMAGENES/neumatico7.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/neumatico8.jpg" alt="Llanta de aleación">
-            <h4>Llanta Mixtas</h4>
-            <p class="description">Llanta mixta para todo tipo de terrenos.</p>
-            <button class="btn btn-primary" onclick="addToCart('Llanta Mixtas', 160000, '../assets/IMAGENES/neumatico8.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/neumatico9.jpg" alt="Llanta de aleación">
-            <h4>Llanta Sólidas</h4>
-            <p class="description">Llanta sólida para vehículos pesados.</p>
-            <button class="btn btn-primary" onclick="addToCart('Llanta Sólidas', 220000, '../assets/IMAGENES/neumatico9.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/neumatico10.avif" alt="Llanta de aleación">
-            <h4>Llanta Estándar</h4>
-            <p class="description">Llanta estándar para uso diario.</p>
-            <button class="btn btn-primary" onclick="addToCart('Llanta Estándar', 100000, '../assets/IMAGENES/neumatico10.avif')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/neumatico9.jpg" alt="Llanta de aleación">
-            <h4>Llanta de Carga Extra</h4>
-            <p class="description">Llanta diseñada para soportar cargas pesadas.</p>
-            <button class="btn btn-primary" onclick="addToCart('Llanta de Carga Extra', 250000, '../assets/IMAGENES/neumatico9.jpg')">🛒 Agregar al carrito</button>
-        </div>
-    </div>
-</div>
-
-<!-- Sección de productos de Tubos de escape -->
-<div class="container mt-4 product-section" id="tubos-escape-section">
-    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
-    <h2 class="text-center">Tubos de escape</h2>
-    <div class="category-container">
-        <div class="category-card">
-            <img src="../assets/IMAGENES/tubo%20de%20escape11.jpg" alt="Tubo estándar">
-            <h4>Tubo Estándar</h4>
-            <p class="description">Tubo de escape estándar para vehículos comunes.</p>
-            <button class="btn btn-primary" onclick="addToCart('Tubo Estándar', 80000, '../assets/IMAGENES/tubo%20de%20escape11.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/tubo12.jpg" alt="Tubo de escape de alto rendimiento">
-            <h4>Tubo de Alto Rendimiento</h4>
-            <p class="description">Tubo de escape diseñado para mejorar el rendimiento del motor.</p>
-            <button class="btn btn-primary" onclick="addToCart('Tubo de Alto Rendimiento', 150000, '../assets/IMAGENES/tubo12.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/tubo11.jpg" alt="Tubo para carro deportivo">
-            <h4>Tubo para Carro Deportivo</h4>
-            <p class="description">Tubo de escape especial para autos deportivos.</p>
-            <button class="btn btn-primary" onclick="addToCart('Tubo para Carro Deportivo', 250000, '../assets/IMAGENES/tubo11.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/tubo9.jpg" alt="Tubo de escape de acero inoxidable">
-            <h4>Tubo de Acero Inoxidable</h4>
-            <p class="description">Tubo de escape resistente a la corrosión.</p>
-            <button class="btn btn-primary" onclick="addToCart('Tubo de Acero Inoxidable', 200000, '../assets/IMAGENES/tubo9.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/tuboescape%232.png" alt="Tubo de escape de doble salida">
-            <h4>Tubo de Doble Salida</h4>
-            <p class="description">Tubo de escape con doble salida para mayor potencia.</p>
-            <button class="btn btn-primary" onclick="addToCart('Tubo de Doble Salida', 300000, '../assets/IMAGENES/tuboescape%232.png')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/tubo13.jpg" alt="Tubo de escape estándar">
-            <h4>Tubo Estándar</h4>
-            <p class="description">Tubo de escape básico para vehículos comunes.</p>
-            <button class="btn btn-primary" onclick="addToCart('Tubo Estándar', 90000, '../assets/IMAGENES/tubo13.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/tubo%2014.jpg" alt="Tubo de escape estándar">
-            <h4>Tubo Estándar</h4>
-            <p class="description">Tubo de escape básico para vehículos comunes.</p>
-            <button class="btn btn-primary" onclick="addToCart('Tubo Estándar', 95000, '../assets/IMAGENES/tubo%2014.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/tubo%2015.jpg" alt="Tubo de escape estándar">
-            <h4>Tubo Estándar</h4>
-            <p class="description">Tubo de escape básico para vehículos comunes.</p>
-            <button class="btn btn-primary" onclick="addToCart('Tubo Estándar', 100000, '../assets/IMAGENES/tubo%2015.jpg')">🛒 Agregar al carrito</button>
-        </div>
-    </div>
-</div>
-
-<!-- Sección de productos de Exploradoras -->
-<div class="container mt-4 product-section" id="exploradoras-section">
-    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
-    <h2 class="text-center">Exploradoras</h2>
-    <div class="category-container">
-        <div class="category-card">
-            <img src="../assets/IMAGENES/exploradora%20%234.webp" alt="Exploradora estándar">
-            <h4>Exploradora Estándar</h4>
-            <p class="description">Exploradora básica para uso diario.</p>
-            <button class="btn btn-primary" onclick="addToCart('Exploradora Estándar', 50000, '../assets/IMAGENES/exploradora%20%234.webp')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/exploradora%233.png" alt="Exploradora deportiva">
-            <h4>Exploradora Deportiva</h4>
-            <p class="description">Exploradora diseñada para vehículos deportivos.</p>
-            <button class="btn btn-primary" onclick="addToCart('Exploradora Deportiva', 120000, '../assets/IMAGENES/exploradora%233.png')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/exploradoras%20%235.webp" alt="Exploradora de acero inoxidable">
-            <h4>Exploradora de Acero Inoxidable</h4>
-            <p class="description">Exploradora resistente a la corrosión.</p>
-            <button class="btn btn-primary" onclick="addToCart('Exploradora de Acero Inoxidable', 180000, '../assets/IMAGENES/exploradoras%20%235.webp')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/explo2.jpg" alt="Exploradora de doble salida">
-            <h4>Exploradora de Doble Salida</h4>
-            <p class="description">Exploradora con doble salida para mayor potencia.</p>
-            <button class="btn btn-primary" onclick="addToCart('Exploradora de Doble Salida', 250000, '../assets/IMAGENES/explo2.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/explo3.jpg" alt="Exploradora de alto rendimiento">
-            <h4>Exploradora de Alto Rendimiento</h4>
-            <p class="description">Exploradora de alto rendimiento para terrenos difíciles.</p>
-            <button class="btn btn-primary" onclick="addToCart('Exploradora de Alto Rendimiento', 300000, '../assets/IMAGENES/explo3.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/explo4.jpg" alt="Exploradora para camionetas">
-            <h4>Exploradora para Camionetas</h4>
-            <p class="description">Exploradora robusta para camionetas y SUV.</p>
-            <button class="btn btn-primary" onclick="addToCart('Exploradora para Camionetas', 280000, '../assets/IMAGENES/explo4.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/explo5.webp" alt="Exploradora personalizada">
-            <h4>Exploradora Personalizada</h4>
-            <p class="description">Exploradora con diseño personalizado.</p>
-            <button class="btn btn-primary" onclick="addToCart('Exploradora Personalizada', 350000, '../assets/IMAGENES/explo5.webp')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/explo7.webp" alt="Exploradora de lujo">
-            <h4>Exploradora de Lujo</h4>
-            <p class="description">Exploradora de alta gama con acabados premium.</p>
-            <button class="btn btn-primary" onclick="addToCart('Exploradora de Lujo', 400000, '../assets/IMAGENES/explo7.webp')">🛒 Agregar al carrito</button>
-        </div>
-    </div>
-</div>
-
-<!-- Sección de productos de Cámaras -->
-<div class="container mt-4 product-section" id="camaras-section">
-    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
-    <h2 class="text-center">Cámaras</h2>
-    <div class="category-container">
-        <div class="category-card">
-            <img src="../assets/IMAGENES/camaar%20%234.jpeg" alt="Cámara estándar">
-            <h4>Cámara Estándar</h4>
-            <p class="description">Cámara básica para vehículos comunes.</p>
-            <button class="btn btn-primary" onclick="addToCart('Cámara Estándar', 60000, '../assets/IMAGENES/camaar%20%234.jpeg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/camaara%20%233.webp" alt="Cámara de alta resolución">
-            <h4>Cámara de Alta Resolución</h4>
-            <p class="description">Cámara con alta calidad de imagen.</p>
-            <button class="btn btn-primary" onclick="addToCart('Cámara de Alta Resolución', 100000, '../assets/IMAGENES/camaara%20%233.webp')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/camara%20%232.png" alt="Cámara deportiva">
-            <h4>Cámara Deportiva</h4>
-            <p class="description">Cámara diseñada para vehículos deportivos.</p>
-            <button class="btn btn-primary" onclick="addToCart('Cámara Deportiva', 150000, '../assets/IMAGENES/camara%20%232.png')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/camara%20%235.webp" alt="Cámara de visión nocturna">
-            <h4>Cámara de Visión Nocturna</h4>
-            <p class="description">Cámara con visión nocturna para mayor seguridad.</p>
-            <button class="btn btn-primary" onclick="addToCart('Cámara de Visión Nocturna', 200000, '../assets/IMAGENES/camara%20%235.webp')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/camara%231.jpeg" alt="Cámara 360°">
-            <h4>Cámara 360°</h4>
-            <p class="description">Cámara con visión panorámica de 360 grados.</p>
-            <button class="btn btn-primary" onclick="addToCart('Cámara 360°', 250000, '../assets/IMAGENES/camara%231.jpeg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/camara9.webp" alt="Cámara para motos">
-            <h4>Cámara para Motos</h4>
-            <p class="description">Cámara especial para motocicletas.</p>
-            <button class="btn btn-primary" onclick="addToCart('Cámara para Motos', 120000, '../assets/IMAGENES/camara9.webp')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/camara10.jpg" alt="Cámara de seguridad">
-            <h4>Cámara de Seguridad</h4>
-            <p class="description">Cámara de seguridad para vehículos.</p>
-            <button class="btn btn-primary" onclick="addToCart('Cámara de Seguridad', 180000, '../assets/IMAGENES/camara10.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/cmara8.jpg" alt="Cámara de lujo">
-            <h4>Cámara de Lujo</h4>
-            <p class="description">Cámara de alta gama con acabados premium.</p>
-            <button class="btn btn-primary" onclick="addToCart('Cámara de Lujo', 300000, '../assets/IMAGENES/cmara8.jpg')">🛒 Agregar al carrito</button>
-        </div>
-    </div>
-</div>
-
-<!-- Sección de productos de Tapetes -->
-<div class="container mt-4 product-section" id="tapetes-section">
-    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
-    <h2 class="text-center">Tapetes</h2>
-    <div class="category-container">
-        <div class="category-card">
-            <img src="../assets/IMAGENES/tapete%20baul.png" alt="Tapete estándar">
-            <h4>Tapete Estándar</h4>
-            <p class="description">Tapete básico para vehículos comunes.</p>
-            <button class="btn btn-primary" onclick="addToCart('Tapete Estándar', 30000, '../assets/IMAGENES/tapete%20baul.png')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/tapetes%20%233.png" alt="Tapete de goma">
-            <h4>Tapete de Goma</h4>
-            <p class="description">Tapete resistente y fácil de limpiar.</p>
-            <button class="btn btn-primary" onclick="addToCart('Tapete de Goma', 50000, '../assets/IMAGENES/tapetes%20%233.png')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/tapetes%20de%20carro%20%232.jpg" alt="Tapete personalizado">
-            <h4>Tapete Personalizado</h4>
-            <p class="description">Tapete con diseño personalizado.</p>
-            <button class="btn btn-primary" onclick="addToCart('Tapete Personalizado', 80000, '../assets/IMAGENES/tapetes%20de%20carro%20%232.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/tapete8.webp" Tapete de lujo">
-            <h4>Tapete de Lujo</h4>
-            <p class="description">Tapete de alta gama con acabados premium.</p>
-            <button class="btn btn-primary" onclick="addToCart('Tapete de Lujo', 120000, '../assets/IMAGENES/tapete8.webp')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/tapete6.jpg" alt="Tapete antideslizante">
-            <h4>Tapete Antideslizante</h4>
-            <p class="description">Tapete con superficie antideslizante.</p>
-            <button class="btn btn-primary" onclick="addToCart('Tapete Antideslizante', 70000, '../assets/IMAGENES/tapete6.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/Tapete5.jpg" alt="Tapete para camionetas">
-            <h4>Tapete para Camionetas</h4>
-            <p class="description">Tapete robusto para camionetas y SUV.</p>
-            <button class="btn btn-primary" onclick="addToCart('Tapete para Camionetas', 100000, '../assets/IMAGENES/Tapete5.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/tapete4.avif" alt="Tapete de felpa">
-            <h4>Tapete de Felpa</h4>
-            <p class="description">Tapete suave y cómodo para el interior del vehículo.</p>
-            <button class="btn btn-primary" onclick="addToCart('Tapete de Felpa', 90000, '../assets/IMAGENES/tapete4.avif')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/tapete7.webp" alt="Tapete de caucho">
-            <h4>Tapete color rosa</h4>
-            <p class="description">Tapete de caucho resistente al agua y al desgaste.</p>
-            <button class="btn btn-primary" onclick="addToCart('Tapete color rosa', 110000, '../assets/IMAGENES/tapete7.webp')">🛒 Agregar al carrito</button>
-        </div>
-    </div>
-</div>
-
-<!-- Sección de productos de Estribos -->
-<div class="container mt-4 product-section" id="estribos-section">
-    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
-    <h2 class="text-center">Estribos</h2>
-    <div class="category-container">
-        <div class="category-card">
-            <img src="../assets/IMAGENES/estribos%231.webp" alt="Estribo estándar">
-            <h4>Estribo Estándar</h4>
-            <p class="description">Estribo básico para vehículos comunes.</p>
-            <button class="btn btn-primary" onclick="addToCart('Estribo Estándar', 80000, '../assets/IMAGENES/estribos%231.webp')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/estribos%232.jpeg" alt="Estribo deportivo">
-            <h4>Estribo Deportivo</h4>
-            <p class="description">Estribo diseñado para vehículos deportivos.</p>
-            <button class="btn btn-primary" onclick="addToCart('Estribo Deportivo', 150000, '../assets/IMAGENES/estribos%232.jpeg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/estribo%233.jpeg" alt="Estribo de acero inoxidable">
-            <h4>Estribo de Acero Inoxidable</h4>
-            <p class="description">Estribo resistente a la corrosión.</p>
-            <button class="btn btn-primary" onclick="addToCart('Estribo de Acero Inoxidable', 200000, '../assets/IMAGENES/estribo%233.jpeg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/ESTRIBOS%234.png" alt="Estribo de lujo">
-            <h4>Estribo de Lujo</h4>
-            <p class="description">Estribo de alta gama con acabados premium.</p>
-            <button class="btn btn-primary" onclick="addToCart('Estribo de Lujo', 250000, '../assets/IMAGENES/ESTRIBOS%234.png')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/estribos%235.webp" alt="Estribo para camionetas">
-            <h4>Estribo para Camionetas</h4>
-            <p class="description">Estribo robusto para camionetas y SUV.</p>
-            <button class="btn btn-primary" onclick="addToCart('Estribo para Camionetas', 180000, '../assets/IMAGENES/estribos%235.webp')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/estribos1.jpg" alt="Estribo personalizado">
-            <h4>Estribo Personalizado</h4>
-            <p class="description">Estribo con diseño personalizado.</p>
-            <button class="btn btn-primary" onclick="addToCart('Estribo Personalizado', 220000, '../assets/IMAGENES/estribos1.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/estribos2.webp" alt="Estribo antideslizante">
-            <h4>Estribo Antideslizante</h4>
-            <p class="description">Estribo con superficie antideslizante.</p>
-            <button class="btn btn-primary" onclick="addToCart('Estribo Antideslizante', 160000, '../assets/IMAGENES/estribos2.webp')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/estribos3.jpg" alt="Estribo de carga extra">
-            <h4>Estribo de Carga Extra</h4>
-            <p class="description">Estribo diseñado para soportar cargas pesadas.</p>
-            <button class="btn btn-primary" onclick="addToCart('Estribo de Carga Extra', 280000, '../assets/IMAGENES/estribos3.jpg')">🛒 Agregar al carrito</button>
-        </div>
-    </div>
-</div>
-
-<!-- Sección de productos de Perillas -->
-<div class="container mt-4 product-section" id="perillas-section">
-    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
-    <h2 class="text-center">Perillas</h2>
-    <div class="category-container">
-        <div class="category-card">
-            <img src="../static/img/perilla5.webp" Perilla estándar">
-            <h4>Perilla Estándar</h4>
-            <p class="description">Perilla básica para vehículos comunes.</p>
-            <button class="btn btn-primary" onclick="addToCart('Perilla Estándar', 20000, '../assets/IMAGENES/perilla5.webp')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/perilladepo.jpg" Perilla deportiva">
-            <h4>Perilla Deportiva</h4>
-            <p class="description">Perilla diseñada para vehículos deportivos.</p>
-            <button class="btn btn-primary" onclick="addToCart('Perilla Deportiva', 50000, '../assets/IMAGENES/perilladepo.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/perillas%231.jpeg" alt="Perilla de lujo">
-            <h4>Perilla de Lujo</h4>
-            <p class="description">Perilla de alta gama con acabados premium.</p>
-            <button class="btn btn-primary" onclick="addToCart('Perilla de Lujo', 80000, '../assets/IMAGENES/perillas%231.jpeg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/perilla%20%232.png" alt="Perilla personalizada">
-            <h4>Perilla Personalizada</h4>
-            <p class="description">Perilla con diseño personalizado.</p>
-            <button class="btn btn-primary" onclick="addToCart('Perilla Personalizada', 70000, '../assets/IMAGENES/perilla%20%232.png')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/perillaanti.webp" alt="Perilla antideslizante">
-            <h4>Perilla Antideslizante</h4>
-            <p class="description">Perilla con superficie antideslizante.</p>
-            <button class="btn btn-primary" onclick="addToCart('Perilla Antideslizante', 60000, '../assets/IMAGENES/perillaanti.webp')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/perillas2.webp" alt="Perilla ergonómica">
-            <h4>Perilla Ergonómica</h4>
-            <p class="description">Perilla diseñada para mayor comodidad.</p>
-            <button class="btn btn-primary" onclick="addToCart('Perilla Ergonómica', 90000, '../assets/IMAGENES/perillas2.webp')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/perillas3.jpg" alt="Perilla de aluminio">
-            <h4>Perilla de Aluminio</h4>
-            <p class="description">Perilla de aluminio resistente y ligera.</p>
-            <button class="btn btn-primary" onclick="addToCart('Perilla de Aluminio', 100000, '../assets/IMAGENES/perillas3.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/perillas4.webp" alt="Perilla de acero inoxidable">
-            <h4>Perilla de Acero Inoxidable</h4>
-            <p class="description">Perilla de acero inoxidable resistente a la corrosión.</p>
-            <button class="btn btn-primary" onclick="addToCart('Perilla de Acero Inoxidable', 120000, '../assets/IMAGENES/perillas4.webp')">🛒 Agregar al carrito</button>
-        </div>
-    </div>
-</div>
-
-<!-- Sección de productos de Spoilers -->
-<div class="container mt-4 product-section" id="spoilers-section">
-    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
-    <h2 class="text-center">Spoilers</h2>
-    <div class="category-container">
-        <div class="category-card">
-            <img src="../assets/IMAGENES/Spoiler%231.jpg" alt="Spoiler estándar">
-            <h4>Spoiler Estándar</h4>
-            <p class="description">Spoiler básico para vehículos comunes.</p>
-            <button class="btn btn-primary" onclick="addToCart('Spoiler Estándar', 100000, '../assets/IMAGENES/Spoiler%231.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/spoilers%232.png" alt="Spoiler deportivo">
-            <h4>Spoiler Deportivo</h4>
-            <p class="description">Spoiler diseñado para vehículos deportivos.</p>
-            <button class="btn btn-primary" onclick="addToCart('Spoiler Deportivo', 200000, '../assets/IMAGENES/spoilers%232.png')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/spoilers%233.webp" alt="Spoiler de lujo">
-            <h4>Spoiler de Lujo</h4>
-            <p class="description">Spoiler de alta gama con acabados premium.</p>
-            <button class="btn btn-primary" onclick="addToCart('Spoiler de Lujo', 300000, '../assets/IMAGENES/spoilers%233.webp')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/spoilers%20%235.jpg" alt="Spoiler personalizado">
-            <h4>Spoiler Personalizado</h4>
-            <p class="description">Spoiler con diseño personalizado.</p>
-            <button class="btn btn-primary" onclick="addToCart('Spoiler Personalizado', 250000, '../assets/IMAGENES/spoilers%20%235.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/spoi2.jpg" alt="Spoiler de fibra de carbono">
-            <h4>Spoiler de Fibra de Carbono</h4>
-            <p class="description">Spoiler ligero y resistente de fibra de carbono.</p>
-            <button class="btn btn-primary" onclick="addToCart('Spoiler de Fibra de Carbono', 350000, '../assets/IMAGENES/spoi2.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/spoi3.jpg" alt="Spoiler ajustable">
-            <h4>Spoiler Ajustable</h4>
-            <p class="description">Spoiler con ángulo ajustable para mayor aerodinámica.</p>
-            <button class="btn btn-primary" onclick="addToCart('Spoiler Ajustable', 280000, '../assets/IMAGENES/spoi3.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/spoi4.webp" alt="Spoiler para camionetas">
-            <h4>Spoiler para Camionetas</h4>
-            <p class="description">Spoiler robusto para camionetas y SUV.</p>
-            <button class="btn btn-primary" onclick="addToCart('Spoiler para Camionetas', 320000, '../assets/IMAGENES/spoi4.webp')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/spoi5.jpg" alt="Spoiler de carga extra">
-            <h4>Spoiler de Carga Extra</h4>
-            <p class="description">Spoiler diseñado para soportar cargas pesadas.</p>
-            <button class="btn btn-primary" onclick="addToCart('Spoiler de Carga Extra', 400000, '../assets/IMAGENES/spoi5.jpg')">🛒 Agregar al carrito</button>
-        </div>
-    </div>
-</div>
-
-<!-- Sección de productos de Retrovisores -->
-<div class="container mt-4 product-section" id="retrovisores-section">
-    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
-    <h2 class="text-center">Retrovisores</h2>
-    <div class="category-container">
-        <div class="category-card">
-            <img src="../assets/IMAGENES/retrovisores%20%231.jpg" alt="Retrovisor estándar">
-            <h4>Retrovisor Estándar</h4>
-            <p class="description">Retrovisor básico para vehículos comunes.</p>
-            <button class="btn btn-primary" onclick="addToCart('Retrovisor Estándar', 50000, '../assets/IMAGENES/retrovisores%20%231.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/retro6.jpg" Retrovisor deportivo">
-            <h4>Retrovisor Deportivo</h4>
-            <p class="description">Retrovisor diseñado para vehículos deportivos.</p>
-            <<button class="btn btn-primary" onclick="addToCart('Retrovisor Deportivo', 100000, '../assets/IMAGENES/retro6.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/retro2.jpg" Retrovisor de lujo">
-            <h4>Retrovisor de Lujo</h4>
-            <p class="description">Retrovisor de alta gama con acabados premium.</p>
-            <button class="btn btn-primary" onclick="addToCart('Retrovisor de Lujo', 150000, '../assets/IMAGENES/retro2.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/retro3.webp" Retrovisor personalizado">
-            <h4>Retrovisor Personalizado</h4>
-            <p class="description">Retrovisor con diseño personalizado.</p>
-            <button class="btn btn-primary" onclick="addToCart('Retrovisor Personalizado', 120000, '../assets/IMAGENES/retro3.webp')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/retro4.jpg""Retrovisor antideslumbrante">
-            <h4>Retrovisor Antideslumbrante</h4>
-            <p class="description">Retrovisor con función antideslumbrante.</p>
-            <button class="btn btn-primary" onclick="addToCart('Retrovisor Antideslumbrante', 130000, '../assets/IMAGENES/retro4.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/retro5.jpg""Retrovisor con cámara">
-            <h4>Retrovisor con Cámara</h4>
-            <p class="description">Retrovisor integrado con cámara de seguridad.</p>
-            <button class="btn btn-primary" onclick="addToCart('Retrovisor con Cámara', 200000, '../assets/IMAGENES/retro5.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/retro6.jpg"="Retrovisor para camionetas">
-            <h4>Retrovisor para Camionetas</h4>
-            <p class="description">Retrovisor robusto para camionetas y SUV.</p>
-            <button class="btn btn-primary" onclick="addToCart('Retrovisor para Camionetas', 180000, '../assets/IMAGENES/retro6.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/retro8.jpg"="Retrovisor de carga extra">
-            <h4>Retrovisor de Carga Extra</h4>
-            <p class="description">Retrovisor diseñado para soportar cargas pesadas.</p>
-            <button class="btn btn-primary" onclick="addToCart('Retrovisor de Carga Extra', 250000, '../assets/IMAGENES/retro8.jpg')">🛒 Agregar al carrito</button>
-        </div>
-    </div>
-</div>
-
-<!-- Sección de productos de Repuestos -->
-<div class="container mt-4 product-section" id="repuestos-section">
-    <div class="back-button" onclick="showCategories()">← Volver a categorías</div>
-    <h2 class="text-center">Repuestos</h2>
-    <div class="category-container">
-        <div class="category-card">
-            <img src="../static/img/repu1.jpg" alt="Repuesto estándar">
-            <h4>Repuesto Estándar</h4>
-            <p class="description">Repuesto básico para vehículos comunes.</p>
-            <button class="btn btn-primary" onclick="addToCart('Repuesto Estándar', 40000, '../assets/IMAGENES/repu1.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/repu2.jpg" alt="Repuesto deportivo">
-            <h4>Repuesto Deportivo</h4>
-            <p class="description">Repuesto diseñado para vehículos deportivos.</p>
-            <button class="btn btn-primary" onclick="addToCart('Repuesto Deportivo', 80000, '../assets/IMAGENES/repu2.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/repu3.jpg" alt="Repuesto de lujo">
-            <h4>Repuesto de aceite</h4>
-            <p class="description">Repuesto de aceite para todo tipo de carro</p>
-            <button class="btn btn-primary" onclick="addToCart('Repuesto de Aceite', 120000, '../assets/IMAGENES/repu3.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/repu4.webp" alt="Repuesto personalizado">
-            <h4>Repuesto de batería</h4>
-            <p class="description">Repuesto de baterías para carros.</p>
-            <button class="btn btn-primary" onclick="addToCart('Repuesto de Batería', 100000, '../assets/IMAGENES/repu4.webp')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/repu5.jpg" alt="Repuesto para camionetas">
-            <h4>Pastillas de frenos</h4>
-            <p class="description">Repuesto robusto para camionetas y SUV.</p>
-            <button class="btn btn-primary" onclick="addToCart('Pastillas de Frenos', 150000, '../assets/IMAGENES/repu5.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../static/img/repu6.jpg" alt="Repuesto de carga extra">
-            <h4>Repuesto de motor</h4>
-            <p class="description">Repuesto diseñado para motores de carros</p>
-            <button class="btn btn-primary" onclick="addToCart('Repuesto de Motor', 200000, '../assets/IMAGENES/repu6.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/repuesto7.jpg" alt="Repuesto de alta resistencia">
-            <h4>Repuesto de Alta Resistencia</h4>
-            <p class="description">Repuesto de alta resistencia para uso intensivo.</p>
-            <button class="btn btn-primary" onclick="addToCart('Repuesto de Alta Resistencia', 180000, '../assets/IMAGENES/repuesto7.jpg')">🛒 Agregar al carrito</button>
-        </div>
-        <div class="category-card">
-            <img src="../assets/IMAGENES/repuesto8.jpg" alt="Repuesto de acero inoxidable">
-            <h4>Repuesto de Acero Inoxidable</h4>
-            <p class="description">Repuesto de acero inoxidable resistente a la corrosión.</p>
-            <button class="btn btn-primary" onclick="addToCart('Repuesto de Acero Inoxidable', 220000, '../assets/IMAGENES/repuesto8.jpg')">🛒 Agregar al carrito</button>
-        </div>
-    </div>
+    <!-- Paginación -->
+    <nav aria-label="Page navigation">
+        <ul class="pagination" id="pagination">
+            <!-- Los números de página se generarán con JavaScript -->
+        </ul>
+    </nav>
 </div>
 
 <!-- Footer -->
@@ -704,6 +111,196 @@
 <button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
 
 <script>
+    // Datos de todos los productos
+    const allProducts = [
+        // Llantas
+        { id: 1, name: 'Llanta Deportiva', category: 'llantas', price: 150000, image: '../assets/IMAGENES/neumatico%20%234.jpeg', description: 'Llanta de alto rendimiento para deportivos. Diseño aerodinámico.', available: true },
+        { id: 2, name: 'Llanta de Aleación', category: 'llantas', price: 200000, image: '../assets/IMAGENES/neumatico%20%232.jpeg', description: 'Llanta ligera y resistente, ideal para todo tipo de vehículos.', available: true },
+        { id: 3, name: 'Llanta Lisas', category: 'llantas', price: 120000, image: '../assets/IMAGENES/neumatico10.avif', description: 'Llanta lisa para un manejo suave y cómodo.', available: true },
+        { id: 4, name: 'Llanta Radiales', category: 'llantas', price: 180000, image: '../assets/IMAGENES/neumatico7.jpg', description: 'Llanta radial para mayor durabilidad y rendimiento.', available: true },
+        { id: 5, name: 'Llanta Mixtas', category: 'llantas', price: 160000, image: '../assets/IMAGENES/neumatico8.jpg', description: 'Llanta mixta para todo tipo de terrenos.', available: true },
+        { id: 6, name: 'Llanta Sólidas', category: 'llantas', price: 220000, image: '../assets/IMAGENES/neumatico9.jpg', description: 'Llanta sólida para vehículos pesados.', available: true },
+        { id: 7, name: 'Llanta Estándar', category: 'llantas', price: 100000, image: '../assets/IMAGENES/neumatico10.avif', description: 'Llanta estándar para uso diario.', available: true },
+        { id: 8, name: 'Llanta de Carga Extra', category: 'llantas', price: 250000, image: '../assets/IMAGENES/neumatico9.jpg', description: 'Llanta diseñada para soportar cargas pesadas.', available: true },
+
+        // Tubos de escape
+        { id: 9, name: 'Tubo Estándar', category: 'tubos-escape', price: 80000, image: '../assets/IMAGENES/tubo%20de%20escape11.jpg', description: 'Tubo de escape estándar para vehículos comunes.', available: true },
+        { id: 10, name: 'Tubo de Alto Rendimiento', category: 'tubos-escape', price: 150000, image: '../assets/IMAGENES/tubo12.jpg', description: 'Tubo de escape diseñado para mejorar el rendimiento del motor.', available: true },
+        { id: 11, name: 'Tubo para Carro Deportivo', category: 'tubos-escape', price: 250000, image: '../assets/IMAGENES/tubo11.jpg', description: 'Tubo de escape especial para autos deportivos.', available: true },
+        { id: 12, name: 'Tubo de Acero Inoxidable', category: 'tubos-escape', price: 200000, image: '../assets/IMAGENES/tubo9.jpg', description: 'Tubo de escape resistente a la corrosión.', available: true },
+        { id: 13, name: 'Tubo de Doble Salida', category: 'tubos-escape', price: 300000, image: '../assets/IMAGENES/tuboescape%232.png', description: 'Tubo de escape con doble salida para mayor potencia.', available: true },
+        { id: 14, name: 'Tubo Estándar', category: 'tubos-escape', price: 90000, image: '../assets/IMAGENES/tubo13.jpg', description: 'Tubo de escape básico para vehículos comunes.', available: true },
+        { id: 15, name: 'Tubo Estándar', category: 'tubos-escape', price: 95000, image: '../assets/IMAGENES/tubo%2014.jpg', description: 'Tubo de escape básico para vehículos comunes.', available: true },
+        { id: 16, name: 'Tubo Estándar', category: 'tubos-escape', price: 100000, image: '../assets/IMAGENES/tubo%2015.jpg', description: 'Tubo de escape básico para vehículos comunes.', available: true },
+
+        // Exploradoras
+        { id: 17, name: 'Exploradora Estándar', category: 'exploradoras', price: 50000, image: '../assets/IMAGENES/exploradora%20%234.webp', description: 'Exploradora básica para uso diario.', available: true },
+        { id: 18, name: 'Exploradora Deportiva', category: 'exploradoras', price: 120000, image: '../assets/IMAGENES/exploradora%233.png', description: 'Exploradora diseñada para vehículos deportivos.', available: true },
+        { id: 19, name: 'Exploradora de Acero Inoxidable', category: 'exploradoras', price: 180000, image: '../assets/IMAGENES/exploradoras%20%235.webp', description: 'Exploradora resistente a la corrosión.', available: true },
+        { id: 20, name: 'Exploradora de Doble Salida', category: 'exploradoras', price: 250000, image: '../assets/IMAGENES/explo2.jpg', description: 'Exploradora con doble salida para mayor potencia.', available: true },
+        { id: 21, name: 'Exploradora de Alto Rendimiento', category: 'exploradoras', price: 300000, image: '../assets/IMAGENES/explo3.jpg', description: 'Exploradora de alto rendimiento para terrenos difíciles.', available: true },
+        { id: 22, name: 'Exploradora para Camionetas', category: 'exploradoras', price: 280000, image: '../assets/IMAGENES/explo4.jpg', description: 'Exploradora robusta para camionetas y SUV.', available: true },
+        { id: 23, name: 'Exploradora Personalizada', category: 'exploradoras', price: 350000, image: '../assets/IMAGENES/explo5.webp', description: 'Exploradora con diseño personalizado.', available: true },
+        { id: 24, name: 'Exploradora de Lujo', category: 'exploradoras', price: 400000, image: '../assets/IMAGENES/explo7.webp', description: 'Exploradora de alta gama con acabados premium.', available: true },
+
+        // Cámaras
+        { id: 25, name: 'Cámara Estándar', category: 'camaras', price: 60000, image: '../assets/IMAGENES/camaar%20%234.jpeg', description: 'Cámara básica para vehículos comunes.', available: true },
+        { id: 26, name: 'Cámara de Alta Resolución', category: 'camaras', price: 100000, image: '../assets/IMAGENES/camaara%20%233.webp', description: 'Cámara con alta calidad de imagen.', available: true },
+        { id: 27, name: 'Cámara Deportiva', category: 'camaras', price: 150000, image: '../assets/IMAGENES/camara%20%232.png', description: 'Cámara diseñada para vehículos deportivos.', available: true },
+        { id: 28, name: 'Cámara de Visión Nocturna', category: 'camaras', price: 200000, image: '../assets/IMAGENES/camara%20%235.webp', description: 'Cámara con visión nocturna para mayor seguridad.', available: true },
+        { id: 29, name: 'Cámara 360°', category: 'camaras', price: 250000, image: '../assets/IMAGENES/camara%231.jpeg', description: 'Cámara con visión panorámica de 360 grados.', available: true },
+        { id: 30, name: 'Cámara para Motos', category: 'camaras', price: 120000, image: '../assets/IMAGENES/camara9.webp', description: 'Cámara especial para motocicletas.', available: true },
+        { id: 31, name: 'Cámara de Seguridad', category: 'camaras', price: 180000, image: '../assets/IMAGENES/camara10.jpg', description: 'Cámara de seguridad para vehículos.', available: true },
+        { id: 32, name: 'Cámara de Lujo', category: 'camaras', price: 300000, image: '../assets/IMAGENES/cmara8.jpg', description: 'Cámara de alta gama con acabados premium.', available: true },
+
+        // Tapetes
+        { id: 33, name: 'Tapete Estándar', category: 'tapetes', price: 30000, image: '../assets/IMAGENES/tapete%20baul.png', description: 'Tapete básico para vehículos comunes.', available: true },
+        { id: 34, name: 'Tapete de Goma', category: 'tapetes', price: 50000, image: '../assets/IMAGENES/tapetes%20%233.png', description: 'Tapete resistente y fácil de limpiar.', available: true },
+        { id: 35, name: 'Tapete Personalizado', category: 'tapetes', price: 80000, image: '../assets/IMAGENES/tapetes%20de%20carro%20%232.jpg', description: 'Tapete con diseño personalizado.', available: true },
+        { id: 36, name: 'Tapete de Lujo', category: 'tapetes', price: 120000, image: '../assets/IMAGENES/tapete8.webp', description: 'Tapete de alta gama con acabados premium.', available: true },
+        { id: 37, name: 'Tapete Antideslizante', category: 'tapetes', price: 70000, image: '../assets/IMAGENES/tapete6.jpg', description: 'Tapete con superficie antideslizante.', available: true },
+        { id: 38, name: 'Tapete para Camionetas', category: 'tapetes', price: 100000, image: '../assets/IMAGENES/Tapete5.jpg', description: 'Tapete robusto para camionetas y SUV.', available: true },
+        { id: 39, name: 'Tapete de Felpa', category: 'tapetes', price: 90000, image: '../assets/IMAGENES/tapete4.avif', description: 'Tapete suave y cómodo para el interior del vehículo.', available: true },
+        { id: 40, name: 'Tapete color rosa', category: 'tapetes', price: 110000, image: '../assets/IMAGENES/tapete7.webp', description: 'Tapete de caucho resistente al agua y al desgaste.', available: true },
+
+        // Estribos
+        { id: 41, name: 'Estribo Estándar', category: 'estribos', price: 80000, image: '../assets/IMAGENES/estribos%231.webp', description: 'Estribo básico para vehículos comunes.', available: true },
+        { id: 42, name: 'Estribo Deportivo', category: 'estribos', price: 150000, image: '../assets/IMAGENES/estribos%232.jpeg', description: 'Estribo diseñado para vehículos deportivos.', available: true },
+        { id: 43, name: 'Estribo de Acero Inoxidable', category: 'estribos', price: 200000, image: '../assets/IMAGENES/estribo%233.jpeg', description: 'Estribo resistente a la corrosión.', available: true },
+        { id: 44, name: 'Estribo de Lujo', category: 'estribos', price: 250000, image: '../assets/IMAGENES/ESTRIBOS%234.png', description: 'Estribo de alta gama con acabados premium.', available: true },
+        { id: 45, name: 'Estribo para Camionetas', category: 'estribos', price: 180000, image: '../assets/IMAGENES/estribos%235.webp', description: 'Estribo robusto para camionetas y SUV.', available: true },
+        { id: 46, name: 'Estribo Personalizado', category: 'estribos', price: 220000, image: '../assets/IMAGENES/estribos1.jpg', description: 'Estribo con diseño personalizado.', available: true },
+        { id: 47, name: 'Estribo Antideslizante', category: 'estribos', price: 160000, image: '../assets/IMAGENES/estribos2.webp', description: 'Estribo con superficie antideslizante.', available: true },
+        { id: 48, name: 'Estribo de Carga Extra', category: 'estribos', price: 280000, image: '../assets/IMAGENES/estribos3.jpg', description: 'Estribo diseñado para soportar cargas pesadas.', available: true },
+
+        // Perillas
+        { id: 49, name: 'Perilla Estándar', category: 'perillas', price: 20000, image: '../assets/IMAGENES/perilla5.webp', description: 'Perilla básica para vehículos comunes.', available: true },
+        { id: 50, name: 'Perilla Deportiva', category: 'perillas', price: 50000, image: '../assets/IMAGENES/perilladepo.jpg', description: 'Perilla diseñada para vehículos deportivos.', available: true },
+        { id: 51, name: 'Perilla de Lujo', category: 'perillas', price: 80000, image: '../assets/IMAGENES/perillas%231.jpeg', description: 'Perilla de alta gama con acabados premium.', available: true },
+        { id: 52, name: 'Perilla Personalizada', category: 'perillas', price: 70000, image: '../assets/IMAGENES/perilla%20%232.png', description: 'Perilla con diseño personalizado.', available: true },
+        { id: 53, name: 'Perilla Antideslizante', category: 'perillas', price: 60000, image: '../assets/IMAGENES/perillaanti.webp', description: 'Perilla con superficie antideslizante.', available: true },
+        { id: 54, name: 'Perilla Ergonómica', category: 'perillas', price: 90000, image: '../assets/IMAGENES/perillas2.webp', description: 'Perilla diseñada para mayor comodidad.', available: true },
+        { id: 55, name: 'Perilla de Aluminio', category: 'perillas', price: 100000, image: '../assets/IMAGENES/perillas3.jpg', description: 'Perilla de aluminio resistente y ligera.', available: true },
+        { id: 56, name: 'Perilla de Acero Inoxidable', category: 'perillas', price: 120000, image: '../assets/IMAGENES/perillas4.webp', description: 'Perilla de acero inoxidable resistente a la corrosión.', available: true },
+
+        // Spoilers
+        { id: 57, name: 'Spoiler Estándar', category: 'spoilers', price: 100000, image: '../assets/IMAGENES/Spoiler%231.jpg', description: 'Spoiler básico para vehículos comunes.', available: true },
+        { id: 58, name: 'Spoiler Deportivo', category: 'spoilers', price: 200000, image: '../assets/IMAGENES/spoilers%232.png', description: 'Spoiler diseñado para vehículos deportivos.', available: true },
+        { id: 59, name: 'Spoiler de Lujo', category: 'spoilers', price: 300000, image: '../assets/IMAGENES/spoilers%233.webp', description: 'Spoiler de alta gama con acabados premium.', available: true },
+        { id: 60, name: 'Spoiler Personalizado', category: 'spoilers', price: 250000, image: '../assets/IMAGENES/spoilers%20%235.jpg', description: 'Spoiler con diseño personalizado.', available: true },
+        { id: 61, name: 'Spoiler de Fibra de Carbono', category: 'spoilers', price: 350000, image: '../assets/IMAGENES/spoi2.jpg', description: 'Spoiler ligero y resistente de fibra de carbono.', available: true },
+        { id: 62, name: 'Spoiler Ajustable', category: 'spoilers', price: 280000, image: '../assets/IMAGENES/spoi3.jpg', description: 'Spoiler con ángulo ajustable para mayor aerodinámica.', available: true },
+        { id: 63, name: 'Spoiler para Camionetas', category: 'spoilers', price: 320000, image: '../assets/IMAGENES/spoi4.webp', description: 'Spoiler robusto para camionetas y SUV.', available: true },
+        { id: 64, name: 'Spoiler de Carga Extra', category: 'spoilers', price: 400000, image: '../assets/IMAGENES/spoi5.jpg', description: 'Spoiler diseñado para soportar cargas pesadas.', available: true },
+
+        // Retrovisores
+        { id: 65, name: 'Retrovisor Estándar', category: 'retrovisores', price: 50000, image: '../assets/IMAGENES/retrovisores%20%231.jpg', description: 'Retrovisor básico para vehículos comunes.', available: true },
+        { id: 66, name: 'Retrovisor Deportivo', category: 'retrovisores', price: 100000, image: '../assets/IMAGENES/retro6.jpg', description: 'Retrovisor diseñado para vehículos deportivos.', available: true },
+        { id: 67, name: 'Retrovisor de Lujo', category: 'retrovisores', price: 150000, image: '../assets/IMAGENES/retro2.jpg', description: 'Retrovisor de alta gama con acabados premium.', available: true },
+        { id: 68, name: 'Retrovisor Personalizado', category: 'retrovisores', price: 120000, image: '../assets/IMAGENES/retro3.webp', description: 'Retrovisor con diseño personalizado.', available: true },
+        { id: 69, name: 'Retrovisor Antideslumbrante', category: 'retrovisores', price: 130000, image: '../assets/IMAGENES/retro4.jpg', description: 'Retrovisor con función antideslumbrante.', available: true },
+        { id: 70, name: 'Retrovisor con Cámara', category: 'retrovisores', price: 200000, image: '../assets/IMAGENES/retro5.jpg', description: 'Retrovisor integrado con cámara de seguridad.', available: true },
+        { id: 71, name: 'Retrovisor para Camionetas', category: 'retrovisores', price: 180000, image: '../assets/IMAGENES/retro6.jpg', description: 'Retrovisor robusto para camionetas y SUV.', available: true },
+        { id: 72, name: 'Retrovisor de Carga Extra', category: 'retrovisores', price: 250000, image: '../assets/IMAGENES/retro8.jpg', description: 'Retrovisor diseñado para soportar cargas pesadas.', available: true },
+
+        // Repuestos
+        { id: 73, name: 'Repuesto Estándar', category: 'repuestos', price: 40000, image: '../assets/IMAGENES/repu1.jpg', description: 'Repuesto básico para vehículos comunes.', available: true },
+        { id: 74, name: 'Repuesto Deportivo', category: 'repuestos', price: 80000, image: '../assets/IMAGENES/repu2.jpg', description: 'Repuesto diseñado para vehículos deportivos.', available: true },
+        { id: 75, name: 'Repuesto de aceite', category: 'repuestos', price: 120000, image: '../assets/IMAGENES/repu3.jpg', description: 'Repuesto de aceite para todo tipo de carro', available: true },
+        { id: 76, name: 'Repuesto de batería', category: 'repuestos', price: 100000, image: '../assets/IMAGENES/repu4.webp', description: 'Repuesto de baterías para carros.', available: true },
+        { id: 77, name: 'Pastillas de frenos', category: 'repuestos', price: 150000, image: '../assets/IMAGENES/repu5.jpg', description: 'Repuesto robusto para camionetas y SUV.', available: true },
+        { id: 78, name: 'Repuesto de motor', category: 'repuestos', price: 200000, image: '../assets/IMAGENES/repu6.jpg', description: 'Repuesto diseñado para motores de carros', available: true },
+        { id: 79, name: 'Repuesto de Alta Resistencia', category: 'repuestos', price: 180000, image: '../assets/IMAGENES/repuesto7.jpg', description: 'Repuesto de alta resistencia para uso intensivo.', available: true },
+        { id: 80, name: 'Repuesto de Acero Inoxidable', category: 'repuestos', price: 220000, image: '../assets/IMAGENES/repuesto8.jpg', description: 'Repuesto de acero inoxidable resistente a la corrosión.', available: true }
+    ];
+
+    // Variables para paginación
+    let currentPage = 1;
+    const productsPerPage = 12;
+    let filteredProducts = [...allProducts];
+
+    // Función para renderizar productos
+    function renderProducts() {
+        const productContainer = document.getElementById('product-container');
+        productContainer.innerHTML = '';
+
+        // Calcular índices para la paginación
+        const startIndex = (currentPage - 1) * productsPerPage;
+        const endIndex = startIndex + productsPerPage;
+        const productsToShow = filteredProducts.slice(startIndex, endIndex);
+
+        // Crear elementos de producto
+        productsToShow.forEach(product => {
+            const productCard = document.createElement('div');
+            productCard.className = 'category-card';
+            productCard.innerHTML = `
+                <img src="${product.image}" alt="${product.name}">
+                <h4>${product.name}</h4>
+                <p class="description">${product.description}</p>
+                <p class="price">$${product.price.toLocaleString()}</p>
+                <button class="btn btn-primary" onclick="addToCart('${product.name}', ${product.price}, '${product.image}')">🛒 Agregar al carrito</button>
+            `;
+            productContainer.appendChild(productCard);
+        });
+
+        // Renderizar paginación
+        renderPagination();
+    }
+
+    // Función para renderizar la paginación
+    function renderPagination() {
+        const pagination = document.getElementById('pagination');
+        pagination.innerHTML = '';
+
+        const pageCount = Math.ceil(filteredProducts.length / productsPerPage);
+
+        // Botón Anterior
+        const prevLi = document.createElement('li');
+        prevLi.className = `page-item ${currentPage === 1 ? 'disabled' : ''}`;
+        prevLi.innerHTML = `<a class="page-link" href="#" onclick="changePage(${currentPage - 1})">Anterior</a>`;
+        pagination.appendChild(prevLi);
+
+        // Números de página
+        for (let i = 1; i <= pageCount; i++) {
+            const pageLi = document.createElement('li');
+            pageLi.className = `page-item ${i === currentPage ? 'active' : ''}`;
+            pageLi.innerHTML = `<a class="page-link" href="#" onclick="changePage(${i})">${i}</a>`;
+            pagination.appendChild(pageLi);
+        }
+
+        // Botón Siguiente
+        const nextLi = document.createElement('li');
+        nextLi.className = `page-item ${currentPage === pageCount ? 'disabled' : ''}`;
+        nextLi.innerHTML = `<a class="page-link" href="#" onclick="changePage(${currentPage + 1})">Siguiente</a>`;
+        pagination.appendChild(nextLi);
+    }
+
+    // Función para cambiar de página
+    function changePage(page) {
+        currentPage = page;
+        renderProducts();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Función para buscar productos
+    function searchProducts(event) {
+        event.preventDefault();
+        const searchTerm = document.getElementById('search-input').value.toLowerCase();
+
+        if (searchTerm.trim() === '') {
+            filteredProducts = [...allProducts];
+        } else {
+            filteredProducts = allProducts.filter(product =>
+                product.name.toLowerCase().includes(searchTerm) ||
+                product.description.toLowerCase().includes(searchTerm) ||
+                product.category.toLowerCase().includes(searchTerm)
+            );
+        }
+
+        currentPage = 1;
+        renderProducts();
+    }
+
     // Función para añadir un producto al carrito
     function addToCart(name, price, image) {
         // Obtener el carrito actual del localStorage
@@ -739,56 +336,6 @@
         // Opcional: Mostrar una alerta o mensaje de éxito
         alert('Producto agregado al carrito');
     }
-    // Función para mostrar la sección de productos de una categoría
-    function showProducts(category) {
-        // Oculta todas las secciones
-        document.querySelectorAll('.product-section').forEach(section => {
-            section.style.display = 'none';
-        });
-        // Oculta la sección de categorías
-        document.getElementById('category-section').style.display = 'none';
-        // Muestra la sección de la categoría seleccionada
-        const sectionToShow = document.getElementById(`${category}-section`);
-        if (sectionToShow) {
-            sectionToShow.style.display = 'block';
-        } else {
-            console.error(`Sección no encontrada: ${category}-section`);
-        }
-    }
-
-    // Función para volver a la sección de categorías
-    function showCategories() {
-        // Oculta todas las secciones de productos
-        document.querySelectorAll('.product-section').forEach(section => {
-            section.style.display = 'none';
-        });
-        // Muestra la sección de categorías
-        document.getElementById('category-section').style.display = 'block';
-    }
-
-    // Función para buscar categorías
-    function searchCategory(event) {
-        event.preventDefault();
-        const searchTerm = document.getElementById('search-input').value.toLowerCase();
-        const categories = {
-            'llantas': 'llantas',
-            'tubos de escape': 'tubos-escape',
-            'exploradoras': 'exploradoras',
-            'cámaras': 'camaras',
-            'tapetes': 'tapetes',
-            'estribos': 'estribos',
-            'perillas': 'perillas',
-            'spoilers': 'spoilers',
-            'retrovisores': 'retrovisores',
-            'repuestos': 'repuestos'
-        };
-
-        if (categories[searchTerm]) {
-            showProducts(categories[searchTerm]);
-        } else {
-            alert('Categoría no encontrada');
-        }
-    }
 
     // Función para cambiar el modo
     function toggleMode() {
@@ -811,8 +358,11 @@
         }
     }
 
-    // Llamar a la función al cargar la página
-    aplicarModoGuardado();
+    // Inicializar la página
+    document.addEventListener('DOMContentLoaded', () => {
+        aplicarModoGuardado();
+        renderProducts();
+    });
 </script>
 <!-- Bootstrap JS (necesario para el menú responsivo) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
