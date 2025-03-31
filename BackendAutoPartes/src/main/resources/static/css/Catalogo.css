@@ -496,57 +496,7 @@ body {
     background-color: #007BFF !important;
     color: white !important;
 }
-<<<<<<< HEAD
- feature/frontend/ArregloDeCatalogo
-/* Estilos del menú desplegable */
-.profile-dropdown {
-    position: relative;
-}
-.profile-button {
-    background-color: transparent;
-    border: none;
-    color: white;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 14px;
-    cursor: pointer;
-}
-.profile-button:hover {
-    color: #FF335F;
-}
-.profile-icon {
-    width: 25px;
-    height: 25px;
-    border-radius: 50%;
-    object-fit: cover;
-    vertical-align: middle;
-}
-.profile-dropdown-content {
-    display: none;
-    position: absolute;
-    right: 0;
-    background-color: #222;
-    border-radius: 10px;
-    padding: 10px 0;
-    width: 150px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-    z-index: 100;
-}
-.profile-dropdown-content a {
-    color: white;
-    text-decoration: none;
-    padding: 10px 15px;
-    display: block;
-    transition: background-color 0.3s;
-}
-.profile-dropdown-content a:hover {
-    background-color: #FF335F;
-    border-radius: 5px;
-}
-=======
 
->>>>>>> c8d5c49 (Arreglo final de catalogo en el css y java script)
 .profile-dropdown:hover .profile-dropdown-content {
     display: block;
 }
@@ -601,12 +551,7 @@ body {
     color: white !important;
     background-color: #007BFF !important;
     border-color: #007BFF !important;
-<<<<<<< HEAD
-
-/* Añade esto al final de tu archivo CSS existente */
-=======
 }
->>>>>>> c8d5c49 (Arreglo final de catalogo en el css y java script)
 
 /* Estilos para el contador del carrito */
 .navbar .nav-link .badge {
@@ -765,8 +710,4 @@ body {
         left: 5%;
         right: auto;
     }
-<<<<<<< HEAD
- develop
-=======
->>>>>>> c8d5c49 (Arreglo final de catalogo en el css y java script)
 }
