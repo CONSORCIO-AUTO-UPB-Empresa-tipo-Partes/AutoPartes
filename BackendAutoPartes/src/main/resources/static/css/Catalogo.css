@@ -31,11 +31,6 @@ body {
     border-color: #0056b3 !important;
 }
 
-.search-form .btn:hover {
-    background-color: #e63946;
-    border-color: #e63946;
-}
-
 .background-stripes {
     position: fixed;
     width: 100%;
@@ -466,7 +461,7 @@ body {
 .profile-dropdown-content {
     display: none;
     position: absolute;
-    right: 8;
+    right: 0;
     background-color: #222;
     border-radius: 10px;
     padding: 10px 0;
@@ -501,6 +496,7 @@ body {
     background-color: #007BFF !important;
     color: white !important;
 }
+<<<<<<< HEAD
  feature/frontend/ArregloDeCatalogo
 /* Estilos del menú desplegable */
 .profile-dropdown {
@@ -548,6 +544,9 @@ body {
     background-color: #FF335F;
     border-radius: 5px;
 }
+=======
+
+>>>>>>> c8d5c49 (Arreglo final de catalogo en el css y java script)
 .profile-dropdown:hover .profile-dropdown-content {
     display: block;
 }
@@ -558,6 +557,7 @@ body {
     gap: 20px;
     padding: 20px;
 }
+
 /* Estilos base de la paginación (comunes a ambos modos) */
 .pagination {
     justify-content: center;
@@ -576,8 +576,8 @@ body {
 }
 
 .page-link:hover {
-    color: white !important; /* Texto blanco en hover */
-    background-color: #FF335F; /* Fondo rojo en modo oscuro */
+    color: white !important;
+    background-color: #FF335F;
     border-color: #FF335F;
 }
 
@@ -598,11 +598,15 @@ body {
 }
 
 .modo-claro .page-link:hover {
-    color: white !important; /* Texto blanco en hover */
-    background-color: #007BFF !important; /* Fondo azul en modo claro */
+    color: white !important;
+    background-color: #007BFF !important;
     border-color: #007BFF !important;
+<<<<<<< HEAD
 
 /* Añade esto al final de tu archivo CSS existente */
+=======
+}
+>>>>>>> c8d5c49 (Arreglo final de catalogo en el css y java script)
 
 /* Estilos para el contador del carrito */
 .navbar .nav-link .badge {
@@ -761,5 +765,8 @@ body {
         left: 5%;
         right: auto;
     }
+<<<<<<< HEAD
  develop
+=======
+>>>>>>> c8d5c49 (Arreglo final de catalogo en el css y java script)
 }
