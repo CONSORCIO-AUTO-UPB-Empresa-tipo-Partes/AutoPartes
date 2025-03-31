@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editar Perfil - Accesorios para Autos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../static/Styles/perfil.css">
+    <link rel="stylesheet" href="../static/css/Perfil.css">
     <style>
     </style>
 </head>
@@ -30,23 +30,25 @@
                 <button class="btn btn-outline-success" type="submit">Buscar</button>
             </form>
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="Catalogo.html">Inicio</a></li>
-
-                <!-- Perfil con menú desplegable -->
                 <li class="nav-item">
-                <div class="profile-dropdown">
-                    <button class="profile-button">
-                        <img src="../static/img/USUARIO.png" alt="Perfil" class="profile-icon">
-                        <!--<span>Perfil</span>-->
-                    </button>
-                    <div class="profile-dropdown-content">
-                        <a href="Perfil.html">Mi cuenta</a>
-                        <a href="Historial_Compras.html">Historial de compras</a>
-                        <a href="PrincipalUltimo.html" onclick="logout()">Salir</a>
-                    </div>
-                </div>
+                    <a class="nav-link" href="Catalogo.html">Inicio</a>
+                </li>
 
-                    <!-- Icono del carrito -->
+                <!-- Menú desplegable del perfil -->
+                <li class="nav-item">
+                    <div class="profile-dropdown">
+                        <button class="profile-button">
+                            <img src="../static/img/USUARIO.png" alt="Perfil" class="profile-icon">
+                        </button>
+                        <div class="profile-dropdown-content">
+                            <a href="Perfil.html">Mi cuenta</a>
+                            <a href="Historial_Compras.html">Historial de compras</a>
+                            <a href="PrincipalUltimo.html" onclick="logout()">Salir</a>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Icono del carrito -->
                 <li class="nav-item">
                     <a class="nav-link" href="Carrito.html" style="font-size: 27px;">🛒</a>
                 </li>
@@ -57,11 +59,11 @@
 
 <script>
     function logout() {
-      window.location.href = 'PrincipalUltimo.html';
+        window.location.href = 'PrincipalUltimo.html';
     }
 </script>
 
-
+<!-- Contenido de la página de edición de perfil -->
 <div class="cart-container">
     <h2>Editar Perfil</h2>
     <form id="profileForm">
@@ -89,7 +91,7 @@
         <!-- Teléfono -->
         <div class="mb-3">
             <label for="phone" class="form-label">Teléfono</label>
-            <input type="tel" class="form-control" id="phone" value="+57 301 641 7515" required>
+            <input type="tel" class="form-control" id="phone" value="+57 123 456 1178" required>
             <div class="invalid-feedback">Por favor, ingresa tu número de teléfono.</div>
         </div>
 
@@ -225,147 +227,11 @@
            }, 1000); // Simula un retraso de 1 segundo
        }
    });
-   <script>
-   // Función para enviar datos al backend
-   async function saveDataToBackend() {
-       const formData = {
-           name: document.getElementById('name').value,
-           lastname: document.getElementById('lastname').value,
-           email: document.getElementById('email').value,
-           phone: document.getElementById('phone').value,
-           address: document.getElementById('address').value,
-           documentType: document.getElementById('documentType').value,
-           document: document.getElementById('document').value,
-           password: document.getElementById('password').value,
-       };
 
-       try {
-           const response = await fetch('/api/save-profile', {
-               method: 'POST',
-               headers: {
-                   'Content-Type': 'application/json',
-               },
-               body: JSON.stringify(formData),
-           });
-
-           if (response.ok) {
-               document.getElementById('confirmationMessage').style.display = 'block';
-               setTimeout(() => {
-                   document.getElementById('confirmationMessage').style.display = 'none';
-               }, 3000);
-           } else {
-               alert('Error al guardar los datos.');
-           }
-       } catch (error) {
-           console.error('Error:', error);
-           alert('Error al conectar con el servidor.');
-       }
-   }
-
-   // Función para guardar los datos en localStorage
-   function saveDataToLocalStorage() {
-       const formData = {
-           name: document.getElementById('name').value,
-           lastname: document.getElementById('lastname').value,
-           email: document.getElementById('email').value,
-           phone: document.getElementById('phone').value,
-           address: document.getElementById('address').value,
-           documentType: document.getElementById('documentType').value,
-           document: document.getElementById('document').value,
-           password: document.getElementById('password').value,
-       };
-       localStorage.setItem('profileData', JSON.stringify(formData)); // Guardar datos en localStorage
-   }
-
-   // Función para cargar los datos desde localStorage
-   function loadDataFromLocalStorage() {
-       const savedData = localStorage.getItem('profileData');
-       if (savedData) {
-           const formData = JSON.parse(savedData);
-           document.getElementById('name').value = formData.name;
-           document.getElementById('lastname').value = formData.lastname;
-           document.getElementById('email').value = formData.email;
-           document.getElementById('phone').value = formData.phone;
-           document.getElementById('address').value = formData.address;
-           document.getElementById('documentType').value = formData.documentType;
-           document.getElementById('document').value = formData.document;
-           document.getElementById('password').value = formData.password;
-       }
-   }
-
-   // Función para validar el formulario
-   function validateForm() {
-       const form = document.getElementById('profileForm');
-       const email = document.getElementById('email').value;
-
-       if (!email.includes('@')) {
-           alert('El correo electrónico debe contener un "@".');
-           return false;
-       }
-
-       if (!form.checkValidity()) {
-           form.classList.add('was-validated');
-           return false;
-       }
-
-       return true;
-   }
-
-   // Función para manejar el envío del formulario
-   document.getElementById('profileForm').addEventListener('submit', function (event) {
-       event.preventDefault();
-
-       if (validateForm()) {
-           saveDataToLocalStorage(); // Guardar datos en localStorage
-           document.getElementById('confirmationMessage').style.display = 'block';
-
-           setTimeout(() => {
-               document.getElementById('confirmationMessage').style.display = 'none';
-           }, 3000);
-       }
-   });
-
-   // Cargar datos al iniciar la página
-   window.addEventListener('load', loadDataFromLocalStorage);
-
-   // Función para cargar datos desde el backend
-   async function loadDataFromBackend() {
-       try {
-           const response = await fetch('/api/get-profile');
-           if (response.ok) {
-               const formData = await response.json();
-               document.getElementById('name').value = formData.name;
-               document.getElementById('lastname').value = formData.lastname;
-               document.getElementById('email').value = formData.email;
-               document.getElementById('phone').value = formData.phone;
-               document.getElementById('address').value = formData.address;
-               document.getElementById('documentType').value = formData.documentType;
-               document.getElementById('document').value = formData.document;
-               document.getElementById('password').value = formData.password;
-           }
-       } catch (error) {
-           console.error('Error:', error);
-       }
-   }
-
-   // Función para manejar el envío del formulario
-   document.getElementById('profileForm').addEventListener('submit', function (event) {
-       event.preventDefault();
-
-       if (validateForm()) {
-           saveDataToBackend(); // Guardar datos en el backend
-       }
-   });
-   document.getElementById('modo-btn').addEventListener('click', () => {
-    document.body.classList.toggle('modo-claro');
-});
-
-   // Cargar datos al iniciar la página
-   window.addEventListener('load', loadDataFromBackend);
-</script>
 <!-- Bootstrap JS (necesario para el menú responsivo) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 <button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
+<script src="../static/js/Perfil.js"></script>
 </body>
 </html>
