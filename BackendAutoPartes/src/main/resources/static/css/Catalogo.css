@@ -501,6 +501,7 @@ body {
     background-color: #007BFF !important;
     color: white !important;
 }
+ feature/frontend/ArregloDeCatalogo
 /* Estilos del menú desplegable */
 .profile-dropdown {
     position: relative;
@@ -600,4 +601,165 @@ body {
     color: white !important; /* Texto blanco en hover */
     background-color: #007BFF !important; /* Fondo azul en modo claro */
     border-color: #007BFF !important;
+
+/* Añade esto al final de tu archivo CSS existente */
+
+/* Estilos para el contador del carrito */
+.navbar .nav-link .badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    font-size: 0.7rem;
+    padding: 3px 6px;
+}
+
+/* Notificaciones */
+.notificacion-carrito {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #FF335F;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 5px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+    box-shadow: 0 4px 15px rgba(255, 51, 95, 0.3);
+    display: flex;
+    align-items: center;
+}
+
+.notificacion-carrito.mostrar {
+    opacity: 1;
+}
+
+.notificacion-carrito i {
+    margin-right: 10px;
+    font-size: 1.2rem;
+}
+
+.modo-claro .notificacion-carrito {
+    background-color: #007BFF;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+/* Loader */
+.loader-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.modo-claro .loader-container {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+.spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+/* Mensajes de error */
+.alert-danger {
+    background-color: #FF335F;
+    color: white;
+    border: none;
+}
+
+.modo-claro .alert-danger {
+    background-color: #dc3545;
+}
+
+/* Mejoras para las tarjetas de producto */
+.category-card {
+    position: relative;
+    overflow: hidden;
+}
+
+.category-card .btn-primary {
+    transition: all 0.3s ease;
+}
+
+.category-card .btn-primary:disabled {
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+    cursor: not-allowed;
+}
+
+/* Efecto hover para las tarjetas */
+.category-card:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 10px 20px rgba(255, 51, 95, 0.2);
+}
+
+.modo-claro .category-card:hover {
+    box-shadow: 0 10px 20px rgba(0, 123, 255, 0.2);
+}
+
+/* Placeholder para imágenes */
+.no-image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #333;
+    color: #ccc;
+    height: 200px;
+}
+
+.modo-claro .no-image-placeholder {
+    background-color: #f8f9fa;
+    color: #6c757d;
+}
+
+/* Precios */
+.price {
+    font-weight: bold;
+    color: #FF335F;
+    margin: 10px 0;
+}
+
+.modo-claro .price {
+    color: #007BFF;
+}
+
+/* Barra de búsqueda */
+.search-container {
+    margin-bottom: 30px;
+}
+
+.search-container .form-control {
+    border-radius: 20px;
+    padding: 10px 20px;
+}
+
+.search-container .btn {
+    border-radius: 20px;
+    margin-left: -10px;
+}
+
+/* Responsividad adicional */
+@media (max-width: 768px) {
+    .category-card {
+        width: 100%;
+        height: auto;
+    }
+
+    .category-card img {
+        height: 150px;
+    }
+
+    .notificacion-carrito {
+        width: 90%;
+        left: 5%;
+        right: auto;
+    }
+ develop
 }
