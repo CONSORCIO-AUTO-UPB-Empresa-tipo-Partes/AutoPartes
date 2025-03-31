@@ -501,3 +501,103 @@ body {
     background-color: #007BFF !important;
     color: white !important;
 }
+/* Estilos del menú desplegable */
+.profile-dropdown {
+    position: relative;
+}
+.profile-button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    cursor: pointer;
+}
+.profile-button:hover {
+    color: #FF335F;
+}
+.profile-icon {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    object-fit: cover;
+    vertical-align: middle;
+}
+.profile-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #222;
+    border-radius: 10px;
+    padding: 10px 0;
+    width: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+.profile-dropdown-content a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    transition: background-color 0.3s;
+}
+.profile-dropdown-content a:hover {
+    background-color: #FF335F;
+    border-radius: 5px;
+}
+.profile-dropdown:hover .profile-dropdown-content {
+    display: block;
+}
+
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+/* Estilos base de la paginación (comunes a ambos modos) */
+.pagination {
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.page-item.active .page-link {
+    background-color: #FF335F;
+    border-color: #FF335F;
+    color: white !important;
+}
+
+.page-link {
+    color: #FF335F;
+    transition: all 0.3s;
+}
+
+.page-link:hover {
+    color: white !important; /* Texto blanco en hover */
+    background-color: #FF335F; /* Fondo rojo en modo oscuro */
+    border-color: #FF335F;
+}
+
+.page-item.disabled .page-link {
+    color: #6c757d;
+    pointer-events: none;
+}
+
+/* Modo claro - paginación */
+.modo-claro .page-item.active .page-link {
+    background-color: #007BFF !important;
+    border-color: #007BFF !important;
+    color: white !important;
+}
+
+.modo-claro .page-link {
+    color: #007BFF !important;
+}
+
+.modo-claro .page-link:hover {
+    color: white !important; /* Texto blanco en hover */
+    background-color: #007BFF !important; /* Fondo azul en modo claro */
+    border-color: #007BFF !important;
+}

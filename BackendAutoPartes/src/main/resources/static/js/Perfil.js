@@ -1,102 +1,156 @@
-
-    let empleados = [];
-    let editando = false;
-    let empleadoEditando = null;
-
-    document.getElementById("formAgregarEmpleado").addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    let nombre = document.getElementById("nombreEmpleado").value;
-    let apellido = document.getElementById("apellidoEmpleado").value;
-    let rol = document.getElementById("rolUsuario").value;
-    let id = document.getElementById("idEmpleado").value;
-
-    if (editando) {
-        // Actualizar el empleado existente
-        empleadoEditando.nombre = nombre;
-        empleadoEditando.apellido = apellido;
-        empleadoEditando.rol = rol;
-        editando = false; // Salir del modo edición
-        empleadoEditando = null; // Limpiar la referencia al empleado en edición
-        document.querySelector("#formAgregarEmpleado button[type='submit']").textContent = "Agregar empleado";
-    } else {
-        // Agregar un nuevo empleado
-        if (empleados.some(emp => emp.id === id)) {
-            alert("El ID ya existe. Intente con otro.");
-            return;
-        }
-
-        let nuevoEmpleado = { id, nombre, apellido, rol };
-        empleados.push(nuevoEmpleado);
+// Función para inicializar el modo claro/oscuro
+function initModoClaro() {
+    const modoGuardado = localStorage.getItem("modo");
+    if (modoGuardado === "claro") {
+        document.body.classList.add("modo-claro");
     }
 
-    actualizarTabla();
-    document.getElementById("formAgregarEmpleado").reset();
-});
-
-    function actualizarTabla() {
-        let tabla = document.getElementById("tablaEmpleadosBody");
-        tabla.innerHTML = "";
-        empleados.forEach(emp => {
-            let fila = `<tr>
-                            <td>${emp.id}</td>
-                            <td>${emp.nombre}</td>
-                            <td>${emp.apellido}</td>
-                            <td>${emp.rol}</td>
-                            <td>
-                                <button class="btn btn-warning btn-sm" onclick="editarEmpleado('${emp.id}')">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="eliminarEmpleado('${emp.id}')">Eliminar</button>
-                            </td>
-                        </tr>`;
-            tabla.innerHTML += fila;
-        });
-    }
-
-    function editarEmpleado(id) {
-    empleadoEditando = empleados.find(emp => emp.id === id);
-    if (empleadoEditando) {
-        document.getElementById("nombreEmpleado").value = empleadoEditando.nombre;
-        document.getElementById("apellidoEmpleado").value = empleadoEditando.apellido;
-        document.getElementById("rolUsuario").value = empleadoEditando.rol;
-        document.getElementById("idEmpleado").value = empleadoEditando.id;
-        editando = true;
-        document.querySelector("#formAgregarEmpleado button[type='submit']").textContent = "Guardar cambios";
+    const toggleBtn = document.querySelector('.toggle-mode');
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', toggleMode);
     }
 }
 
-    function consultarEmpleado() {
-        let idConsulta = document.getElementById("idConsultar").value;
-        let empleado = empleados.find(emp => emp.id === idConsulta);
-        let resultado = document.getElementById("resultadoConsulta");
+// Función para cambiar entre modo claro y oscuro
+function toggleMode() {
+    const body = document.body;
+    body.classList.toggle("modo-claro");
 
-        if (empleado) {
-            resultado.innerHTML = `<div class="alert alert-success">
-                                      <strong>Empleado encontrado:</strong><br>
-                                      <b>ID:</b> ${empleado.id}<br>
-                                      <b>Nombre:</b> ${empleado.nombre}<br>
-                                      <b>Apellido:</b> ${empleado.apellido}<br>
-                                      <b>Rol:</b> ${empleado.rol}
-                                   </div>`;
+    // Guardar la preferencia en localStorage
+    localStorage.setItem("modo", body.classList.contains("modo-claro") ? "claro" : "oscuro");
+}
+
+// Función para enviar datos al backend
+async function saveDataToBackend() {
+    const formData = {
+        name: document.getElementById('name').value,
+        lastname: document.getElementById('lastname').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        address: document.getElementById('address').value,
+        documentType: document.getElementById('documentType').value,
+        document: document.getElementById('document').value,
+        password: document.getElementById('password').value,
+    };
+
+    try {
+        const response = await fetch('/api/save-profile', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+
+        if (response.ok) {
+            document.getElementById('confirmationMessage').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('confirmationMessage').style.display = 'none';
+            }, 3000);
         } else {
-            resultado.innerHTML = `<div class="alert alert-danger">No se encontró un empleado con ese ID.</div>`;
+            alert('Error al guardar los datos.');
         }
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error al conectar con el servidor.');
+    }
+}
+
+// Función para guardar los datos en localStorage
+function saveDataToLocalStorage() {
+    const formData = {
+        name: document.getElementById('name').value,
+        lastname: document.getElementById('lastname').value,
+        email: document.getElementById('email').value,
+        phone: document.getElementById('phone').value,
+        address: document.getElementById('address').value,
+        documentType: document.getElementById('documentType').value,
+        document: document.getElementById('document').value,
+        password: document.getElementById('password').value,
+    };
+    localStorage.setItem('profileData', JSON.stringify(formData));
+}
+
+// Función para cargar los datos desde localStorage
+function loadDataFromLocalStorage() {
+    const savedData = localStorage.getItem('profileData');
+    if (savedData) {
+        const formData = JSON.parse(savedData);
+        document.getElementById('name').value = formData.name || '';
+        document.getElementById('lastname').value = formData.lastname || '';
+        document.getElementById('email').value = formData.email || '';
+        document.getElementById('phone').value = formData.phone || '';
+        document.getElementById('address').value = formData.address || '';
+        document.getElementById('documentType').value = formData.documentType || '';
+        document.getElementById('document').value = formData.document || '';
+        document.getElementById('password').value = formData.password || '';
+    }
+}
+
+// Función para validar el formulario
+function validateForm() {
+    const form = document.getElementById('profileForm');
+    const email = document.getElementById('email').value;
+
+    if (!email.includes('@')) {
+        alert('El correo electrónico debe contener un "@".');
+        return false;
     }
 
-    function eliminarEmpleado(id) {
-        empleados = empleados.filter(emp => emp.id !== id);
-        actualizarTabla();
+    if (!form.checkValidity()) {
+        form.classList.add('was-validated');
+        return false;
     }
 
-    function mostrarConsultar() {
-        document.getElementById("consultarEmpleado").classList.remove("hidden");
-        document.getElementById("agregarEmpleado").classList.add("hidden");
-    }
+    return true;
+}
 
-    function mostrarAgregar() {
-        document.getElementById("agregarEmpleado").classList.remove("hidden");
-        document.getElementById("consultarEmpleado").classList.add("hidden");
-    }
+// Función para manejar el envío del formulario
+function setupFormSubmit() {
+    document.getElementById('profileForm').addEventListener('submit', function(event) {
+        event.preventDefault();
 
-    function toggleMode() {
-        document.body.classList.toggle("modo-claro");
+        if (validateForm()) {
+            saveDataToLocalStorage();
+            saveDataToBackend();
+
+            document.getElementById('confirmationMessage').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('confirmationMessage').style.display = 'none';
+            }, 3000);
+        }
+    });
+}
+
+// Función para cargar datos desde el backend
+async function loadDataFromBackend() {
+    try {
+        const response = await fetch('/api/get-profile');
+        if (response.ok) {
+            const formData = await response.json();
+            document.getElementById('name').value = formData.name || '';
+            document.getElementById('lastname').value = formData.lastname || '';
+            document.getElementById('email').value = formData.email || '';
+            document.getElementById('phone').value = formData.phone || '';
+            document.getElementById('address').value = formData.address || '';
+            document.getElementById('documentType').value = formData.documentType || '';
+            document.getElementById('document').value = formData.document || '';
+            document.getElementById('password').value = formData.password || '';
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        // Si hay error, cargar de localStorage como fallback
+        loadDataFromLocalStorage();
     }
+}
+
+// Inicialización cuando se carga la página
+window.addEventListener('DOMContentLoaded', function() {
+    initModoClaro(); // Inicializar el modo claro/oscuro
+    setupFormSubmit(); // Configurar el envío del formulario
+
+    // Intentar cargar datos del backend primero, si falla cargar de localStorage
+    loadDataFromBackend().catch(() => {
+        loadDataFromLocalStorage();
+    });
+});
