@@ -1,102 +1,48 @@
-
-    let empleados = [];
-    let editando = false;
-    let empleadoEditando = null;
-
-    document.getElementById("formAgregarEmpleado").addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    let nombre = document.getElementById("nombreEmpleado").value;
-    let apellido = document.getElementById("apellidoEmpleado").value;
-    let rol = document.getElementById("rolUsuario").value;
-    let id = document.getElementById("idEmpleado").value;
-
-    if (editando) {
-        // Actualizar el empleado existente
-        empleadoEditando.nombre = nombre;
-        empleadoEditando.apellido = apellido;
-        empleadoEditando.rol = rol;
-        editando = false; // Salir del modo edición
-        empleadoEditando = null; // Limpiar la referencia al empleado en edición
-        document.querySelector("#formAgregarEmpleado button[type='submit']").textContent = "Agregar empleado";
-    } else {
-        // Agregar un nuevo empleado
-        if (empleados.some(emp => emp.id === id)) {
-            alert("El ID ya existe. Intente con otro.");
-            return;
-        }
-
-        let nuevoEmpleado = { id, nombre, apellido, rol };
-        empleados.push(nuevoEmpleado);
-    }
-
-    actualizarTabla();
-    document.getElementById("formAgregarEmpleado").reset();
+document.addEventListener('DOMContentLoaded', function() {
+    cargarCatalogo();
 });
 
-    function actualizarTabla() {
-        let tabla = document.getElementById("tablaEmpleadosBody");
-        tabla.innerHTML = "";
-        empleados.forEach(emp => {
-            let fila = `<tr>
-                            <td>${emp.id}</td>
-                            <td>${emp.nombre}</td>
-                            <td>${emp.apellido}</td>
-                            <td>${emp.rol}</td>
-                            <td>
-                                <button class="btn btn-warning btn-sm" onclick="editarEmpleado('${emp.id}')">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="eliminarEmpleado('${emp.id}')">Eliminar</button>
-                            </td>
-                        </tr>`;
-            tabla.innerHTML += fila;
-        });
-    }
-
-    function editarEmpleado(id) {
-    empleadoEditando = empleados.find(emp => emp.id === id);
-    if (empleadoEditando) {
-        document.getElementById("nombreEmpleado").value = empleadoEditando.nombre;
-        document.getElementById("apellidoEmpleado").value = empleadoEditando.apellido;
-        document.getElementById("rolUsuario").value = empleadoEditando.rol;
-        document.getElementById("idEmpleado").value = empleadoEditando.id;
-        editando = true;
-        document.querySelector("#formAgregarEmpleado button[type='submit']").textContent = "Guardar cambios";
+async function cargarCatalogo() {
+    try {
+        const response = await fetch('/api/catalog/itemtypes-with-batches');
+        const catalogo = await response.json();
+        mostrarCatalogo(catalogo);
+    } catch (error) {
+        console.error('Error al cargar el catálogo:', error);
     }
 }
 
-    function consultarEmpleado() {
-        let idConsulta = document.getElementById("idConsultar").value;
-        let empleado = empleados.find(emp => emp.id === idConsulta);
-        let resultado = document.getElementById("resultadoConsulta");
+function mostrarCatalogo(catalogo) {
+    const catalogoContainer = document.getElementById('catalogoContainer');
+    catalogoContainer.innerHTML = '';
 
-        if (empleado) {
-            resultado.innerHTML = `<div class="alert alert-success">
-                                      <strong>Empleado encontrado:</strong><br>
-                                      <b>ID:</b> ${empleado.id}<br>
-                                      <b>Nombre:</b> ${empleado.nombre}<br>
-                                      <b>Apellido:</b> ${empleado.apellido}<br>
-                                      <b>Rol:</b> ${empleado.rol}
-                                   </div>`;
-        } else {
-            resultado.innerHTML = `<div class="alert alert-danger">No se encontró un empleado con ese ID.</div>`;
-        }
-    }
+    catalogo.forEach(item => {
+        const itemCard = document.createElement('div');
+        itemCard.className = 'col-md-4 mb-4';
+        itemCard.innerHTML = `
+                        <div class="card">
+                            <img src="${item.itemType.imagepath}" class="card-img-top" alt="${item.itemType.itemname}">
+                            <div class="card-body">
+                                <h5 class="card-title">${item.itemType.itemname}</h5>
+                                <p class="card-text">${item.itemType.itemdescription}</p>
+                                <ul class="list-group list-group-flush">
+                                    ${item.batches.map(batch => `
+                                        <li class="list-group-item">
+                                            <strong>Lote:</strong> ${batch.id} -
+                                            <strong>Precio:</strong> $${batch.unitsaleprice} -
+                                            <strong>Cantidad:</strong> ${batch.quantity}
+                                        </li>
+                                    `).join('')}
+                                </ul>
+                                <button class="btn btn-primary mt-3" onclick="comprarProducto(${item.itemType.id})">Comprar</button>
+                            </div>
+                        </div>
+                    `;
+        catalogoContainer.appendChild(itemCard);
+    });
+}
 
-    function eliminarEmpleado(id) {
-        empleados = empleados.filter(emp => emp.id !== id);
-        actualizarTabla();
-    }
-
-    function mostrarConsultar() {
-        document.getElementById("consultarEmpleado").classList.remove("hidden");
-        document.getElementById("agregarEmpleado").classList.add("hidden");
-    }
-
-    function mostrarAgregar() {
-        document.getElementById("agregarEmpleado").classList.remove("hidden");
-        document.getElementById("consultarEmpleado").classList.add("hidden");
-    }
-
-    function toggleMode() {
-        document.body.classList.toggle("modo-claro");
-    }
+function comprarProducto(itemId) {
+    // Lógica para manejar la compra del producto
+    alert(`Producto con ID ${itemId} añadido al carrito.`);
+}

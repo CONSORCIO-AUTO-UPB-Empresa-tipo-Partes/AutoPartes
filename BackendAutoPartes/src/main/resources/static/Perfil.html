@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Perfil - Accesorios para Autos</title>
+    <title>Mi Perfil - TOTES BGA</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../static/Styles/perfil.css">
-    <style>
-    </style>
+    <link rel="stylesheet" href="/css/Perfil.css">
 </head>
 <body>
 <div class="background-stripes">
@@ -16,6 +14,7 @@
     <div class="stripe"></div>
 </div>
 
+<!-- Navbar - Misma estructura que en Catalogo.html para mantener coherencia -->
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="#">
@@ -30,23 +29,25 @@
                 <button class="btn btn-outline-success" type="submit">Buscar</button>
             </form>
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="Catalogo.html">Inicio</a></li>
-
-                <!-- Perfil con menú desplegable -->
                 <li class="nav-item">
-                <div class="profile-dropdown">
-                    <button class="profile-button">
-                        <img src="../static/img/USUARIO.png" alt="Perfil" class="profile-icon">
-                        <!--<span>Perfil</span>-->
-                    </button>
-                    <div class="profile-dropdown-content">
-                        <a href="Perfil.html">Mi cuenta</a>
-                        <a href="Historial_Compras.html">Historial de compras</a>
-                        <a href="PrincipalUltimo.html" onclick="logout()">Salir</a>
-                    </div>
-                </div>
+                    <a class="nav-link" href="Catalogo.html">Inicio</a>
+                </li>
 
-                    <!-- Icono del carrito -->
+                <!-- Menú desplegable del perfil -->
+                <li class="nav-item">
+                    <div class="profile-dropdown">
+                        <button class="profile-button">
+                            <img src="../static/img/USUARIO.png" alt="Perfil" class="profile-icon">
+                        </button>
+                        <div class="profile-dropdown-content">
+                            <a href="Perfil.html">Mi cuenta</a>
+                            <a href="Historial_Compras.html">Historial de compras</a>
+                            <a href="PrincipalUltimo.html" onclick="logout()">Salir</a>
+                        </div>
+                    </div>
+                </li>
+
+                <!-- Icono del carrito -->
                 <li class="nav-item">
                     <a class="nav-link" href="Carrito.html" style="font-size: 27px;">🛒</a>
                 </li>
@@ -55,84 +56,122 @@
     </div>
 </nav>
 
-<script>
-    function logout() {
-      window.location.href = 'PrincipalUltimo.html';
-    }
-</script>
-
-
-<div class="cart-container">
-    <h2>Editar Perfil</h2>
-    <form id="profileForm">
-        <!-- Nombre y Apellido -->
-        <div class="row mb-3">
-            <div class="col">
-                <label for="name" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="name" value="María Angélica" required>
-                <div class="invalid-feedback">Por favor, ingresa tu nombre.</div>
-            </div>
-            <div class="col">
-                <label for="lastname" class="form-label">Apellido</label>
-                <input type="text" class="form-control" id="lastname" value="Parra Grazt" required>
-                <div class="invalid-feedback">Por favor, ingresa tu apellido.</div>
+<!-- Contenido del perfil -->
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="profile-sidebar">
+                <div class="profile-image">
+                    <img src="../static/img/USUARIO.png" alt="Foto de perfil" class="img-fluid rounded-circle">
+                </div>
+                <h3 id="user-name">Cargando...</h3>
+                <p id="user-email">Cargando...</p>
+                <div class="profile-menu">
+                    <ul class="nav flex-column">
+                        <li class="nav-item"><a class="nav-link active" href="#" onclick="showSection('personal-info')">Información Personal</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('purchase-history')">Historial de Compras</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('security')">Seguridad</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#" onclick="showSection('address')">Direcciones</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <!-- Correo Electrónico -->
-        <div class="mb-3">
-            <label for="email" class="form-label">Correo Electrónico</label>
-            <input type="email" class="form-control" id="email" value="maria.parra@example.com" required>
-            <div class="invalid-feedback">Por favor, ingresa un correo válido (debe incluir @).</div>
-        </div>
+        <div class="col-md-8">
+            <!-- Sección de información personal -->
+            <div id="personal-info" class="profile-section active">
+                <h2>Información Personal</h2>
+                <form id="user-info-form">
+                    <div class="mb-3">
+                        <label for="user-fullname" class="form-label">Nombre completo</label>
+                        <input type="text" class="form-control" id="user-fullname" placeholder="Nombre completo">
+                    </div>
+                    <div class="mb-3">
+                        <label for="user-email-input" class="form-label">Correo electrónico</label>
+                        <input type="email" class="form-control" id="user-email-input" placeholder="correo@ejemplo.com">
+                    </div>
+                    <div class="mb-3">
+                        <label for="user-phone" class="form-label">Teléfono</label>
+                        <input type="tel" class="form-control" id="user-phone" placeholder="123-456-7890">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Actualizar información</button>
+                </form>
+            </div>
 
-        <!-- Teléfono -->
-        <div class="mb-3">
-            <label for="phone" class="form-label">Teléfono</label>
-            <input type="tel" class="form-control" id="phone" value="+57 301 641 7515" required>
-            <div class="invalid-feedback">Por favor, ingresa tu número de teléfono.</div>
-        </div>
+            <!-- Sección de historial de compras -->
+            <div id="purchase-history" class="profile-section">
+                <h2>Historial de Compras</h2>
+                <div class="purchase-list" id="purchase-list">
+                    <p>Cargando historial de compras...</p>
+                </div>
+            </div>
 
-        <!-- Dirección -->
-        <div class="mb-3">
-            <label for="address" class="form-label">Dirección</label>
-            <textarea class="form-control" id="address" rows="3" required>Calle 123 # 45 - 67, Bogotá, Colombia</textarea>
-            <div class="invalid-feedback">Por favor, ingresa tu dirección.</div>
-        </div>
+            <!-- Sección de seguridad -->
+            <div id="security" class="profile-section">
+                <h2>Seguridad</h2>
+                <form id="password-form">
+                    <div class="mb-3">
+                        <label for="current-password" class="form-label">Contraseña actual</label>
+                        <input type="password" class="form-control" id="current-password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="new-password" class="form-label">Nueva contraseña</label>
+                        <input type="password" class="form-control" id="new-password">
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirm-password" class="form-label">Confirmar contraseña</label>
+                        <input type="password" class="form-control" id="confirm-password">
+                    </div>
+                    <button type="submit" class="btn btn-primary">Cambiar contraseña</button>
+                </form>
+            </div>
 
-        <!-- Tipo de Documento -->
-        <div class="mb-3">
-            <label for="documentType" class="form-label">Tipo de Documento</label>
-            <select class="form-select" id="documentType" required>
-                <option value="CC">Cédula de Ciudadanía</option>
-                <option value="NIT">NIT</option>
-                <option value="PASSPORT">Pasaporte</option>
-            </select>
-            <div class="invalid-feedback">Por favor, selecciona un tipo de documento.</div>
+            <!-- Sección de direcciones -->
+            <div id="address" class="profile-section">
+                <h2>Mis Direcciones</h2>
+                <div id="addresses-list">
+                    <p>Cargando direcciones...</p>
+                </div>
+                <button class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#addAddressModal">Agregar dirección</button>
+            </div>
         </div>
-
-        <!-- Número de Documento -->
-        <div class="mb-3">
-            <label for="document" class="form-label">Número de Documento</label>
-            <input type="text" class="form-control" id="document" value="123456789" required>
-            <div class="invalid-feedback">Por favor, ingresa tu número de documento.</div>
-        </div>
-
-        <!-- Contraseña -->
-        <div class="mb-3">
-            <label for="password" class="form-label">Contraseña</label>
-            <input type="password" class="form-control" id="password" value="********" required>
-            <div class="invalid-feedback">Por favor, ingresa tu contraseña.</div>
-        </div>
-
-        <!-- Botón de Guardar Cambios -->
-        <button type="submit" class="btn btn-primary">Guardar Cambios</button>
-    </form>
+    </div>
 </div>
 
-<!-- Mensaje de confirmación (oculto inicialmente) -->
-<div id="confirmationMessage" class="alert alert-success mt-3" style="display: none;">
-    ¡Cambios guardados correctamente!
+<!-- Modal para agregar dirección -->
+<div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addAddressModalLabel">Agregar Nueva Dirección</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="address-form">
+                    <div class="mb-3">
+                        <label for="address-name" class="form-label">Nombre de la dirección (ej. Casa, Trabajo)</label>
+                        <input type="text" class="form-control" id="address-name">
+                    </div>
+                    <div class="mb-3">
+                        <label for="address-street" class="form-label">Dirección</label>
+                        <input type="text" class="form-control" id="address-street">
+                    </div>
+                    <div class="mb-3">
+                        <label for="address-city" class="form-label">Ciudad</label>
+                        <input type="text" class="form-control" id="address-city">
+                    </div>
+                    <div class="mb-3">
+                        <label for="address-zip" class="form-label">Código Postal</label>
+                        <input type="text" class="form-control" id="address-zip">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="addAddress()">Guardar</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!-- Footer -->
@@ -156,216 +195,245 @@
 
 <button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
 
-<script>
-    // Función para cambiar el modo
-   function toggleMode() {
-       const body = document.body;
-       body.classList.toggle("modo-claro");
-
-       // Guardar el estado del modo en localStorage
-       if (body.classList.contains("modo-claro")) {
-           localStorage.setItem("modo", "claro");
-       } else {
-           localStorage.setItem("modo", "oscuro");
-       }
-   }
-
-   // Aplicar el modo guardado al cargar la página
-   function aplicarModoGuardado() {
-       const modoGuardado = localStorage.getItem("modo");
-       if (modoGuardado === "claro") {
-           document.body.classList.add("modo-claro");
-       }
-   }
-
-   // Llamar a la función al cargar la página
-   aplicarModoGuardado();
-
-   // Manejar el envío del formulario
-   document.getElementById('profileForm').addEventListener('submit', function(event) {
-       event.preventDefault();
-       alert('Cambios guardados correctamente');
-       // Aquí puedes agregar la lógica para guardar los cambios en el servidor
-   });
-
-   // Función para validar el formulario
-   function validateForm() {
-       const form = document.getElementById('profileForm');
-       const email = document.getElementById('email').value;
-
-       // Verificar si el correo tiene un @
-       if (!email.includes('@')) {
-           alert('El correo electrónico debe contener un "@".');
-           return false;
-       }
-
-       // Verificar si todos los campos requeridos están llenos
-       if (!form.checkValidity()) {
-           form.classList.add('was-validated'); // Muestra los mensajes de error
-           return false;
-       }
-
-       return true; // El formulario es válido
-   }
-
-   // Función para manejar el envío del formulario
-   document.getElementById('profileForm').addEventListener('submit', function (event) {
-       event.preventDefault(); // Evita el envío automático
-
-       if (validateForm()) {
-           // Simular el guardado de cambios (puedes reemplazar esto con una llamada a tu backend)
-           setTimeout(() => {
-               // Mostrar mensaje de confirmación
-               document.getElementById('confirmationMessage').style.display = 'block';
-
-               // Ocultar el mensaje después de 3 segundos
-               setTimeout(() => {
-                   document.getElementById('confirmationMessage').style.display = 'none';
-               }, 3000);
-           }, 1000); // Simula un retraso de 1 segundo
-       }
-   });
-   <script>
-   // Función para enviar datos al backend
-   async function saveDataToBackend() {
-       const formData = {
-           name: document.getElementById('name').value,
-           lastname: document.getElementById('lastname').value,
-           email: document.getElementById('email').value,
-           phone: document.getElementById('phone').value,
-           address: document.getElementById('address').value,
-           documentType: document.getElementById('documentType').value,
-           document: document.getElementById('document').value,
-           password: document.getElementById('password').value,
-       };
-
-       try {
-           const response = await fetch('/api/save-profile', {
-               method: 'POST',
-               headers: {
-                   'Content-Type': 'application/json',
-               },
-               body: JSON.stringify(formData),
-           });
-
-           if (response.ok) {
-               document.getElementById('confirmationMessage').style.display = 'block';
-               setTimeout(() => {
-                   document.getElementById('confirmationMessage').style.display = 'none';
-               }, 3000);
-           } else {
-               alert('Error al guardar los datos.');
-           }
-       } catch (error) {
-           console.error('Error:', error);
-           alert('Error al conectar con el servidor.');
-       }
-   }
-
-   // Función para guardar los datos en localStorage
-   function saveDataToLocalStorage() {
-       const formData = {
-           name: document.getElementById('name').value,
-           lastname: document.getElementById('lastname').value,
-           email: document.getElementById('email').value,
-           phone: document.getElementById('phone').value,
-           address: document.getElementById('address').value,
-           documentType: document.getElementById('documentType').value,
-           document: document.getElementById('document').value,
-           password: document.getElementById('password').value,
-       };
-       localStorage.setItem('profileData', JSON.stringify(formData)); // Guardar datos en localStorage
-   }
-
-   // Función para cargar los datos desde localStorage
-   function loadDataFromLocalStorage() {
-       const savedData = localStorage.getItem('profileData');
-       if (savedData) {
-           const formData = JSON.parse(savedData);
-           document.getElementById('name').value = formData.name;
-           document.getElementById('lastname').value = formData.lastname;
-           document.getElementById('email').value = formData.email;
-           document.getElementById('phone').value = formData.phone;
-           document.getElementById('address').value = formData.address;
-           document.getElementById('documentType').value = formData.documentType;
-           document.getElementById('document').value = formData.document;
-           document.getElementById('password').value = formData.password;
-       }
-   }
-
-   // Función para validar el formulario
-   function validateForm() {
-       const form = document.getElementById('profileForm');
-       const email = document.getElementById('email').value;
-
-       if (!email.includes('@')) {
-           alert('El correo electrónico debe contener un "@".');
-           return false;
-       }
-
-       if (!form.checkValidity()) {
-           form.classList.add('was-validated');
-           return false;
-       }
-
-       return true;
-   }
-
-   // Función para manejar el envío del formulario
-   document.getElementById('profileForm').addEventListener('submit', function (event) {
-       event.preventDefault();
-
-       if (validateForm()) {
-           saveDataToLocalStorage(); // Guardar datos en localStorage
-           document.getElementById('confirmationMessage').style.display = 'block';
-
-           setTimeout(() => {
-               document.getElementById('confirmationMessage').style.display = 'none';
-           }, 3000);
-       }
-   });
-
-   // Cargar datos al iniciar la página
-   window.addEventListener('load', loadDataFromLocalStorage);
-
-   // Función para cargar datos desde el backend
-   async function loadDataFromBackend() {
-       try {
-           const response = await fetch('/api/get-profile');
-           if (response.ok) {
-               const formData = await response.json();
-               document.getElementById('name').value = formData.name;
-               document.getElementById('lastname').value = formData.lastname;
-               document.getElementById('email').value = formData.email;
-               document.getElementById('phone').value = formData.phone;
-               document.getElementById('address').value = formData.address;
-               document.getElementById('documentType').value = formData.documentType;
-               document.getElementById('document').value = formData.document;
-               document.getElementById('password').value = formData.password;
-           }
-       } catch (error) {
-           console.error('Error:', error);
-       }
-   }
-
-   // Función para manejar el envío del formulario
-   document.getElementById('profileForm').addEventListener('submit', function (event) {
-       event.preventDefault();
-
-       if (validateForm()) {
-           saveDataToBackend(); // Guardar datos en el backend
-       }
-   });
-   document.getElementById('modo-btn').addEventListener('click', () => {
-    document.body.classList.toggle('modo-claro');
-});
-
-   // Cargar datos al iniciar la página
-   window.addEventListener('load', loadDataFromBackend);
-</script>
-<!-- Bootstrap JS (necesario para el menú responsivo) -->
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Custom JS -->
+<script>
+    // Variable para almacenar los datos del usuario
+    let userData = null;
 
-<button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
+    // Al cargar la página, verificamos si hay un token de autenticación
+    document.addEventListener('DOMContentLoaded', function() {
+        // Obtener token de localStorage
+        const token = localStorage.getItem('authToken');
+
+        if (!token) {
+            // Si no hay token, redirigir al login
+            window.location.href = 'InicioSesionCliente.html';
+            return;
+        }
+
+        // Cargar datos del usuario
+        loadUserData(token);
+    });
+
+    // Función para cargar datos del usuario
+    function loadUserData(token) {
+        // Simulación de datos del usuario (en producción, esto vendría del backend)
+        // En una implementación real, aquí harías una llamada fetch al backend
+        userData = {
+            id: '12345',
+            name: 'Carlos Rodriguez',
+            email: 'carlos.rodriguez@email.com',
+            phone: '321-456-7890',
+            addresses: [
+                { id: 1, name: 'Casa', street: 'Calle 123 #45-67', city: 'Bucaramanga', zip: '680001' }
+            ],
+            purchases: [
+                { id: 'ORD-001', date: '2023-05-15', total: 82300, status: 'Entregado' },
+                { id: 'ORD-002', date: '2023-06-20', total: 150000, status: 'En proceso' }
+            ]
+        };
+
+        // Actualizar la interfaz con los datos del usuario
+        updateUserInterface();
+    }
+
+    // Función para actualizar la interfaz con los datos del usuario
+    function updateUserInterface() {
+        if (!userData) return;
+
+        // Actualizar información básica
+        document.getElementById('user-name').textContent = userData.name;
+        document.getElementById('user-email').textContent = userData.email;
+
+        // Llenar formulario de información personal
+        document.getElementById('user-fullname').value = userData.name;
+        document.getElementById('user-email-input').value = userData.email;
+        document.getElementById('user-phone').value = userData.phone;
+
+        // Mostrar historial de compras
+        updatePurchaseHistory();
+
+        // Mostrar direcciones
+        updateAddressesList();
+    }
+
+    // Actualizar historial de compras
+    function updatePurchaseHistory() {
+        const purchaseList = document.getElementById('purchase-list');
+        if (userData.purchases.length === 0) {
+            purchaseList.innerHTML = '<p>No tienes compras registradas.</p>';
+            return;
+        }
+
+        let html = '<div class="list-group">';
+        userData.purchases.forEach(purchase => {
+            html += `
+                <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">Orden #${purchase.id}</h5>
+                        <small>${purchase.date}</small>
+                    </div>
+                    <p class="mb-1">Total: $${purchase.total.toLocaleString()}</p>
+                    <small class="text-muted">Estado: ${purchase.status}</small>
+                </div>
+            `;
+        });
+        html += '</div>';
+        purchaseList.innerHTML = html;
+    }
+
+    // Actualizar lista de direcciones
+    function updateAddressesList() {
+        const addressesList = document.getElementById('addresses-list');
+        if (userData.addresses.length === 0) {
+            addressesList.innerHTML = '<p>No tienes direcciones registradas.</p>';
+            return;
+        }
+
+        let html = '<div class="list-group">';
+        userData.addresses.forEach(address => {
+            html += `
+                <div class="list-group-item">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1">${address.name}</h5>
+                        <button class="btn btn-sm btn-danger" onclick="removeAddress(${address.id})">Eliminar</button>
+                    </div>
+                    <p class="mb-1">${address.street}</p>
+                    <small class="text-muted">${address.city}, ${address.zip}</small>
+                </div>
+            `;
+        });
+        html += '</div>';
+        addressesList.innerHTML = html;
+    }
+
+    // Función para añadir una dirección
+    function addAddress() {
+        const name = document.getElementById('address-name').value;
+        const street = document.getElementById('address-street').value;
+        const city = document.getElementById('address-city').value;
+        const zip = document.getElementById('address-zip').value;
+
+        if (!name || !street || !city || !zip) {
+            alert('Por favor complete todos los campos de la dirección');
+            return;
+        }
+
+        // Generar un ID único (en una aplicación real esto vendría del backend)
+        const id = userData.addresses.length > 0 ?
+            Math.max(...userData.addresses.map(a => a.id)) + 1 : 1;
+
+        // Añadir la dirección a la lista
+        userData.addresses.push({ id, name, street, city, zip });
+
+        // Actualizar la UI
+        updateAddressesList();
+
+        // Cerrar el modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('addAddressModal'));
+        modal.hide();
+
+        // Limpiar el formulario
+        document.getElementById('address-form').reset();
+    }
+
+    // Función para eliminar una dirección
+    function removeAddress(id) {
+        if (confirm('¿Está seguro que desea eliminar esta dirección?')) {
+            userData.addresses = userData.addresses.filter(address => address.id !== id);
+            updateAddressesList();
+        }
+    }
+
+    // Función para mostrar diferentes secciones del perfil
+    function showSection(sectionId) {
+        // Ocultar todas las secciones
+        document.querySelectorAll('.profile-section').forEach(section => {
+            section.classList.remove('active');
+        });
+
+        // Mostrar la sección seleccionada
+        document.getElementById(sectionId).classList.add('active');
+
+        // Actualizar menú
+        document.querySelectorAll('.profile-menu .nav-link').forEach(link => {
+            link.classList.remove('active');
+        });
+        event.target.classList.add('active');
+    }
+
+    // Manejar envío del formulario de información personal
+    document.getElementById('user-info-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        // Actualizar los datos del usuario
+        userData.name = document.getElementById('user-fullname').value;
+        userData.email = document.getElementById('user-email-input').value;
+        userData.phone = document.getElementById('user-phone').value;
+
+        // Actualizar la UI
+        updateUserInterface();
+
+        // Mostrar mensaje de éxito
+        alert('Información actualizada correctamente');
+    });
+
+    // Manejar envío del formulario de cambio de contraseña
+    document.getElementById('password-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const currentPassword = document.getElementById('current-password').value;
+        const newPassword = document.getElementById('new-password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+
+        if (!currentPassword || !newPassword || !confirmPassword) {
+            alert('Por favor complete todos los campos');
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            alert('Las contraseñas no coinciden');
+            return;
+        }
+
+        // En una aplicación real, aquí se enviaría la solicitud al backend
+
+        // Mostrar mensaje de éxito
+        alert('Contraseña actualizada correctamente');
+
+        // Resetear el formulario
+        this.reset();
+    });
+
+    // Función para cerrar sesión
+    function logout() {
+        // Eliminar token de autenticación
+        localStorage.removeItem('authToken');
+        // Redireccionar a la página principal
+        window.location.href = 'PrincipalUltimo.html';
+    }
+
+    // Función para cambiar el modo claro/oscuro
+    function toggleMode() {
+        document.body.classList.toggle("modo-claro");
+
+        // Guardar preferencia en localStorage
+        if (document.body.classList.contains("modo-claro")) {
+            localStorage.setItem("modo", "claro");
+        } else {
+            localStorage.setItem("modo", "oscuro");
+        }
+    }
+
+    // Aplicar el modo guardado al cargar la página
+    (function aplicarModoGuardado() {
+        const modoGuardado = localStorage.getItem("modo");
+        if (modoGuardado === "claro") {
+            document.body.classList.add("modo-claro");
+        }
+    })();
+</script>
 </body>
 </html>
