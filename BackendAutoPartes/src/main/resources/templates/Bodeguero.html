@@ -1,118 +1,161 @@
 <!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bodeguero - Totes BGA</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../css/Bodeguero.css">
-</head>
-<body>
+            <html lang="es">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>Bodeguero - Totes BGA</title>
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+                <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+                <link rel="stylesheet" href="../css/Bodeguero.css">
+            </head>
+            <body>
 
-<!-- Botón de modo claro/oscuro -->
-<button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
+            <!-- Botón de modo claro/oscuro -->
+            <button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
 
-<nav class="navbar navbar-expand-lg navbar-dark">
-    <div class="container">
-        <a class="navbar-brand" href="#">
-            <img src="../img/logo-totes0.png" alt="Logo">
-            Totes BGA - Bodeguero
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="Bodeguero.html">Agregar</a></li>
-                <li class="nav-item"><a class="nav-link" href="Batch.html">Lote</a></li>
-                <li class="nav-item"><a class="nav-link" href="InicioSesion.html">Salir</a></li>
-                <li class="nav-item"><a class="nav-link" href="ConsultaProveedores.html">Busqueda Proveedores</a></li>
-            </ul>
-        </div>
-    </div>
-</nav>
+            <nav class="navbar navbar-expand-lg navbar-dark">
+                <div class="container">
+                    <a class="navbar-brand" href="#">
+                        <img src="../img/logo-totes0.png" alt="Logo">
+                        Totes BGA - Bodeguero
+                    </a>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNav">
+                        <ul class="navbar-nav ms-auto">
+                            <li class="nav-item"><a class="nav-link" href="Bodeguero.html">Agregar</a></li>
+                            <li class="nav-item"><a class="nav-link" href="Batch.html">Lote</a></li>
+                            <li class="nav-item"><a class="nav-link" href="ConsultaProveedores.html">Consultar Proveedor</a></li>
+                            <li class="nav-item"><a class="nav-link" href="InicioSesion.html">Salir</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
 
-<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-    <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></button>
-    </div>
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="../assets/img/fondo%20admin.jpg" class="d-block w-100" alt="Imagen 1">
-        </div>
-        <div class="carousel-item">
-            <img src="../img/Fondoadmin2.webp" class="d-block w-100" alt="Imagen 2">
-        </div>
-        <div class="carousel-item">
-            <img src="../img/fondoadmin3.avif" class="d-block w-100" alt="Imagen 3">
-        </div>
-    </div>
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-    </button>
-</div>
-
-<div class="admin-panel container">
-    <h2 class="text-center">Administrar Productos</h2>
-
-    <h4 class="mt-4">Agregar Producto</h4>
-
-    <form id="formAgregarProducto">
-        <div class="mb-3">
-            <label class="form-label">Nombre del Producto</label>
-            <input type="text" class="form-control" id="nombreProducto" required>
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Imagen del Producto</label>
-            <input type="file" class="form-control" id="imagenProducto" accept="image/*">
-            <img id="previewImagen" src="#" alt="Preview" style="display: none; width: 100px; height: 100px; margin-top: 10px;">
-            <button type="button" class="btn btn-danger btn-sm mt-2" id="eliminarImagen" style="display: none;">Eliminar Imagen</button>
-        </div>
-        <button type="submit" class="btn btn-primary">Agregar Producto</button>
-    </form>
-
-    <h4 class="mt-4">Lista de Productos</h4>
-    <table class="table table-dark table-striped">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Imagen</th>
-            <th>Acciones</th>
-        </tr>
-        </thead>
-        <tbody id="tablaProductos">
-        </tbody>
-    </table>
-</div>
-
-<footer class="footer">
-    <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <ul class="footer-links">
-                    <li><a href="#">TotesBGA Financiación</a></li>
-                    <li><a href="#">Cookie Settings</a></li>
-                    <li><a href="#">Acerca de</a></li>
-                    <li><a href="#">Privacidad</a></li>
-                    <li><a href="#">Nuestro Sistema</a></li>
-                </ul>
-                <p class="policy">Política de Protección De Datos Personales</p>
-                <p class="copy">&copy; 2025 TotesBGA Colombia. Todos los derechos reservados.</p>
+            <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="../assets/IMAGENES/fondo%20admin.jpg" class="d-block w-100" alt="Imagen 1">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="../static/img/Fondoadmin2.webp" class="d-block w-100" alt="Imagen 2">
+                    </div>
+                    <div class="carousel-item">
+                        <img src="../static/img/fondoadmin3.avif" class="d-block w-100" alt="Imagen 3">
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
             </div>
-        </div>
-    </div>
-</footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Tu archivo JavaScript -->
-<script src="../js/Bodeguero.js"></script>
+            <div class="admin-panel container">
+                <h2 class="text-center">Administrar Lotes</h2>
 
-</body>
-</html>
+                <h4 class="mt-4">Agregar Lote</h4>
+                <form id="formAgregarLote">
+                    <div class="mb-3">
+                        <label class="form-label">Fecha de Llegada</label>
+                        <input type="datetime-local" class="form-control" id="datearrival" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Cantidad</label>
+                        <input type="number" class="form-control" id="quantity" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Precio de Compra</label>
+                        <input type="number" step="0.01" class="form-control" id="purchaseprice" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Precio Unitario de Compra</label>
+                        <input type="number" step="0.01" class="form-control" id="unitpurchaseprice" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Precio Unitario de Venta</label>
+                        <input type="number" step="0.01" class="form-control" id="unitsaleprice" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Meses de Garantía</label>
+                        <input type="number" class="form-control" id="monthsofwarranty">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Descripción del Ítem</label>
+                        <textarea class="form-control" id="itemdescription"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">ID del Ítem</label>
+                        <input type="number" class="form-control" id="itemId" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">ID del Proveedor</label>
+                        <input type="number" class="form-control" id="providerId" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Días de Garantía</label>
+                        <input type="number" class="form-control" id="warrantyindays">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">¿Tiene Garantía?</label>
+                        <select class="form-control" id="havewarranty">
+                            <option value="true">Sí</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Agregar Lote</button>
+                </form>
+
+                <h4 class="mt-4">Lista de Lotes</h4>
+                <table class="table table-dark table-striped">
+                    <thead>
+                    <tr>
+                        <th>ID Lote</th>
+                        <th>Fecha</th>
+                        <th>Proveedor</th>
+                        <th>Cantidad</th>
+                        <th>ID Tipo Ítem</th>
+                        <th>Precio Compra</th>
+                        <th>Precio Venta</th>
+                        <th>Garantía</th>
+                        <th>Días Garantía</th>
+                        <th>Descripción</th>
+                        <th>Precio Unitario Compra</th>
+                        <th>Precio Unitario Venta</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tablaLotes">
+                    </tbody>
+                </table>
+            </div>
+
+            <footer class="footer">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <ul class="footer-links">
+                                <li><a href="#">TotesBGA Financiación</a></li>
+                                <li><a href="#">Cookie Settings</a></li>
+                                <li><a href="#">Acerca de</a></li>
+                                <li><a href="#">Privacidad</a></li>
+                                <li><a href="#">Nuestro Sistema</a></li>
+                            </ul>
+                            <p class="policy">Política de Protección De Datos Personales</p>
+                            <p class="copy">&copy; 2025 TotesBGA Colombia. Todos los derechos reservados.</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+            <script src="../js/Batch.js"></script>
+            </body>
+            </html>
