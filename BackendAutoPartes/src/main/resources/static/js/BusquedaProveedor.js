@@ -1,16 +1,6 @@
-// Base de datos de proveedores (simulada)
-let proveedores = [
-    { id: "P001", nombre: "Proveedor Uno" },
-    { id: "P002", nombre: "Distribuidora ACME" },
-    { id: "P003", nombre: "TecnoParts" },
-    { id: "P004", nombre: "Alimentos S.A." },
-    { id: "P005", nombre: "Ferretería Industrial" }
-];
-
-// Función para consultar proveedor por ID o nombre
 function consultarProveedor() {
-    let consulta = document.getElementById("consultaProveedor").value.trim();
-    let resultado = document.getElementById("resultadoConsulta");
+    const consulta = document.getElementById("consultaProveedor").value.trim();
+    const resultado = document.getElementById("resultadoConsulta");
 
     if (!consulta) {
         resultado.innerHTML = `
@@ -20,53 +10,58 @@ function consultarProveedor() {
         return;
     }
 
-    // Buscar por ID o nombre (ignorando mayúsculas/minúsculas)
-    let proveedoresEncontrados = proveedores.filter(prov =>
-        prov.id.toLowerCase().includes(consulta.toLowerCase()) ||
-        prov.nombre.toLowerCase().includes(consulta.toLowerCase())
-    );
+    const esID = !isNaN(consulta);
+    const url = esID
+        ? `/api/providers/${consulta}`
+        : `/api/providers/name/${encodeURIComponent(consulta)}`;
 
-    if (proveedoresEncontrados.length > 0) {
-        let mensaje = '';
-        if (proveedoresEncontrados.length === 1) {
-            mensaje = `1 proveedor encontrado`;
-        } else {
-            mensaje = `${proveedoresEncontrados.length} proveedores encontrados`;
-        }
-
-        resultado.innerHTML = `
-            <div class="alert alert-success">
-                <strong>${mensaje}</strong>
-            </div>`;
-
-        // Actualizar la tabla con los resultados
-        actualizarTablaProveedores(proveedoresEncontrados);
-
-        // Resaltar las filas encontradas
-        setTimeout(() => {
-            proveedoresEncontrados.forEach(prov => {
-                const row = document.getElementById(`proveedor-${prov.id}`);
-                if (row) {
-                    row.classList.add('highlight-row');
-                    setTimeout(() => {
-                        row.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }, 100);
-                }
-            });
-        }, 300);
-    } else {
-        resultado.innerHTML = `
-            <div class="alert alert-danger">
-                No se encontraron proveedores con ese ID o nombre.
-            </div>`;
-        // Mostrar todos los proveedores si no hay resultados
-        actualizarTablaProveedores(proveedores);
-    }
+    fetch(url)
+        .then(response => {
+            if (!response.ok) throw new Error("No encontrado");
+            return response.json();
+        })
+        .then(proveedor => {
+            resultado.innerHTML = `
+                <div class="alert alert-success">
+                    <strong>Proveedor encontrado por ${esID ? 'ID' : 'nombre'}:</strong> ${proveedor.name}
+                </div>`;
+            actualizarTablaProveedores([proveedor]);
+            resaltarFila(proveedor.id);
+        })
+        .catch(error => {
+            resultado.innerHTML = `
+                <div class="alert alert-danger">
+                    No se encontraron proveedores con ese ${esID ? 'ID' : 'nombre'}.
+                </div>`;
+            cargarTodosLosProveedores();
+        });
 }
 
-// Función para actualizar la tabla de proveedores
-function actualizarTablaProveedores(listaProveedores = proveedores) {
-    let tabla = document.getElementById("tablaProveedoresBody");
+function resaltarFila(id) {
+    setTimeout(() => {
+        const row = document.getElementById(`proveedor-${id}`);
+        if (row) {
+            row.classList.add('highlight-row');
+            setTimeout(() => {
+                row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
+    }, 300);
+}
+
+function cargarTodosLosProveedores() {
+    fetch("/api/providers")
+        .then(response => response.json())
+        .then(proveedores => {
+            actualizarTablaProveedores(proveedores);
+        })
+        .catch(error => {
+            console.error("Error al cargar proveedores:", error);
+        });
+}
+
+function actualizarTablaProveedores(listaProveedores = []) {
+    const tabla = document.getElementById("tablaProveedoresBody");
     tabla.innerHTML = "";
 
     if (listaProveedores.length === 0) {
@@ -77,56 +72,43 @@ function actualizarTablaProveedores(listaProveedores = proveedores) {
         return;
     }
 
+    let filasHTML = "";
     listaProveedores.forEach(prov => {
-        let fila = `<tr id="proveedor-${prov.id}">
-            <td>${prov.id}</td>
-            <td><strong>${prov.nombre}</strong></td>
-        </tr>`;
-        tabla.innerHTML += fila;
+        filasHTML += `
+            <tr id="proveedor-${prov.id}">
+                <td>${prov.id}</td>
+                <td><strong>${prov.name}</strong></td>
+            </tr>`;
     });
+
+    tabla.innerHTML = filasHTML;
 }
 
-// Función para cambiar entre modo claro/oscuro
-function toggleMode() {
-    document.body.classList.toggle("modo-claro");
-}
-
-// Inicializar la tabla al cargar la página
-window.onload = function() {
-    actualizarTablaProveedores();
-    // Poner foco en el campo de búsqueda
-    document.getElementById("consultaProveedor").focus();
-};
-
-// Permitir búsqueda al presionar Enter
-document.getElementById("consultaProveedor").addEventListener("keypress", function(event) {
+// Buscar con Enter
+document.getElementById("consultaProveedor").addEventListener("keypress", function (event) {
     if (event.key === "Enter") {
         consultarProveedor();
     }
 });
-// Función para cambiar el modo
+
+// Modo claro/oscuro
 function toggleMode() {
     const body = document.body;
     body.classList.toggle("modo-claro");
-
-    // Guardar el estado del modo en localStorage
-    if (body.classList.contains("modo-claro")) {
-        localStorage.setItem("modo", "claro");
-    } else {
-        localStorage.setItem("modo", "oscuro");
-    }
+    localStorage.setItem("modo", body.classList.contains("modo-claro") ? "claro" : "oscuro");
 }
 
-// Aplicar el modo guardado al cargar la página
 function aplicarModoGuardado() {
-    const modoGuardado = localStorage.getItem("modo");
-    if (modoGuardado === "claro") {
+    const modo = localStorage.getItem("modo");
+    if (modo === "claro") {
         document.body.classList.add("modo-claro");
     }
 }
 
-// Llamar a la función al cargar la página
-aplicarModoGuardado();
+window.onload = function () {
+    aplicarModoGuardado();
+    cargarTodosLosProveedores();
+    document.getElementById("consultaProveedor").focus();
+};
 
-// Cargar el carrito al iniciar la página
-window.addEventListener('load', loadCart);
+window.addEventListener("load", loadCart);
