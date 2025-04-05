@@ -77,7 +77,7 @@ function actualizarTablaProveedores(listaProveedores = []) {
         filasHTML += `
             <tr id="proveedor-${prov.id}">
                 <td>${prov.id}</td>
-                <td><strong>${prov.name}</strong></td>
+                <td><strong>${prov.Nombre}</strong></td>
             </tr>`;
     });
 
