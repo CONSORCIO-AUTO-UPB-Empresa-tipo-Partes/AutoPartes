@@ -539,6 +539,215 @@ body {
 .modo-claro .modal-content h2 {
     color: #007BFF !important;
 }
+/* Estilos generales para factura */
+.factura-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 40px;
+    background-color: #222;
+    color: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+/* Encabezado */
+.factura-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #FF335F;
+}
+
+.factura-header h1 {
+    color: white;
+    font-size: 32px;
+    margin: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Información superior */
+.factura-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.factura-info-left, .factura-info-right {
+    flex: 1;
+}
+
+.factura-info-right {
+    text-align: right;
+}
+
+/* Método de pago */
+.metodo-pago {
+    background-color: rgba(255, 51, 95, 0.1);
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border: 1px solid #FF335F;
+}
+
+.metodo-pago h3 {
+    margin-top: 0;
+    color: #FF335F;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Información del cliente */
+.cliente-info {
+    background-color: rgba(255, 51, 95, 0.1);
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+    border: 1px solid #FF335F;
+}
+
+.cliente-info h2 {
+    margin-top: 0;
+    color: #FF335F;
+    font-size: 20px;
+}
+
+/* Tabla de artículos */
+.articulos-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+}
+
+.articulos-table thead th {
+    background-color: #FF335F;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+.articulos-table tbody td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #444;
+}
+
+.articulos-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.articulos-table tbody tr:hover {
+    background-color: rgba(255, 51, 95, 0.1);
+}
+
+/* Sección de totales */
+.factura-totales {
+    text-align: right;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #FF335F;
+}
+
+.factura-totales p {
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+.factura-totales .total {
+    font-size: 24px;
+    font-weight: bold;
+    color: #FF335F;
+}
+
+/* Pie de factura */
+.factura-footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 14px;
+    color: #aaa;
+    padding-top: 20px;
+    border-top: 1px dashed #555;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .factura-container {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .factura-info {
+        flex-direction: column;
+    }
+
+    .factura-info-right {
+        text-align: left;
+        margin-top: 20px;
+    }
+}
+
+/* Modo claro para la factura */
+.modo-claro .factura-container {
+    background-color: white;
+    color: #333;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.modo-claro .factura-header {
+    border-bottom-color: #007BFF;
+}
+
+.modo-claro .factura-header h1 {
+    color: #2b2d42;
+}
+
+.modo-claro .metodo-pago {
+    background-color: #f1faee;
+    border-color: #007BFF;
+}
+
+.modo-claro .metodo-pago h3 {
+    color: #007BFF;
+}
+
+.modo-claro .cliente-info {
+    background-color: #f1faee;
+    border-color: #007BFF;
+}
+
+.modo-claro .cliente-info h2 {
+    color: #007BFF;
+}
+
+.modo-claro .articulos-table thead th {
+    background-color: #007BFF;
+}
+
+.modo-claro .articulos-table tbody td {
+    border-bottom-color: #ddd;
+}
+
+.modo-claro .articulos-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.modo-claro .factura-totales {
+    border-top-color: #007BFF;
+}
+
+.modo-claro .factura-totales .total {
+    color: #007BFF;
+}
+
+.modo-claro .factura-footer {
+    color: #6c757d;
+    border-top-color: #ddd;
+}
 .modo-claro .search-form .btn {
     background-color: #007BFF !important;     /* Azul en modo claro */
     border-color: #007BFF !important;         /* Borde azul */
@@ -655,16 +864,4 @@ body {
 .modo-claro .profile-dropdown-content a:hover {
     color: white !important;
     background-color: #007BFF !important;
-}
-
-/* Para el botón de pagar en modo oscuro (color rosado) */
-.invoice-summary button {
-    background-color: #FF335F !important;
-    color: white !important;
-    border-color: #FF335F !important;
-}
-
-.invoice-summary button:hover {
-    background-color: #e63946 !important;
-    border-color: #e63946 !important;
 }

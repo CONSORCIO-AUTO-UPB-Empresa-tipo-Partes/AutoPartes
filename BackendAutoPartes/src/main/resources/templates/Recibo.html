@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accesorios para Autos</title>
+    <title>Recibo de Pago - TotesBGA</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/Factura.css">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="../static/css/Recibo.css">
 </head>
 <body>
 <div class="background-stripes">
@@ -30,7 +30,6 @@
             </form>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="Catalogo.html">Inicio</a></li>
-                <!-- Menú desplegable del perfil -->
                 <li class="nav-item">
                     <div class="profile-dropdown">
                         <button class="profile-button">
@@ -43,7 +42,6 @@
                         </div>
                     </div>
                 </li>
-                <!-- Icono del carrito -->
                 <li class="nav-item">
                     <a class="nav-link" href="Carrito.html" style="font-size: 27px;">🛒</a>
                 </li>
@@ -52,61 +50,59 @@
     </div>
 </nav>
 
-<script>
-    function logout() {
-      window.location.href = 'PrincipalUltimo.html';
-    }
-</script>
-
-
-<div class="invoice-container">
-    <h2>Factura</h2>
-    <div id="cart-items">
-        <!-- Aquí se mostrarán los productos del carrito -->
+<div class="factura-container">
+    <div class="factura-header">
+        <h1>FACTURA</h1>
     </div>
-    <div class="invoice-summary">
-        <h3>Resumen de la factura</h3>
-        <p>Documento de la persona: <span id="documentPerson">123456789</span></p>
-        <p>Número de factura: <span id="invoice-number">FAC-001</span></p>
-        <p>Fecha: <span id="date">2025-04-05T10:30:00</span></p>
-        <p>Subtotal sin impuestos: <span id="subtotalWithoutTax">$100.00</span></p>
-        <p>Impuestos: <span id="tax">$19.00</span></p>
-        <p>¿Tiene descuento?: <span id="hasDiscount">Sí</span></p>
-        <p>Monto de descuento: <span id="discountAmount">$10.00</span></p>
-        <p>Total: <span id="totalPrice">$109.00</span></p>
-        <button onclick="processPayment()" class="btn btn-primary">Pagar</button>
+
+    <div class="factura-info">
+        <div class="factura-info-left">
+            <p><strong>Fecha:</strong> <span id="invoice-date">Cargando...</span></p>
+            <p><strong>Factura:</strong> <span id="invoice-number">Cargando...</span></p>
+            <p><strong>Nombre:</strong> <span id="client-name">Cargando...</span></p>
+            <p><strong>Teléfono:</strong> <span id="client-phone">Cargando...</span></p>
+            <p><strong>Dirección:</strong> <span id="client-address">Cargando...</span></p>
+        </div>
+        <div class="factura-info-right">
+            <div class="metodo-pago">
+                <h3>MÉTODO DE PAGO</h3>
+                <p><strong>Tipo:</strong> <span id="payment-method">Cargando...</span></p>
+                <p><strong>Referencia:</strong> <span id="payment-reference">Cargando...</span></p>
+            </div>
+        </div>
     </div>
-    <div class="payment-methods">
-        <h3>Métodos de pago</h3>
-        <label>
-            <input type="radio" name="payment-method" value="credit-card" checked> Tarjeta de crédito
-        </label>
-        <label>
-            <input type="radio" name="payment-method" value="debit-card"> Tarjeta de débito
-        </label>
-        <label>
-            <input type="radio" name="payment-method" value="paypal"> PayPal
-        </label>
-        <label>
-            <input type="radio" name="payment-method" value="pse"> PSE
-        </label>
+
+    <table class="articulos-table" id="items-table">
+        <thead>
+        <tr>
+            <th>ARTÍCULO</th>
+            <th>CANT.</th>
+            <th>PRECIO UNITARIO</th>
+            <th>TOTAL</th>
+        </tr>
+        </thead>
+        <tbody id="items-table-body">
+        <!-- Los elementos se llenarán dinámicamente -->
+        <tr>
+            <td colspan="4" class="text-center">Cargando productos...</td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="factura-totales">
+        <p><strong>Subtotal:</strong> <span id="subtotal">$0.00</span></p>
+        <p><strong>Impuestos (16%):</strong> <span id="tax">$0.00</span></p>
+        <p><strong>Descuento:</strong> <span id="discount">$0.00</span></p>
+        <p class="total">TOTAL: <span id="total-amount">$0.00</span></p>
+    </div>
+
+    <div class="factura-footer">
+        <p><strong>¿Alguna pregunta?</strong></p>
+        <p><a href="mailto:soporte@totesbga.com"><i class="fas fa-envelope"></i> soporte@totesbga.com</a></p>
+        <p><a href="tel:+573001234567"><i class="fas fa-phone"></i> +57 300 123 4567</a></p>
     </div>
 </div>
 
-<!-- Modal de pago exitoso -->
-<div id="successModal" class="modal">
-    <div class="modal-content">
-        <h2>Pago exitoso</h2>
-        <p>Tu pago ha sido procesado correctamente.</p>
-        <button onclick="closeModal()">Aceptar</button>
-    </div>
-</div>
-
-<script>
-
-</script>
-
-<!-- Footer -->
 <footer class="footer">
     <div class="container">
         <div class="row">
@@ -126,8 +122,14 @@
 </footer>
 
 <button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
+
+<script>
+
+</script>
+
+<button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
 <!-- Bootstrap JS (necesario para el menú responsivo) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="../static/js/Factura.js"></script>
+<script src="../static/js/Recibo.js"></script>
 </body>
 </html>
