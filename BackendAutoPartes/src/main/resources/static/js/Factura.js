@@ -57,6 +57,10 @@
     const selectedPaymentMethod = document.querySelector('input[name="payment-method"]:checked').value;
     const modal = document.getElementById('successModal');
     modal.style.display = 'block';
+        function processPayment() {
+            // Redirige directamente al recibo
+            window.location.href = 'Recibo.html';
+        }
 
     // Actualizar la factura como pagada
     const invoiceSummary = document.querySelector('.invoice-summary');

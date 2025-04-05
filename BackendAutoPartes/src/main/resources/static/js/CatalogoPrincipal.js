@@ -1,4 +1,18 @@
-// Función para alternar entre modo claro y oscuro
+document.addEventListener('DOMContentLoaded', function() {
+    cargarCatalogo();
+});
+
+async function cargarCatalogo() {
+    try {
+        const response = await fetch('/api/catalog/itemtypes-with-batches');
+        const catalogo = await response.json();
+        mostrarCatalogo(catalogo);
+    } catch (error) {
+        console.error('Error al cargar el catálogo:', error);
+    }
+}
+
+// Función para cambiar el modo
 function toggleMode() {
     const body = document.body;
     body.classList.toggle("modo-claro");
@@ -22,82 +36,53 @@ function aplicarModoGuardado() {
 // Llamar a la función al cargar la página
 aplicarModoGuardado();
 
-// Lógica para agregar, editar y eliminar lotes
-let lotes = [];
-let idCounter = 1;
+function mostrarCatalogo(catalogo) {
+    const catalogoContainer = document.getElementById('catalogoContainer');
+    catalogoContainer.innerHTML = '';
 
-const formAgregarLote = document.getElementById("formAgregarLote");
-const tablaLotes = document.getElementById("tablaLotes");
-
-formAgregarLote.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const lote = {
-        id: idCounter++, // Asignar un ID único
-        idBatch: document.getElementById("idBatch").value,
-        date: document.getElementById("date").value,
-        supplier: document.getElementById("supplier").value,
-        quantity: document.getElementById("quantity").value,
-        idItemType: document.getElementById("idItemType").value,
-        purchasePrice: parseFloat(document.getElementById("purchasePrice").value),
-        sellingPrice: parseFloat(document.getElementById("sellingPrice").value),
-        haveWarranty: document.getElementById("haveWarranty").value === "true",
-        warrantyInDays: document.getElementById("warrantyInDays").value,
-        description: document.getElementById("description").value,
-        unitPurchasePrice: parseFloat(document.getElementById("unitPurchasePrice").value),
-        unitSellingPrice: parseFloat(document.getElementById("unitSellingPrice").value),
-    };
-
-    lotes.push(lote);
-    actualizarTablaLotes();
-    formAgregarLote.reset();
-});
-
-function actualizarTablaLotes() {
-    tablaLotes.innerHTML = "";
-    lotes.forEach((lote) => {
-        const fila = document.createElement("tr");
-        fila.innerHTML = `
-            <td>${lote.idBatch}</td>
-            <td>${lote.date}</td>
-            <td>${lote.supplier}</td>
-            <td>${lote.quantity}</td>
-            <td>${lote.idItemType}</td>
-            <td>$${lote.purchasePrice.toFixed(2)}</td>
-            <td>$${lote.sellingPrice.toFixed(2)}</td>
-            <td>${lote.haveWarranty ? "Sí" : "No"}</td>
-            <td>${lote.warrantyInDays}</td>
-            <td>${lote.description}</td>
-            <td>$${lote.unitPurchasePrice.toFixed(2)}</td>
-            <td>$${lote.unitSellingPrice.toFixed(2)}</td>
-            <td>
-                <button class="btn btn-primary btn-sm" onclick="editarLote(${lote.id})">Editar</button>
-                <button class="btn btn-danger btn-sm" onclick="eliminarLote(${lote.id})">Eliminar</button>
-            </td>
+    catalogo.forEach(item => {
+        const itemCard = document.createElement('div');
+        itemCard.className = 'col-md-4 mb-4 item-card';
+        itemCard.dataset.itemName = item.itemType.itemname.toLowerCase();
+        itemCard.innerHTML = `
+            <div class="card">
+                <img src="${item.itemType.imagepath}" class="card-img-top" alt="${item.itemType.itemname}">
+                <div class="card-body">
+                    <h5 class="card-title">${item.itemType.itemname}</h5>
+                    <p class="card-text">${item.itemType.itemdescription}</p>
+                    <ul class="list-group list-group-flush">
+                        ${item.batches.map(batch => `
+                            <li class="list-group-item">
+                                <strong>Lote:</strong> ${batch.id} -
+                                <strong>Precio:</strong> $${batch.unitsaleprice} -
+                                <strong>Cantidad:</strong> ${batch.quantity}
+                            </li>
+                        `).join('')}
+                    </ul>
+                    <button class="btn btn-primary mt-3" onclick="window.location.href='/InicioSesionCliente.js'">Más info</button>
+                </div>
+            </div>
         `;
-        tablaLotes.appendChild(fila);
+        catalogoContainer.appendChild(itemCard);
     });
 }
 
-function editarLote(id) {
-    const lote = lotes.find((l) => l.id === id);
-    if (lote) {
-        document.getElementById("idBatch").value = lote.idBatch;
-        document.getElementById("date").value = lote.date;
-        document.getElementById("supplier").value = lote.supplier;
-        document.getElementById("quantity").value = lote.quantity;
-        document.getElementById("idItemType").value = lote.idItemType;
-        document.getElementById("purchasePrice").value = lote.purchasePrice;
-        document.getElementById("sellingPrice").value = lote.sellingPrice;
-        document.getElementById("haveWarranty").value = lote.haveWarranty ? "true" : "false";
-        document.getElementById("warrantyInDays").value = lote.warrantyInDays;
-        document.getElementById("description").value = lote.description;
-        document.getElementById("unitPurchasePrice").value = lote.unitPurchasePrice;
-        document.getElementById("unitSellingPrice").value = lote.unitSellingPrice;
-        eliminarLote(id);
-    }
+
+function filtrarCatalogo() {
+    const searchInput = document.getElementById('searchInput').value.toLowerCase();
+    const itemCards = document.querySelectorAll('.item-card');
+
+    itemCards.forEach(card => {
+        const itemName = card.dataset.itemName;
+        if (itemName.includes(searchInput)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    });
 }
 
-function eliminarLote(id) {
-    lotes = lotes.filter((l) => l.id !== id);
-    actualizarTablaLotes();
+function comprarProducto(itemId) {
+    // Lógica para manejar la compra del producto
+    alert(`Producto con ID ${itemId} añadido al carrito.`);
 }
