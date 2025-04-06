@@ -114,16 +114,16 @@ function validateToken(token) {
 function redirectBasedOnUserType(userType) {
     switch(userType) {
         case 'cliente':
-            window.location.href = '../Catalogo.html';
+            window.location.href = 'Catalogo.html';
             break;
         case 'bodeguero':
-            window.location.href = '../Bodeguero.html';
+            window.location.href = 'Bodeguero.html';
             break;
         case 'administrador':
-            window.location.href = '../Admin.html';
+            window.location.href = 'Admin.html';
             break;
         default:
-            window.location.href = '../Catalogo.html';
+            window.location.href = 'Catalogo.html';
     }
 }
 

@@ -4,14 +4,12 @@ import com.autopartes.BackendAutoPartes.model.dto.*;
 import com.autopartes.BackendAutoPartes.model.dto.request.RegisterRequest;
 import com.autopartes.BackendAutoPartes.repository.PersonRepository;
 import com.autopartes.BackendAutoPartes.repository.UserRepository;
-import com.autopartes.BackendAutoPartes.repository.UsertokenRepository;
+import com.autopartes.BackendAutoPartes.security.JwtUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.Optional;
-import java.util.UUID;
+
 
 /**
  * Service for managing User entities.
@@ -23,10 +21,7 @@ public class UserService {
      * The repository for managing User entities.
      */
     private final UserRepository userRepository;
-    /**
-     * The repository for managing Usertoken entities.
-     */
-    private final UsertokenRepository tokenRepository;
+
     /**
      * The password encoder.
      */
@@ -34,23 +29,24 @@ public class UserService {
 
     private final PersonRepository personRepository;
 
+    private final JwtUtils jwtUtils;
+
     /**
-     * Constructor.
+     * Constructs a new UserService with the specified dependencies.
      *
      * @param userRepository The repository for managing User entities.
-     * @param tokenRepository The repository for managing Usertoken entities.
-     * @param passwordEncoder The password encoder.
+     * @param passwordEncoder The password encoder for hashing passwords.
+     * @param personRepository The repository for managing Person entities.
+     * @param jwtUtils The utility class for handling JWT operations.
      */
     public UserService(UserRepository userRepository,
-                       UsertokenRepository tokenRepository,
                        BCryptPasswordEncoder passwordEncoder,
-                       PersonRepository personRepository) {
+                       PersonRepository personRepository, JwtUtils jwtUtils) {
         this.userRepository = userRepository;
-        this.tokenRepository = tokenRepository;
+        this.jwtUtils = jwtUtils;
         this.passwordEncoder = passwordEncoder;
         this.personRepository = personRepository;
     }
-
 
     /**
      * Finds all users.
@@ -69,8 +65,7 @@ public class UserService {
      */
     public User save(User user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
-        return user;
+        return userRepository.save(user);
     }
 
     /**
@@ -83,53 +78,21 @@ public class UserService {
     }
 
     /**
-     * Login a user.
+     * Logs in a user by validating their credentials and generating a JWT token.
      *
      * @param email The user's email.
      * @param password The user's password.
-     * @return Optional containing the found user or empty if not found.
+     * @return Optional containing the generated JWT token or empty if credentials invalid.
      */
-    public Optional<User> login(String email, String password) {
+    public Optional<String> login(String email, String password) {
         return userRepository.findById(email)
-                .filter(user -> passwordEncoder.matches(password, user.getPassword()));
+                .filter(user -> passwordEncoder.matches(password, user.getPassword()))
+                .map(user -> {
+                    String role = "ROLE_" + user.getUsertypeIdtypeuser().getUsertypename().toUpperCase();
+                    return jwtUtils.generateToken(user.getEmail(), role);
+                });
     }
 
-
-    /**
-     * Generate and save a token for a user.
-     *
-     * @param user The user to generate the token for.
-     * @return The generated token.
-     */
-    public String generateAndSaveToken(User user) {
-        Usertoken token = new Usertoken();
-        token.setToken(UUID.randomUUID().toString());
-        token.setCreatedat(Instant.now());
-        token.setExpiresat(Instant.now().plus(2, ChronoUnit.HOURS));
-        token.setUsertokenscol(true);
-
-        Usertoken savedToken = tokenRepository.save(token);
-
-        user.setUsertokensIdtokens(savedToken);
-        userRepository.save(user);
-
-        return savedToken.getToken();
-    }
-
-    /**
-     * Check if a token is valid.
-     *
-     * @param tokenStr The token to check.
-     * @return True if the token is valid, false otherwise.
-     */
-    public boolean isTokenValid(String tokenStr) {
-        Optional<Usertoken> tokenOpt = tokenRepository.findAll().stream()
-                .filter(t -> t.getToken().equals(tokenStr))
-                .findFirst();
-
-        return tokenOpt.isPresent() &&
-                tokenOpt.get().getExpiresat().isAfter(Instant.now());
-    }
 
     /**
      * Retrieves a user by their email.
@@ -187,10 +150,12 @@ public class UserService {
      * @return Optional containing the updated user or empty if credentials invalid.
      */
     public Optional<User> updatePassword(String email, String oldPassword, String newPassword) {
-        return login(email, oldPassword).map(user -> {
-            user.setPassword(newPassword);
-            return userRepository.save(user);
-        });
+        return userRepository.findById(email)
+                .filter(user -> passwordEncoder.matches(oldPassword, user.getPassword()))
+                .map(user -> {
+                    user.setPassword(passwordEncoder.encode(newPassword));
+                    return userRepository.save(user);
+                });
     }
 
     /**
@@ -207,14 +172,6 @@ public class UserService {
         String hashedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(hashedPassword);
 
-        Usertoken token = new Usertoken();
-        token.setToken(UUID.randomUUID().toString());
-        token.setCreatedat(Instant.now());
-        token.setExpiresat(Instant.now().plus(2, ChronoUnit.HOURS));
-        token.setUsertokenscol(true);
-        tokenRepository.save(token);
-
-        user.setUsertokensIdtokens(token);
         return Optional.of(userRepository.save(user));
     }
 
@@ -236,46 +193,27 @@ public class UserService {
         Usertype usertype = new Usertype();
         usertype.setId(request.getUsertypeId());
 
-        Usertoken token = new Usertoken();
-        token.setToken(UUID.randomUUID().toString());
-        token.setCreatedat(Instant.now());
-        token.setExpiresat(Instant.now().plus(2, ChronoUnit.HOURS));
-        token.setUsertokenscol(true);
-        tokenRepository.save(token);
-
         User user = new User();
         user.setEmail(request.getEmail());
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setPersonIddocument(person);
         user.setUsertypeIdtypeuser(usertype);
-        user.setUsertokensIdtokens(token);
 
         return Optional.of(userRepository.save(user));
     }
 
-    /**
-     * Get user information by token.
-     *
-     * @param token The authentication token.
-     * @return Optional containing the user or empty if token invalid.
-     */
-    public Optional<User> getUserByToken(String token) {
-        return tokenRepository.findByToken(token)
-                .filter(t -> t.getExpiresat().isAfter(Instant.now()))
-                .flatMap(t -> userRepository.findByUsertokensIdtokens(t));
+    public String getUserTypeByEmail(String email) {
+        return userRepository.findById(email)
+                .map(user -> user.getUsertypeIdtypeuser().getUsertypename())
+                .orElse("Unknown");
     }
 
-    /**
-     * Invalidate a token.
-     *
-     * @param token The token to invalidate.
-     */
-    public void invalidateToken(String token) {
-        tokenRepository.findByToken(token)
-                .ifPresent(t -> {
-                    t.setExpiresat(Instant.now());
-                    tokenRepository.save(t);
-                });
+    public boolean isTokenValid(String token) {
+        return jwtUtils.validateToken(token);
     }
 
+    //obtener el email del usuario a partir del token
+    public String getEmailFromToken(String token) {
+        return jwtUtils.extractUsername(token);
+    }
 }

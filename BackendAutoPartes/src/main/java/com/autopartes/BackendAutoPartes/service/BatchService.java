@@ -23,6 +23,13 @@ public class BatchService {
     private final ProviderService providerService;
     private final ItemtypeService itemtypeService;
 
+    /**
+     * Constructor.
+     *
+     * @param batchRepository The repository for managing Batch entities.
+     * @param providerService The service for managing Provider entities.
+     * @param itemtypeService The service for managing Itemtype entities.
+     */
     public BatchService(BatchRepository batchRepository,
                         ProviderService providerService,
                         ItemtypeService itemtypeService) {
@@ -31,17 +38,34 @@ public class BatchService {
         this.itemtypeService = itemtypeService;
     }
 
+    /**
+     * Finds all batches.
+     *
+     * @return List containing all batches.
+     */
     public List<BatchResponse> findAll() {
         return batchRepository.findAll().stream()
                 .map(this::mapToResponse)
                 .toList();
     }
 
+    /**
+     * Finds a batch by its ID.
+     *
+     * @param id The ID of the batch to find.
+     * @return An Optional containing the found batch, or empty if not found.
+     */
     public Optional<BatchResponse> findById(Integer id) {
         return batchRepository.findById(id)
                 .map(this::mapToResponse);
     }
 
+    /**
+     * Creates a new batch.
+     *
+     * @param request The batch to create.
+     * @return An Optional containing the created batch, or empty if validation fails.
+     */
     public Optional<BatchResponse> createBatch(BatchRequest request) {
         return validateBatchRequest(request)
                 .flatMap(req -> {
@@ -64,6 +88,13 @@ public class BatchService {
                 });
     }
 
+    /**
+     * Updates an existing batch.
+     *
+     * @param id The ID of the batch to update.
+     * @param request The updated batch data.
+     * @return An Optional containing the updated batch, or empty if not found.
+     */
     public Optional<BatchResponse> updateBatch(Integer id, BatchRequest request) {
         return batchRepository.findById(id)
                 .map(batch -> {
@@ -73,10 +104,21 @@ public class BatchService {
                 });
     }
 
+    /**
+     * Deletes a batch by its ID.
+     *
+     * @param id The ID of the batch to delete.
+     */
     public void deleteById(Integer id) {
         batchRepository.deleteById(id);
     }
 
+    /**
+     * Finds all batches by item type name, sorted by date.
+     *
+     * @param itemTypeName The name of the item type.
+     * @return List containing all batches for the specified item type, sorted by date.
+     */
     public List<BatchResponse> findAllByItemTypeNameSortedByDate(String itemTypeName) {
         return batchRepository.findAll().stream()
                 .filter(batch -> batch.getItemIditem().getItemname().equals(itemTypeName))
@@ -85,6 +127,12 @@ public class BatchService {
                 .toList();
     }
 
+    /**
+     * Finds the ID of a batch by item type name.
+     *
+     * @param itemTypeName The name of the item type.
+     * @return An Optional containing the ID of the batch, or empty if not found.
+     */
     public Optional<Integer> findIdByItemTypeName(String itemTypeName) {
         return batchRepository.findAll().stream()
                 .filter(batch -> batch.getItemIditem().getItemname().equals(itemTypeName))
@@ -92,6 +140,13 @@ public class BatchService {
                 .findFirst();
     }
 
+    /**
+     * Calculates the total purchase price of batches for a given month and year.
+     *
+     * @param year The year to filter by.
+     * @param month The month to filter by.
+     * @return The total purchase price for the specified month and year.
+     */
     public BigDecimal getTotalPurchasePriceByMonth(int year, int month) {
         validateMonth(month);
         return batchRepository.findAll().stream()
@@ -100,6 +155,12 @@ public class BatchService {
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
+    /**
+     * Finds all batches by provider ID.
+     *
+     * @param providerId The ID of the provider.
+     * @return List containing all batches for the specified provider.
+     */
     private void updateBatchFromRequest(Batch batch, BatchRequest request) {
         batch.setQuantity(request.getQuantity());
         batch.setPurchaseprice(request.getPurchaseprice());
@@ -111,6 +172,12 @@ public class BatchService {
         batch.setHavewarranty(Boolean.TRUE.equals(request.getHavewarranty()));
     }
 
+    /**
+     * Maps a Batch entity to a BatchResponse DTO.
+     *
+     * @param batch The Batch entity to map.
+     * @return The mapped BatchResponse DTO.
+     */
     private BatchResponse mapToResponse(Batch batch) {
         BatchResponse response = new BatchResponse();
         response.setId(batch.getIdbatch());
@@ -129,6 +196,12 @@ public class BatchService {
         return response;
     }
 
+    /**
+     * Validates the batch request.
+     *
+     * @param request The batch request to validate.
+     * @return An Optional containing the validated request, or empty if validation fails.
+     */
     private Optional<BatchRequest> validateBatchRequest(BatchRequest request) {
         if (request.getQuantity() < 0) {
             return Optional.empty();
@@ -136,6 +209,12 @@ public class BatchService {
         return Optional.of(request);
     }
 
+    /**
+     * Validates the quantity.
+     *
+     * @param newQuantity The new quantity to validate.
+     * @param initialQuantity The initial quantity to compare against.
+     */
     private void validateQuantity(Integer newQuantity, Integer initialQuantity) {
         if (newQuantity < 0) {
             throw new IllegalArgumentException("Quantity cannot be negative");
@@ -151,8 +230,33 @@ public class BatchService {
         }
     }
 
+    /**
+     * Checks if the batch date is in the specified year and month.
+     *
+     * @param batch The batch to check.
+     * @param year The year to check against.
+     * @param month The month to check against.
+     * @return True if the batch date is in the specified year and month, false otherwise.
+     */
     private boolean isInYearAndMonth(Batch batch, int year, int month) {
         var batchDate = batch.getDatearrival().atZone(ZoneId.systemDefault());
         return batchDate.getYear() == year && batchDate.getMonthValue() == month;
     }
+
+    /**
+     * Sells a batch by reducing its quantity.
+     *
+     * @param id The ID of the batch to sell.
+     * @param quantity The quantity to sell.
+     * @return An Optional containing the updated batch, or empty if not found.
+     */
+    public Optional<BatchResponse> sellBatch(Integer id, Integer quantity) {
+        return batchRepository.findById(id)
+                .map(batch -> {
+                    validateQuantity(quantity, batch.getInitialquantity());
+                    batch.setInitialquantity(batch.getInitialquantity() - quantity);
+                    return mapToResponse(batchRepository.save(batch));
+                });
+    }
+    
 }

@@ -64,4 +64,14 @@ public class BatchController {
             @PathVariable int month) {
         return ResponseEntity.ok(batchService.getTotalPurchasePriceByMonth(year, month));
     }
+
+    //Modificar la cantidad de un batch al momento de la venta
+    @PutMapping("/sell/{id}")
+    public ResponseEntity<BatchResponse> sellBatch(
+            @PathVariable Integer id,
+            @RequestParam Integer quantity) {
+        return batchService.sellBatch(id, quantity)
+                .map(batch -> ResponseEntity.ok(batch))
+                .orElse(ResponseEntity.notFound().build());
+    }
 }

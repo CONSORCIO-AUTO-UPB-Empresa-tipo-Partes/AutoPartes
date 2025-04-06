@@ -20,19 +20,22 @@ public class JwtUtils {
     private static final long EXPIRATION_TIME = 86400000;
 
     /**
-     * Generates a JWT token for the given username.
+     * Generates a JWT token for the given username and role.
      *
      * @param username The username to include in the token.
+     * @param role The role to include in the token.
      * @return The generated JWT token.
      */
-    public String generateToken(String username) {
+    public String generateToken(String username, String role) {
         return Jwts.builder()
                 .setSubject(username)
+                .claim("role", role) // 👈 Agregamos el rol
                 .setIssuedAt(new Date())
                 .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
+
 
     /**
      * Validates the given JWT token.
@@ -66,4 +69,35 @@ public class JwtUtils {
                 .getBody();
         return claims.getSubject();
     }
+
+    /**
+     * Extracts the role from the given JWT token.
+     *
+     * @param token The token to extract the role from.
+     * @return The extracted role.
+     */
+    public String extractRole(String token) {
+        Claims claims = Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+        return claims.get("role", String.class);
+    }
+
+    /**
+     * Extracts the expiration date from the given JWT token.
+     *
+     * @param token The token to extract the expiration date from.
+     * @return The extracted expiration date.
+     */
+    public Date extractExpiration(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .getExpiration();
+    }
+
 }

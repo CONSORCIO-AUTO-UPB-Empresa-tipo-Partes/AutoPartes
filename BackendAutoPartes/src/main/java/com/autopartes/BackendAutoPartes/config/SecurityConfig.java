@@ -1,6 +1,7 @@
 package com.autopartes.BackendAutoPartes.config;
 
 import com.autopartes.BackendAutoPartes.security.JwtFilter;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,27 +29,35 @@ public class SecurityConfig {
      */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf(csrf -> csrf.disable())
+        http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/",
+                                "/api/auth/**",
+                                "/css/**", "/js/**", "/img/**", "/static/**",
                                 "/InicioSesionCliente.html",
-                                "/Catalogo.html",
-                                "/PrincipalUltimo.html",
-                                "/CatalogoPrincipal.html",
                                 "/Registro.html",
-                                "/css/**",
-                                "/js/**",
-                                "/img/**",
-                                "/assets/**",
-                                "/static/**",
-                                "/api/auth/**"
+                                "/CatalogoPrincipal.html",
+                                "/PrincipalUltimo.html",
+                                "/Contacto.html",
+                                "/Catalogo.html",
+                                "/Perfil.html",
+                                "/Carrito.html",
+                                "/Historial_Compras.html",
+
+                                //Para desarrollo, NO SE ME VAYA A OLVIDAR QUITAR ESTA MIERDA DIOS MIO
+                                "/api/batches/**",
+                                "/api/itemtypes/**",
+                                "/api/providers/**"
                         ).permitAll()
+                        .requestMatchers(
+                                "/api/catalog/**",
+                                "/api/bills/**",
+                                "/api/auth/profile"
+                        ).hasAnyRole("CLIENTE", "BODEGUERO", "ADMINISTRADOR")
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
+
 }

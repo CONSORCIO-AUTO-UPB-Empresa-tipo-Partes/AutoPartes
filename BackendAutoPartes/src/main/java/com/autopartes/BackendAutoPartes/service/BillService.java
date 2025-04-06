@@ -94,18 +94,6 @@ public class BillService {
         billRepository.deleteById(id);
     }
 
-    /**
-     * Finds all bills by customer document.
-     *
-     * @param document The customer's document.
-     * @return List containing all bills for the customer.
-     */
-    public List<Bill> findBillsByCustomerDocument(String document) {
-        return billRepository.findAll().stream()
-                .filter(bill -> bill.getPersonIddocument().getIddocument().equals(document))
-                .sorted((b1, b2) -> b2.getBilldate().compareTo(b1.getBilldate()))
-                .toList();
-    }
 
     /**
      * Finds the total price of all bills for a given month.
@@ -249,15 +237,16 @@ public class BillService {
     }
 
     /**
-     * Finds all bills by customer document.
+     * Finds bills by customer document.
      *
-     * @param document The customer's document.
-     * @return List containing all bills for the customer.
+     * @param customerDocument The customer's document.
+     * @return List containing the found bills.
      */
-    public List<BillResponse> findBillResponsesByCustomerDocument(String document) {
-        return findBillsByCustomerDocument(document).stream()
-                .map(this::mapToResponse)
-                .toList();
+    public List<BillResponse> findBillsByCustomerDocument(String customerDocument) {
+        System.out.println("🔎 Buscando facturas para documento: " + customerDocument);
+        List<Bill> bills = billRepository.findByPersonIddocument_Iddocument(customerDocument);
+        System.out.println("📄 Facturas encontradas: " + bills.size());
+        return bills.stream().map(this::mapToResponse).toList();
     }
 
 }

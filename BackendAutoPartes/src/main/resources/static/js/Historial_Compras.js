@@ -1,196 +1,97 @@
-// =============================================
-// Funcionalidad del Modo Claro/Oscuro
-// =============================================
+document.addEventListener("DOMContentLoaded", async () => {
+    const token = localStorage.getItem("authToken");
+    if (!token) return;
 
-function toggleMode() {
-    const body = document.body;
-    body.classList.toggle("modo-claro");
+    try {
+        // Obtener el perfil autenticado
+        const profileResponse = await fetch("/api/auth/profile", {
+            headers: { "Authorization": `Bearer ${token}` }
+        });
 
-    // Guardar el modo en localStorage
-    if (body.classList.contains("modo-claro")) {
-        localStorage.setItem("modo", "claro");
-    } else {
-        localStorage.setItem("modo", "oscuro");
+        const profile = await profileResponse.json();
+        console.log("🧾 Perfil recibido:", profile); // 👈 AGREGA ESTO
+
+        const document = profile.document?.trim();
+        console.log("📄 Documento del cliente:", document); // 👈 Y ESTO TAMBIÉN
+
+        // Validar documento antes de continuar
+        if (!document) {
+            console.warn("⚠️ Documento del cliente no encontrado, abortando fetch de facturas.");
+            return;
+        }
+
+        // Llamar al historial por documento
+        const billsResponse = await fetch(`/api/bills/customer/${document}`, {
+            headers: { "Authorization": `Bearer ${token}` }
+        });
+
+        const bills = await billsResponse.json();
+        console.log("📦 Facturas recibidas:", bills);
+
+        renderPurchaseHistory(bills);
+    } catch (error) {
+        console.error("❌ Error cargando historial de compras:", error);
     }
-}
+});
 
-function aplicarModoGuardado() {
-    const modoGuardado = localStorage.getItem("modo");
-    if (modoGuardado === "claro") {
-        document.body.classList.add("modo-claro");
-    } else {
-        document.body.classList.remove("modo-claro");
-    }
-}
+function renderPurchaseHistory(bills) {
+    const container = document.getElementById("purchase-history");
 
-// Aplicar el modo guardado al cargar la página
-document.addEventListener("DOMContentLoaded", aplicarModoGuardado);
-
-// =============================================
-// Funcionalidad del Carrito
-// =============================================
-
-function updateQuantity(button, change) {
-    let item = button.closest('.cart-item');
-    let quantityElement = item.querySelector('.quantity');
-    let availableElement = item.querySelector('.available');
-    let price = parseInt(item.getAttribute('data-price'));
-    let quantity = parseInt(quantityElement.textContent);
-    let available = parseInt(availableElement.textContent);
-
-    if (change > 0 && available > 0) {
-        quantity++;
-        available--;
-    } else if (change < 0 && quantity > 1) {
-        quantity--;
-        available++;
+    if (!bills || bills.length === 0) {
+        container.innerHTML = "<p>No se encontraron compras registradas.</p>";
+        return;
     }
 
-    quantityElement.textContent = quantity;
-    availableElement.textContent = available;
-    updateTotal();
-}
-
-function removeFromCart(button) {
-    button.closest('.cart-item').remove();
-    updateTotal();
-}
-
-function updateTotal() {
-    let total = 0;
-    document.querySelectorAll('.cart-item').forEach(item => {
-        let quantity = parseInt(item.querySelector('.quantity').textContent);
-        let price = parseInt(item.getAttribute('data-price'));
-        total += quantity * price;
-    });
-    document.getElementById('total-price').textContent = total > 0 ? `$${total.toLocaleString()}` : '$0';
-}
-
-// =============================================
-// Funcionalidad de Solicitar Devolución
-// =============================================
-
-function requestReturn(productName, deliveryDate, status) {
-    const today = new Date(); // Fecha actual
-    const delivery = new Date(deliveryDate); // Fecha de entrega
-    const daysSinceDelivery = Math.floor((today - delivery) / (1000 * 60 * 60 * 24)); // Días desde la entrega
-
-    // Verificar si el producto fue entregado
-    if (status !== "Entregado") {
-        alert("No se puede solicitar la devolución. El producto no ha sido entregado.");
-        return; // Detener la función si no está entregado
-    }
-
-    // Verificar si han pasado más de 15 días desde la entrega
-    if (daysSinceDelivery > 15) {
-        alert("No se puede solicitar la devolución. Han pasado más de 15 días desde la entrega.");
-        return; // Detener la función si no se cumple la condición
-    }
-
-    // Crear un objeto para la devolución
-    const returnRequest = {
-        productName: productName,
-        date: new Date().toLocaleDateString(),
-        status: "En proceso"
-    };
-
-    // Obtener las devoluciones existentes o inicializar un array vacío
-    let returns = JSON.parse(localStorage.getItem("returns")) || [];
-    returns.push(returnRequest); // Añadir la nueva devolución
-    localStorage.setItem("returns", JSON.stringify(returns)); // Guardar en localStorage
-
-    // Mostrar las devoluciones
-    showReturns();
-    alert(`Devolución solicitada para: ${productName}`);
-}
-
-function showReturns() {
-    const returnsContainer = document.getElementById("returns-container");
-    const returnsList = document.getElementById("returns-list");
-    const returns = JSON.parse(localStorage.getItem("returns")) || [];
-
-    if (returns.length > 0) {
-        returnsContainer.style.display = "block"; // Mostrar el contenedor
-        returnsList.innerHTML = returns.map(returnItem => `
-            <div class="return-item">
-                <h4>${returnItem.productName}</h4>
-                <p><strong>Fecha de devolución:</strong> ${returnItem.date}</p>
-                <p><strong>Estado:</strong> ${returnItem.status}</p>
-            </div>
+    const historyHtml = bills.map(bill => {
+        const itemsHtml = bill.items.map(item => `
+            <tr>
+                <td>${item.itemName}</td>
+                <td>${item.itemDescription}</td>
+                <td>${item.quantitySold}</td>
+                <td>$${parseFloat(item.unitPrice).toLocaleString()}</td>
+                <td>$${parseFloat(item.totalPrice).toLocaleString()}</td>
+            </tr>
         `).join("");
-    } else {
-        returnsContainer.style.display = "none"; // Ocultar si no hay devoluciones
-    }
+
+        return `
+            <div class="card mb-4 shadow-sm factura-box">
+                <div class="card-header bg-dark text-white d-flex justify-content-between">
+                    <span><strong>Factura #${bill.id}</strong></span>
+                    <span><i class="bi bi-calendar"></i> ${bill.billDate?.split("T")[0]}</span>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title text-primary-emphasis">Cliente: ${bill.customerName} (${bill.customerDocument})</h5>
+                    
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-dark table-sm mt-3">
+                            <thead class="table-secondary text-dark">
+                                <tr>
+                                    <th>Producto</th>
+                                    <th>Descripción</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio Unitario</th>
+                                    <th>Subtotal</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${itemsHtml}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-3 resumen-factura">
+                        <p><strong>Total sin IVA:</strong> $${parseFloat(bill.totalPriceWithoutTax).toLocaleString()}</p>
+                        <p><strong>IVA (19%):</strong> $${parseFloat(bill.tax).toLocaleString()}</p>
+                        ${bill.hasDiscount ? `<p><strong>Descuento aplicado:</strong> ${parseFloat(bill.discountRate * 100).toFixed(0)}%</p>` : ""}
+                        <p class="fs-5"><strong>Total pagado:</strong> $${parseFloat(bill.totalPrice).toLocaleString()}</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }).join("");
+
+    container.innerHTML = historyHtml;
 }
 
-// Cargar las devoluciones al iniciar la página
-document.addEventListener("DOMContentLoaded", showReturns);
 
-// =============================================
-// Funcionalidad de Navegación (Categorías y Productos)
-// =============================================
 
-function showProducts(category) {
-    // Oculta todas las secciones
-    document.querySelectorAll('.product-section').forEach(section => {
-        section.style.display = 'none';
-    });
-    // Oculta la sección de categorías
-    document.getElementById('category-section').style.display = 'none';
-    // Muestra la sección de la categoría seleccionada
-    const sectionToShow = document.getElementById(`${category}-section`);
-    if (sectionToShow) {
-        sectionToShow.style.display = 'block';
-    } else {
-        console.error(`Sección no encontrada: ${category}-section`);
-    }
-}
-
-function showCategories() {
-    // Oculta todas las secciones de productos
-    document.querySelectorAll('.product-section').forEach(section => {
-        section.style.display = 'none';
-    });
-    // Muestra la sección de categorías
-    document.getElementById('category-section').style.display = 'block';
-}
-
-function searchCategory(event) {
-    event.preventDefault();
-    const searchTerm = document.getElementById('search-input').value.toLowerCase();
-    const categories = {
-        'llantas': 'llantas',
-        'tubos de escape': 'tubos-escape',
-        'exploradoras': 'exploradoras',
-        'cámaras': 'camaras',
-        'tapetes': 'tapetes',
-        'estribos': 'estribos',
-        'perillas': 'perillas',
-        'spoilers': 'spoilers',
-        'retrovisores': 'retrovisores',
-        'repuestos': 'repuestos'
-    };
-
-    if (categories[searchTerm]) {
-        showProducts(categories[searchTerm]);
-    } else {
-        alert('Categoría no encontrada');
-    }
-}
-
-// =============================================
-// Funcionalidad del Modal de Login
-// =============================================
-
-function addToCart(productName) {
-    const isLoggedIn = false; // Cambiar a true si el usuario está logueado
-    if (!isLoggedIn) {
-        document.getElementById('loginModal').style.display = 'flex';
-    } else {
-        alert(`${productName} añadido al carrito`);
-    }
-}
-
-function closeModal() {
-    document.getElementById('loginModal').style.display = 'none';
-}

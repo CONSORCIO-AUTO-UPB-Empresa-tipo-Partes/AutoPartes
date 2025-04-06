@@ -28,9 +28,4 @@ public class User {
     @JoinColumn(name = "person_iddocument", nullable = false)
     private Person personIddocument;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JoinColumn(name = "usertokens_idtokens", nullable = false)
-    private Usertoken usertokensIdtokens;
-
 }

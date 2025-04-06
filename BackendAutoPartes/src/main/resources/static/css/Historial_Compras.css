@@ -546,3 +546,31 @@ body {
 .modo-claro .profile-button:hover {
     color: #007BFF;
 }
+
+.factura-box {
+    background-color: #111;
+    border: 1px solid #FF335F;
+    border-radius: 12px;
+    overflow: hidden;
+}
+.factura-box .card-header {
+    background-color: #FF335F !important;
+    color: white;
+    font-weight: bold;
+}
+.factura-box .resumen-factura p {
+    margin: 4px 0;
+    color: #f8f9fa;
+}
+
+.modo-claro .factura-box {
+    background-color: #fff;
+    border: 1px solid #007BFF;
+}
+.modo-claro .factura-box .card-header {
+    background-color: #007BFF !important;
+    color: white;
+}
+.modo-claro .resumen-factura p {
+    color: black;
+}

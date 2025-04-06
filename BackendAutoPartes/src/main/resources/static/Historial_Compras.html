@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accesorios para Autos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../static/css/Historial_Compras.css">
+    <link rel="stylesheet" href="../css/Historial_Compras.css">
 
 </head>
 <body>
@@ -18,7 +18,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="#">
-            <img src="../static/img/logo-totes0.png" alt="TOTES BGA" class="logo-principal">
+            <img src="../img/logo-totes0.png" alt="TOTES BGA" class="logo-principal">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -33,7 +33,7 @@
                 <!-- Perfil con menú desplegable -->
                 <div class="profile-dropdown">
                     <button class="profile-button">
-                        <img src="../static/img/USUARIO.png" alt="Perfil" class="profile-icon">
+                        <img src="../img/USUARIO.png" alt="Perfil" class="profile-icon">
                         <!--<span>Perfil</span>-->
                     </button>
                     <div class="profile-dropdown-content">
@@ -62,74 +62,9 @@
 <!-- Contenedor del historial de compras -->
 <div class="history-container">
     <h3>Historial de Compras</h3>
-
-    <!-- Producto 1 -->
-    <div class="history-item">
-        <img src="../assets/IMAGENES/tapete%20baul%20%232.png" alt="Tapete Carro Grand Prix">
-        <div class="history-item-details">
-            <h4>Tapete Carro Grand Prix Universal</h4>
-            <p class="product-description">Ajustable Caucho</p>
-            <p><strong>Fecha de compra:</strong> 10/10/2025</p>
-            <p><strong>Precio:</strong> $82,300</p>
-        </div>
-        <!-- Estado del producto -->
-        <div class="status-update">
-            <h5>Estado del Producto</h5>
-            <p><strong>Estado:</strong> Entregado</p>
-            <p><strong>Fecha de entrega:</strong> 12/10/2025</p>
-        </div>
-        <!-- Devolución del producto -->
-        <div class="return-section">
-            <h5>Devolución del Producto</h5>
-            <p>Si no estás satisfecho con el producto, puedes solicitar una devolución.</p>
-            <button class="btn-return" onclick="requestReturn('Tapete Carro Grand Prix Universal', '2025-10-12', 'Entregado')">Solicitar Devolución</button>
-        </div>
+    <div id="purchase-history">
+        <p>Cargando historial...</p>
     </div>
-
-    <!-- Producto 2 -->
-    <div class="history-item">
-        <img src="../assets/IMAGENES/estribo%233.jpeg" alt="Estribo">
-        <div class="history-item-details">
-            <h4>Estribo para carro 4x4</h4>
-            <p class="product-description">Ajustable en 4x4</p>
-            <p><strong>Fecha de compra:</strong> 05/10/2025</p>
-            <p><strong>Precio:</strong> $50,000</p>
-        </div>
-        <!-- Estado del producto -->
-        <div class="status-update">
-            <h5>Estado del Producto</h5>
-            <p><strong>Estado:</strong> En tránsito</p>
-            <p><strong>Fecha estimada de entrega:</strong> 15/10/2025</p>
-        </div>
-        <!-- Devolución del producto -->
-        <div class="return-section">
-            <h5>Devolución del Producto</h5>
-            <p>Si no estás satisfecho con el producto, puedes solicitar una devolución.</p>
-            <button class="btn-return" onclick="requestReturn('Estribo para carro 4x4', '2025-10-15', 'En tránsito')">Solicitar Devolución</button>
-        </div>
-    </div>
-
-    <!-- Producto 3 (Fecha más actual) -->
-    <div class="history-item">
-        <img src="../assets/IMAGENES/retrovisor%20%232.png" alt="Retrovisor">
-        <div class="history-item-details">
-            <h4>Retrovisor Universal</h4>
-            <p class="product-description">Ajustable y resistente</p>
-            <p><strong>Fecha de compra:</strong> 20/10/2025</p>
-            <p><strong>Precio:</strong> $35,000</p>
-        </div>
-        <div class="status-update">
-            <h5>Estado del Producto</h5>
-            <p><strong>Estado:</strong> Entregado</p>
-            <p><strong>Fecha de entrega:</strong> 22/10/2025</p>
-        </div>
-        <div class="return-section">
-            <h5>Devolución del Producto</h5>
-            <p>Si no estás satisfecho con el producto, puedes solicitar una devolución.</p>
-            <button class="btn-return" onclick="requestReturn('Retrovisor Universal', '2025-10-22', 'Entregado')">Solicitar Devolución</button>
-        </div>
-    </div>
-
 
     <!-- Apartado de devoluciones realizadas -->
     <div class="returns-container" id="returns-container">
@@ -137,10 +72,6 @@
         <div id="returns-list"></div>
     </div>
 </div>
-
-
-
-
 
 <!-- Footer -->
 <footer class="footer">
@@ -169,6 +100,6 @@
 <!-- Bootstrap JS (necesario para el menú responsivo) -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<script src="../static/js/Historial_Compras.js"></script>
+<script src="/js/Historial_Compras.js"></script>
 </body>
 </html>

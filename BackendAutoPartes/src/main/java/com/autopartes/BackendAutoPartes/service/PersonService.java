@@ -73,7 +73,7 @@ public class PersonService {
      * @return Optional containing the found person or empty if not found.
      */
     public Optional<Person> findByName(String name) {
-            return ReusableServices.findByName("person_name", findAll(), Person::getPersonname);
+        return ReusableServices.findByName("person_name", findAll(), Person::getPersonname);
     }
 
 }

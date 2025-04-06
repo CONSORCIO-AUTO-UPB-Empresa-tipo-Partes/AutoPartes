@@ -1,102 +1,108 @@
+// Modo claro/oscuro
+function toggleMode() {
+    const body = document.body;
+    body.classList.toggle("modo-claro");
+    localStorage.setItem("modo", body.classList.contains("modo-claro") ? "claro" : "oscuro");
+}
 
-    let empleados = [];
-    let editando = false;
-    let empleadoEditando = null;
-
-    document.getElementById("formAgregarEmpleado").addEventListener("submit", function (event) {
-    event.preventDefault();
-
-    let nombre = document.getElementById("nombreEmpleado").value;
-    let apellido = document.getElementById("apellidoEmpleado").value;
-    let rol = document.getElementById("rolUsuario").value;
-    let id = document.getElementById("idEmpleado").value;
-
-    if (editando) {
-        // Actualizar el empleado existente
-        empleadoEditando.nombre = nombre;
-        empleadoEditando.apellido = apellido;
-        empleadoEditando.rol = rol;
-        editando = false; // Salir del modo edición
-        empleadoEditando = null; // Limpiar la referencia al empleado en edición
-        document.querySelector("#formAgregarEmpleado button[type='submit']").textContent = "Agregar empleado";
-    } else {
-        // Agregar un nuevo empleado
-        if (empleados.some(emp => emp.id === id)) {
-            alert("El ID ya existe. Intente con otro.");
-            return;
-        }
-
-        let nuevoEmpleado = { id, nombre, apellido, rol };
-        empleados.push(nuevoEmpleado);
-    }
-
-    actualizarTabla();
-    document.getElementById("formAgregarEmpleado").reset();
-});
-
-    function actualizarTabla() {
-        let tabla = document.getElementById("tablaEmpleadosBody");
-        tabla.innerHTML = "";
-        empleados.forEach(emp => {
-            let fila = `<tr>
-                            <td>${emp.id}</td>
-                            <td>${emp.nombre}</td>
-                            <td>${emp.apellido}</td>
-                            <td>${emp.rol}</td>
-                            <td>
-                                <button class="btn btn-warning btn-sm" onclick="editarEmpleado('${emp.id}')">Editar</button>
-                                <button class="btn btn-danger btn-sm" onclick="eliminarEmpleado('${emp.id}')">Eliminar</button>
-                            </td>
-                        </tr>`;
-            tabla.innerHTML += fila;
-        });
-    }
-
-    function editarEmpleado(id) {
-    empleadoEditando = empleados.find(emp => emp.id === id);
-    if (empleadoEditando) {
-        document.getElementById("nombreEmpleado").value = empleadoEditando.nombre;
-        document.getElementById("apellidoEmpleado").value = empleadoEditando.apellido;
-        document.getElementById("rolUsuario").value = empleadoEditando.rol;
-        document.getElementById("idEmpleado").value = empleadoEditando.id;
-        editando = true;
-        document.querySelector("#formAgregarEmpleado button[type='submit']").textContent = "Guardar cambios";
+function aplicarModoGuardado() {
+    const modoGuardado = localStorage.getItem("modo");
+    if (modoGuardado === "claro") {
+        document.body.classList.add("modo-claro");
     }
 }
 
-    function consultarEmpleado() {
-        let idConsulta = document.getElementById("idConsultar").value;
-        let empleado = empleados.find(emp => emp.id === idConsulta);
-        let resultado = document.getElementById("resultadoConsulta");
+// Logout
+function logout() {
+    localStorage.clear();
+    window.location.href = "InicioSesionCliente.html";
+}
 
-        if (empleado) {
-            resultado.innerHTML = `<div class="alert alert-success">
-                                      <strong>Empleado encontrado:</strong><br>
-                                      <b>ID:</b> ${empleado.id}<br>
-                                      <b>Nombre:</b> ${empleado.nombre}<br>
-                                      <b>Apellido:</b> ${empleado.apellido}<br>
-                                      <b>Rol:</b> ${empleado.rol}
-                                   </div>`;
+// Cargar datos del usuario
+async function loadUserProfile() {
+    const token = localStorage.getItem("authToken");
+    if (!token) {
+        window.location.href = "InicioSesionCliente.html";
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/auth/profile", {
+            headers: {
+                Authorization: "Bearer " + token
+            }
+        });
+
+        if (response.ok) {
+            const user = await response.json();
+            document.getElementById("name").value = user.name || '';
+            document.getElementById("lastname").value = user.lastname || '';
+            document.getElementById("email").value = user.email || '';
+            document.getElementById("phone").value = user.phone || '';
+            document.getElementById("address").value = user.address || '';
+            document.getElementById("documentType").value = user.documentType || '';
+            document.getElementById("document").value = user.document || '';
+            document.getElementById("password").value = ''; // nunca mostrar la contraseña real
         } else {
-            resultado.innerHTML = `<div class="alert alert-danger">No se encontró un empleado con ese ID.</div>`;
+            throw new Error("Token inválido o expirado");
         }
+    } catch (err) {
+        console.error("Error al cargar perfil:", err);
+        window.location.href = "InicioSesionCliente.html";
     }
+}
 
-    function eliminarEmpleado(id) {
-        empleados = empleados.filter(emp => emp.id !== id);
-        actualizarTabla();
-    }
+// Inicializar eventos y estado
+window.addEventListener("DOMContentLoaded", () => {
+    aplicarModoGuardado();
+    loadUserProfile();
 
-    function mostrarConsultar() {
-        document.getElementById("consultarEmpleado").classList.remove("hidden");
-        document.getElementById("agregarEmpleado").classList.add("hidden");
-    }
+    document.getElementById("profileForm").addEventListener("submit", (event) => {
+        event.preventDefault();
+        document.getElementById("confirmationMessage").style.display = "block";
+        setTimeout(() => {
+            document.getElementById("confirmationMessage").style.display = "none";
+        }, 3000);
+    });
 
-    function mostrarAgregar() {
-        document.getElementById("agregarEmpleado").classList.remove("hidden");
-        document.getElementById("consultarEmpleado").classList.add("hidden");
-    }
+    document.getElementById("profileForm").addEventListener("submit", async (event) => {
+        event.preventDefault();
 
-    function toggleMode() {
-        document.body.classList.toggle("modo-claro");
-    }
+        const token = localStorage.getItem("authToken");
+        if (!token) return window.location.href = "InicioSesionCliente.html";
+
+        const body = {
+            name: document.getElementById("name").value,
+            lastname: document.getElementById("lastname").value,
+            email: document.getElementById("email").value,
+            phone: document.getElementById("phone").value,
+            address: document.getElementById("address").value,
+            documentType: document.getElementById("documentType").value,
+            document: document.getElementById("document").value
+        };
+
+        try {
+            const response = await fetch("/api/auth/profile", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: "Bearer " + token
+                },
+                body: JSON.stringify(body)
+            });
+
+            if (response.ok) {
+                document.getElementById("confirmationMessage").textContent = "¡Perfil actualizado!";
+                document.getElementById("confirmationMessage").style.display = "block";
+                setTimeout(() => {
+                    document.getElementById("confirmationMessage").style.display = "none";
+                }, 3000);
+            } else {
+                alert("Error al guardar cambios");
+            }
+        } catch (error) {
+            console.error("Error al actualizar perfil:", error);
+        }
+    });
+
+});
