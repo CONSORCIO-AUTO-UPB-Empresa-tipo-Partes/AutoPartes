@@ -43,6 +43,9 @@ public class SecurityConfig {
                                 "/Perfil.html",
                                 "/Carrito.html",
                                 "/Historial_Compras.html",
+                                "/InicioSesionEmpleados.html",
+                                "/Bodeguero.html",
+                                "/Batch.html",
 
                                 //Para desarrollo, NO SE ME VAYA A OLVIDAR QUITAR ESTA MIERDA DIOS MIO
                                 "/api/batches/**",

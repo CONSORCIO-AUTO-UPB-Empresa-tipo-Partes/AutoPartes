@@ -1,3 +1,13 @@
+document.addEventListener("DOMContentLoaded", () => {
+    const token = localStorage.getItem("authToken");
+    const userType = localStorage.getItem("userType");
+
+    if (!token || userType !== "BODEGUERO") {
+        alert("Acceso restringido. Debes iniciar sesión como Bodeguero.");
+        window.location.href = "InicioSesionEmpleados.html";
+    }
+});
+
 // Función para alternar entre modo claro y oscuro
         function toggleMode() {
             const body = document.body;

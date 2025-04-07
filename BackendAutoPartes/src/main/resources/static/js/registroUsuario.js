@@ -78,7 +78,7 @@ function handleRegistration(event) {
         phonenumber: phonenumber,
         personaddress: personaddress,
         persontype: "Cliente",
-        usertypeId: 3 // ID for client user type
+        usertypeId: 1 // ID for client user type
     };
 
     // Send registration request to backend

@@ -155,3 +155,13 @@ body {
             width: 50px;
             height: 50px;
         }
+
+.table-dark th, .table-dark td {
+    vertical-align: middle;
+    text-align: center;
+}
+.table-dark img {
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+}
+

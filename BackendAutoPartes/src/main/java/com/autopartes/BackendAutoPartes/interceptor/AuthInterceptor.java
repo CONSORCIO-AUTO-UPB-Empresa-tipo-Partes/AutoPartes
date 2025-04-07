@@ -61,7 +61,7 @@
 //    private boolean isPublicResource(String path) {
 //        return path.equals("/") ||
 //               path.equals("/InicioSesionCliente.html") ||
-//               path.equals("/InicioSesion.html") ||
+//               path.equals("/InicioSesionEmpleados.html") ||
 //               path.equals("/Registro.html") ||
 //               path.equals("/Catalogo.html") ||
 //               path.equals("/CatalogoPrincipal.html") ||

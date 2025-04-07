@@ -156,10 +156,10 @@ public class BatchService {
     }
 
     /**
-     * Finds all batches by provider ID.
+     * Updates a batch with data from the request.
      *
-     * @param providerId The ID of the provider.
-     * @return List containing all batches for the specified provider.
+     * @param batch The batch to update.
+     * @param request The request containing the updated data.
      */
     private void updateBatchFromRequest(Batch batch, BatchRequest request) {
         batch.setQuantity(request.getQuantity());
