@@ -50,7 +50,8 @@ public class SecurityConfig {
                                 //Para desarrollo, NO SE ME VAYA A OLVIDAR QUITAR ESTA MIERDA DIOS MIO
                                 "/api/batches/**",
                                 "/api/itemtypes/**",
-                                "/api/providers/**"
+                                "/api/providers/**",
+                                "/api/usertype/**"
                         ).permitAll()
                         .requestMatchers(
                                 "/api/catalog/**",
