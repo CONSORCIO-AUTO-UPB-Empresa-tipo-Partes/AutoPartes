@@ -1,9 +1,6 @@
 package com.autopartes.BackendAutoPartes.model.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.ColumnDefault;
@@ -16,6 +13,7 @@ public class Usertype {
     @Id
     @ColumnDefault("nextval('autopartes.usertype_idtypeuser_seq')")
     @Column(name = "idtypeuser", nullable = false)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "description", length = 150)

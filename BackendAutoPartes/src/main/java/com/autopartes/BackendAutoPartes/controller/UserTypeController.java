@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/usertype")
-@CrossOrigin(origins = "*")
 public class UserTypeController {
 
     private final UserTypeService userTypeService;
