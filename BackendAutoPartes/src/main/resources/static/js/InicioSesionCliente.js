@@ -113,15 +113,16 @@ function validateToken(token) {
 // Redirect user based on user type
 function redirectBasedOnUserType(userType) {
     switch(userType) {
-        case 'CLIENTE':
-            window.location.href = 'Catalogo.html';
-            break;
         case 'BODEGUERO':
+        case 'ROLE_BODEGUERO': // por compatibilidad
             window.location.href = 'Bodeguero.html';
             break;
         case 'ADMINISTRADOR':
+        case 'ROLE_ADMINISTRADOR':
             window.location.href = 'Admin.html';
             break;
+        case 'CLIENTE':
+        case 'ROLE_CLIENTE':
         default:
             window.location.href = 'Catalogo.html';
     }

@@ -81,22 +81,23 @@ document.addEventListener("DOMContentLoaded", function () {
         lotes.forEach(lote => {
             const fila = document.createElement("tr");
             fila.innerHTML = `
-                <td>${lote.id}</td>
-                <td>${lote.datearrival ? new Date(lote.datearrival).toLocaleDateString() : ''}</td>
-                <td>${lote.providerId}</td>
-                <td>${lote.quantity}</td>
-                <td>${lote.itemId}</td>
-                <td>$${lote.purchaseprice.toFixed(2)}</td>
-                <td>$${lote.unitsaleprice.toFixed(2)}</td>
-                <td>${lote.havewarranty ? "Sí" : "No"}</td>
-                <td>${lote.warrantyindays}</td>
-                <td>${lote.itemdescription}</td>
-                <td>$${lote.unitpurchaseprice.toFixed(2)}</td>
-                <td>
-                    <button class="btn btn-primary btn-sm" onclick="editarLote(${lote.id})">Editar</button>
-                    <button class="btn btn-danger btn-sm" onclick="eliminarLote(${lote.id})">Eliminar</button>
-                </td>
-            `;
+            <td>${lote.id}</td>
+            <td>${lote.datearrival ? new Date(lote.datearrival).toLocaleDateString() : ''}</td>
+            <td>${lote.providerName || 'No disponible'}</td>
+            <td>${lote.quantity}</td>
+            <td>${lote.itemName || 'No disponible'}</td>
+            <td>$${lote.purchaseprice.toFixed(2)}</td>
+            <td>$${lote.unitsaleprice.toFixed(2)}</td>
+            <td>${lote.havewarranty ? "Sí" : "No"}</td>
+            <td>${lote.warrantyindays}</td>
+            <td>${lote.itemdescription}</td>
+            <td>$${lote.unitpurchaseprice.toFixed(2)}</td>
+            <td>$${lote.unitsaleprice.toFixed(2)}</td>
+            <td>
+                <button class="btn btn-primary btn-sm" onclick="editarLote(${lote.id})">Editar</button>
+                <button class="btn btn-danger btn-sm" onclick="eliminarLote(${lote.id})">Eliminar</button>
+            </td>
+        `;
             tablaLotes.appendChild(fila);
         });
     }
@@ -138,6 +139,45 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     };
 
+    function cargarItemtypes() {
+        fetch("/api/itemtypes", {
+            headers: { "Authorization": "Bearer " + token }
+        })
+            .then(res => res.json())
+            .then(data => {
+                const selectItem = document.getElementById("itemId");
+                selectItem.innerHTML = '<option value="">Seleccione un ítem</option>';
+                data.forEach(item => {
+                    const option = document.createElement("option");
+                    option.value = item.id;
+                    option.textContent = item.itemname;
+                    selectItem.appendChild(option);
+                });
+            })
+            .catch(err => console.error("Error cargando ítems:", err));
+    }
+
+    function cargarProveedores() {
+        fetch("/api/providers", {
+            headers: { "Authorization": "Bearer " + token }
+        })
+            .then(res => res.json())
+            .then(data => {
+                const selectProv = document.getElementById("providerId");
+                selectProv.innerHTML = '<option value="">Seleccione un proveedor</option>';
+                data.forEach(p => {
+                    const option = document.createElement("option");
+                    option.value = p.id;
+                    option.textContent = p.businessname;
+                    selectProv.appendChild(option);
+                });
+            })
+            .catch(err => console.error("Error cargando proveedores:", err));
+    }
+
     // Cargar lotes al inicio
+    cargarItemtypes();
+    cargarProveedores();
     obtenerLotes();
+
 });

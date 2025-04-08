@@ -10,6 +10,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Entity
 @Table(name = "usertype", schema = "autopartes")
 public class Usertype {
+
     @Id
     @ColumnDefault("nextval('autopartes.usertype_idtypeuser_seq')")
     @Column(name = "idtypeuser", nullable = false)
@@ -21,5 +22,4 @@ public class Usertype {
 
     @Column(name = "usertypename", nullable = false, length = 45)
     private String usertypename;
-
 }
