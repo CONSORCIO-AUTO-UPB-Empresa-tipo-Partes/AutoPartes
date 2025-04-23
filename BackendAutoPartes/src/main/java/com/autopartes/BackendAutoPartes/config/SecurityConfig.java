@@ -47,6 +47,11 @@ public class SecurityConfig {
                                 "/Bodeguero.html",
                                 "/Batch.html",
 
+
+                                //pegado Administrador
+                                "/Admin.html",
+                                "/Providers.html",
+
                                 //Para desarrollo, NO SE ME VAYA A OLVIDAR QUITAR ESTA MIERDA DIOS MIO
                                 "/api/batches/**",
                                 "/api/itemtypes/**",

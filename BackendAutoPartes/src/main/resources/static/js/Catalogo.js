@@ -33,6 +33,8 @@ async function cargarCatalogo() {
         mostrarCatalogo(catalogo);
     } catch (error) {
         console.error('Error al cargar el catálogo:', error);
+
+
     }
 }
 
