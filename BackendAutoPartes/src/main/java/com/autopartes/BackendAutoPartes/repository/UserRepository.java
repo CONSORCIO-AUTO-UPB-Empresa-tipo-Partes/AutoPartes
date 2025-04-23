@@ -1,5 +1,6 @@
 package com.autopartes.BackendAutoPartes.repository;
 
+import com.autopartes.BackendAutoPartes.model.dto.Person;
 import com.autopartes.BackendAutoPartes.model.dto.User;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,5 +17,8 @@ public interface UserRepository extends JpaRepository<User, String> {
      */
     @EntityGraph(attributePaths = {"usertypeIdtypeuser"})
     Optional<User> findByEmail(String email);
+
+    Optional<User> findByPersonIddocument(Person person);
+
 
 }

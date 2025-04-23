@@ -1,10 +1,12 @@
 package com.autopartes.BackendAutoPartes.controller;
 
 import com.autopartes.BackendAutoPartes.model.dto.Person;
+import com.autopartes.BackendAutoPartes.model.dto.User;
 import com.autopartes.BackendAutoPartes.model.dto.response.AuthResponse;
 import com.autopartes.BackendAutoPartes.model.dto.request.LoginRequest;
 import com.autopartes.BackendAutoPartes.model.dto.request.RegisterRequest;
 import com.autopartes.BackendAutoPartes.repository.PersonRepository;
+import com.autopartes.BackendAutoPartes.repository.UserRepository;
 import com.autopartes.BackendAutoPartes.security.JwtUtils;
 import com.autopartes.BackendAutoPartes.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
@@ -15,7 +17,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 
 /**
@@ -31,6 +35,7 @@ public class AuthController {
     private final UserService userService;
     private final JwtUtils jwtUtils;
     private final PersonRepository personRepository;
+    private final UserRepository userRepository;
 
     /**
      * Constructor for AuthController.
@@ -38,11 +43,13 @@ public class AuthController {
      * @param userService The UserService to delegate the authentication requests to.
      * @param jwtUtils The utility class for handling JWT operations.
      * @param personRepository The repository for managing Person entities.
+     * @param userRepository 
      */
-    public AuthController(UserService userService, JwtUtils jwtUtils, PersonRepository personRepository) {
+    public AuthController(UserService userService, JwtUtils jwtUtils, PersonRepository personRepository, UserRepository userRespository, UserRepository userRepository) {
         this.userService = userService;
         this.jwtUtils = jwtUtils;
         this.personRepository = personRepository;
+        this.userRepository = userRepository;
     }
 
     /**
@@ -198,5 +205,48 @@ public class AuthController {
                 })
                 .orElse(ResponseEntity.status(404).body("Usuario no encontrado"));
     }
+
+     @GetMapping("/user-info")
+    public ResponseEntity<?> getUserInfo(@RequestHeader("Authorization") String authHeader,
+                                        @RequestParam(required = false) String email) {
+        // Extraer el token
+        String token = authHeader.replace("Bearer ", "");
+        
+        // Si no se proporciona email, obtenerlo del token
+        if (email == null || email.isEmpty()) {
+            email = jwtUtils.extractUsername(token);
+        }
+        
+        // Verificar si el token es válido
+        if (!jwtUtils.validateToken(token)) {
+            return ResponseEntity.status(401).body(Map.of("error", "Token inválido"));
+        }
+        
+        Optional<User> userOptional = userRepository.findByEmail(email);
+        
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            Person person = user.getPersonIddocument();
+            
+            Map<String, Object> userData = new HashMap<>();
+            userData.put("email", user.getEmail());
+            userData.put("userType", user.getUsertypeIdtypeuser().getUsertypename());
+            
+            if (person != null) {
+                String[] nameParts = person.getPersonname().split(" ", 2);
+                userData.put("name", nameParts[0]);
+                userData.put("lastname", nameParts.length > 1 ? nameParts[1] : "");
+                userData.put("phone", person.getPhonenumber());
+                userData.put("address", person.getPersonaddress());
+                userData.put("documentType", person.getTypedocument());
+                userData.put("document", person.getIddocument());
+            }
+            
+            return ResponseEntity.ok(userData);
+        } else {
+            return ResponseEntity.status(404).body(Map.of("error", "Usuario no encontrado"));
+        }
+    }
+    
 
 }
