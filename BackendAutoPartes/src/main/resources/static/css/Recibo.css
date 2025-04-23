@@ -1,0 +1,867 @@
+/* Estilos generales */
+body {
+    background-color: black;
+    color: white;
+    position: relative;
+    overflow-x: hidden;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.search-form .btn {
+    background-color: #FF335F;
+    color: white;
+    border-color: #FF335F;
+    transition: all 0.3s;
+}
+
+.search-form .btn:hover {
+    background-color: #e63946;
+    border-color: #e63946;
+}
+
+.background-stripes {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.stripe {
+    position: absolute;
+    width: 15%;
+    height: 180vh;
+    background: #FF335F;
+    transform: rotate(21deg);
+    opacity: 0.8;
+    transition: background-color 0.3s;
+}
+
+.stripe:nth-child(1) { right: 0; background: #FF335F; }
+.stripe:nth-child(2) { right: 12%; background: #FF4C73; }
+.stripe:nth-child(3) { right: 24%; background: #FF335F; }
+
+.hero {
+    padding: 80px 20px;
+    text-align: center;
+}
+
+.hero h1 span {
+    color: #FF335F;
+    transition: color 0.3s;
+}
+
+.login-container {
+    width: 500px;
+    height: 550px;
+    position: relative;
+    margin: 50px auto;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    border-radius: 10px;
+    text-align: center;
+    z-index: 2;
+}
+
+.hero .btn {
+    background-color: white;
+    color: black;
+    font-weight: bold;
+    margin-right: 10px;
+    transition: all 0.3s;
+}
+
+.hero .btn:hover {
+    background-color: #e63946;
+    color: black;
+}
+
+.navbar {
+    background-color: black;
+    transition: background-color 0.3s;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.logo-principal {
+    height: 100px;
+    margin-right: 10px;
+    transition: filter 0.3s;
+}
+
+.footer {
+    background-color: #222;
+    padding: 20px 0;
+    margin-top: 40px;
+    transition: background-color 0.3s;
+}
+
+.footer a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+.card {
+    background-color: #111;
+    color: white;
+    transition: all 0.3s;
+}
+
+.email-icon {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: white;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
+    text-decoration: none;
+}
+
+.product-box {
+    background-color: #222;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    margin: 20px;
+    transition: transform 0.3s ease-in-out, background-color 0.3s, color 0.3s;
+}
+
+.product-box:hover {
+    transform: scale(1.05);
+}
+
+.product-box img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.product-box h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    gap: 15px;
+}
+
+.footer-links li {
+    display: inline;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
+
+.policy {
+    margin-top: 5px;
+    font-size: 12px;
+}
+
+.copy {
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.toggle-mode {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s;
+    z-index: 1000;
+}
+
+.toggle-mode:hover {
+    transform: scale(1.05);
+}
+
+/* Modo claro */
+.modo-claro {
+    background-color: white !important;
+    color: black !important;
+}
+
+.modo-claro .stripe {
+    background-color: #007BFF !important;
+}
+
+.modo-claro .navbar {
+    background-color: white !important;
+}
+
+.modo-claro .navbar-dark .navbar-nav .nav-link {
+    color: black !important;
+}
+
+.modo-claro .footer {
+    background-color: #f8f9fa !important;
+}
+
+.modo-claro .footer a {
+    color: black !important;
+}
+
+.modo-claro .card {
+    background-color: #e9ecef !important;
+    color: black !important;
+}
+
+.modo-claro .product-box {
+    background-color: #f8f9fa !important;
+    color: black !important;
+}
+
+.modo-claro .logo-principal {
+    filter: invert(1);
+}
+
+.modo-claro .hero .btn {
+    background-color: #007BFF !important;
+    color: white !important;
+}
+
+.modo-claro .hero .btn:hover {
+    background-color: #0056b3 !important;
+}
+
+/* Elementos que cambian de rojo a azul en modo claro */
+.modo-claro .hero h1 span,
+.modo-claro .category-card h4,
+.modo-claro .category-card .price,
+.modo-claro .back-button,
+.modo-claro .search-form .btn,
+.modo-claro .invoice-summary h3,
+.modo-claro .payment-methods h3,
+.modo-claro .profile-dropdown-content a:hover {
+    color: #007BFF !important;
+}
+
+.modo-claro .search-form .btn,
+.modo-claro .invoice-summary button,
+.modo-claro .modal-content button,
+.modo-claro .profile-dropdown-content a:hover {
+    background-color: #007BFF !important;
+    border-color: #007BFF !important;
+}
+
+.modo-claro .search-form .btn:hover,
+.modo-claro .invoice-summary button:hover,
+.modo-claro .modal-content button:hover {
+    background-color: #0056b3 !important;
+    border-color: #0056b3 !important;
+}
+
+.modo-claro .category-card:hover {
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3) !important;
+}
+
+/* Estilos responsivos */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background-color: black;
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .profile-dropdown-content {
+        position: static;
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    .profile-dropdown-content a {
+        padding: 5px 10px;
+    }
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #FF335F;
+}
+
+.profile-dropdown {
+    position: relative;
+}
+
+.profile-button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.profile-button:hover {
+    color: #FF335F;
+}
+
+.profile-icon {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    object-fit: cover;
+    vertical-align: middle;
+    transition: filter 0.3s;
+}
+
+.modo-claro .profile-icon {
+    filter: brightness(0) invert(0);
+}
+
+.modo-claro .profile-button {
+    color: black !important;
+}
+
+.modo-claro .profile-button:hover {
+    color: #007BFF !important;
+}
+
+.profile-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #222;
+    border-radius: 10px;
+    padding: 10px 0;
+    width: 150px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    transition: all 0.3s;
+}
+
+.profile-dropdown-content a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.profile-dropdown-content a:hover {
+    background-color: #FF335F;
+    border-radius: 5px;
+}
+
+.modo-claro .profile-dropdown-content {
+    background-color: #f8f9fa !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.modo-claro .profile-dropdown-content a {
+    color: black !important;
+}
+
+.profile-dropdown:hover .profile-dropdown-content {
+    display: block;
+}
+
+/* Estilos para el carrito y factura */
+.invoice-container {
+    max-width: 1200px;
+    margin: 100px auto 20px;
+    padding: 20px;
+    background-color: #222;
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.invoice-summary {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.invoice-summary h3 {
+    margin: 0 0 15px;
+    font-size: 20px;
+    color: #FF335F;
+    transition: color 0.3s;
+}
+
+.invoice-summary p {
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.invoice-summary button {
+    background-color: #FF335F;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+    transition: all 0.3s;
+}
+
+.invoice-summary button:hover {
+    background-color: #e63946;
+}
+
+.payment-methods {
+    margin-top: 20px;
+    padding: 20px;
+    background-color: #333;
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.payment-methods h3 {
+    margin: 0 0 15px;
+    font-size: 20px;
+    color: #FF335F;
+    transition: color 0.3s;
+}
+
+.payment-methods label {
+    display: block;
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.cart-item img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-right: 20px;
+}
+
+/* Modal de pago */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1001;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background-color: #222;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 10px;
+    text-align: center;
+    transition: all 0.3s;
+}
+
+.modal-content h2 {
+    color: #FF335F;
+    transition: color 0.3s;
+}
+
+.modal-content button {
+    background-color: #FF335F;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.3s;
+}
+
+.modal-content button:hover {
+    background-color: #e63946;
+}
+
+/* Modo claro para elementos específicos */
+.modo-claro .invoice-container,
+.modo-claro .invoice-summary,
+.modo-claro .payment-methods,
+.modo-claro .modal-content {
+    background-color: #f8f9fa !important;
+    color: black !important;
+}
+
+.modo-claro .modal-content h2 {
+    color: #007BFF !important;
+}
+/* Estilos generales para factura */
+.factura-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 40px;
+    background-color: #222;
+    color: white;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+
+/* Encabezado */
+.factura-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #FF335F;
+}
+
+.factura-header h1 {
+    color: white;
+    font-size: 32px;
+    margin: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Información superior */
+.factura-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.factura-info-left, .factura-info-right {
+    flex: 1;
+}
+
+.factura-info-right {
+    text-align: right;
+}
+
+/* Método de pago */
+.metodo-pago {
+    background-color: rgba(255, 51, 95, 0.1);
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border: 1px solid #FF335F;
+}
+
+.metodo-pago h3 {
+    margin-top: 0;
+    color: #FF335F;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+}
+
+/* Información del cliente */
+.cliente-info {
+    background-color: rgba(255, 51, 95, 0.1);
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 30px;
+    border: 1px solid #FF335F;
+}
+
+.cliente-info h2 {
+    margin-top: 0;
+    color: #FF335F;
+    font-size: 20px;
+}
+
+/* Tabla de artículos */
+.articulos-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 30px 0;
+}
+
+.articulos-table thead th {
+    background-color: #FF335F;
+    color: white;
+    padding: 12px 15px;
+    text-align: left;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+}
+
+.articulos-table tbody td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #444;
+}
+
+.articulos-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.articulos-table tbody tr:hover {
+    background-color: rgba(255, 51, 95, 0.1);
+}
+
+/* Sección de totales */
+.factura-totales {
+    text-align: right;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 2px solid #FF335F;
+}
+
+.factura-totales p {
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+.factura-totales .total {
+    font-size: 24px;
+    font-weight: bold;
+    color: #FF335F;
+}
+
+/* Pie de factura */
+.factura-footer {
+    margin-top: 40px;
+    text-align: center;
+    font-size: 14px;
+    color: #aaa;
+    padding-top: 20px;
+    border-top: 1px dashed #555;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .factura-container {
+        padding: 20px;
+        margin: 20px;
+    }
+
+    .factura-info {
+        flex-direction: column;
+    }
+
+    .factura-info-right {
+        text-align: left;
+        margin-top: 20px;
+    }
+}
+
+/* Modo claro para la factura */
+.modo-claro .factura-container {
+    background-color: white;
+    color: #333;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.modo-claro .factura-header {
+    border-bottom-color: #007BFF;
+}
+
+.modo-claro .factura-header h1 {
+    color: #2b2d42;
+}
+
+.modo-claro .metodo-pago {
+    background-color: #f1faee;
+    border-color: #007BFF;
+}
+
+.modo-claro .metodo-pago h3 {
+    color: #007BFF;
+}
+
+.modo-claro .cliente-info {
+    background-color: #f1faee;
+    border-color: #007BFF;
+}
+
+.modo-claro .cliente-info h2 {
+    color: #007BFF;
+}
+
+.modo-claro .articulos-table thead th {
+    background-color: #007BFF;
+}
+
+.modo-claro .articulos-table tbody td {
+    border-bottom-color: #ddd;
+}
+
+.modo-claro .articulos-table tbody tr:hover {
+    background-color: #f8f9fa;
+}
+
+.modo-claro .factura-totales {
+    border-top-color: #007BFF;
+}
+
+.modo-claro .factura-totales .total {
+    color: #007BFF;
+}
+
+.modo-claro .factura-footer {
+    color: #6c757d;
+    border-top-color: #ddd;
+}
+.modo-claro .search-form .btn {
+    background-color: #007BFF !important;     /* Azul en modo claro */
+    border-color: #007BFF !important;         /* Borde azul */
+    color: white !important;                  /* Texto blanco */
+}
+
+.modo-claro .search-form .btn:hover {
+    background-color: #0056b3 !important;     /* Azul más oscuro en hover */
+    border-color: #0056b3 !important;         /* Borde azul oscuro */
+}
+
+/* Modo Claro - Correcciones aplicadas */
+.modo-claro {
+    background-color: white !important;
+    color: black !important;
+}
+.modo-claro .stripe {
+    background-color: #007BFF !important;
+}
+.modo-claro .navbar {
+    background-color: white !important;
+}
+.modo-claro .navbar-dark .navbar-nav .nav-link {
+    color: black !important;
+}
+.modo-claro .footer {
+    background-color: #f8f9fa !important;
+}
+.modo-claro .footer a {
+    color: black !important;
+}
+.modo-claro .card {
+    background-color: #e9ecef !important;
+    color: black !important;
+}
+.modo-claro .product-box {
+    background-color: #f8f9fa !important;
+    color: black !important;
+}
+.modo-claro .logo-principal {
+    filter: invert(1);
+}
+.modo-claro .hero .btn {
+    background-color: #007BFF !important;
+    color: white !important;
+}
+.modo-claro .hero .btn:hover {
+    background-color: #0056b3 !important;
+}
+.modo-claro .cart-container {
+    background-color: #f8f9fa !important;
+    color: black !important;
+    border: 1px solid #ddd !important;
+}
+.modo-claro .cart-summary {
+    background-color: #e9ecef !important;
+    color: black !important;
+    border: 1px solid #ddd !important;
+}
+
+/* Correcciones específicas para modo claro */
+.modo-claro .search-form .btn {
+    background-color: #007BFF;
+    border-color: #007BFF;
+}
+.modo-claro .search-form .btn:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+.modo-claro .profile-icon {
+    filter: invert(1);
+}
+.modo-claro .profile-dropdown-content {
+    background-color: #f8f9fa;
+}
+.modo-claro .profile-dropdown-content a {
+    color: black;
+}
+.modo-claro .profile-dropdown-content a:hover {
+    background-color: #007BFF;
+    color: white;
+}
+.modo-claro .cart-item-actions button,
+.modo-claro .cart-summary button {
+    background-color: #007BFF;
+}
+.modo-claro .cart-item-actions button:hover,
+.modo-claro .cart-summary button:hover {
+    background-color: #0056b3;
+}
+.modo-claro .cart-item-details h4,
+.modo-claro .cart-summary h3 {
+    color: #0D0F8A;
+}
+.modo-claro .category-card {
+    background-color: #e9ecef !important;
+    color: black !important;
+    border: 1px solid #ddd !important;
+}
+.modo-claro .category-card h4,
+.modo-claro .back-button {
+    color: #007BFF !important;
+}
+.modo-claro .category-card .description {
+    color: #666 !important;
+}
+.modo-claro .profile-button {
+    color: black;
+}
+.modo-claro .profile-button:hover {
+    color: #007BFF;
+}
+/* Para el menú desplegable en modo claro (texto blanco al pasar el mouse) */
+.modo-claro .profile-dropdown-content a:hover {
+    color: white !important;
+    background-color: #007BFF !important;
+}
