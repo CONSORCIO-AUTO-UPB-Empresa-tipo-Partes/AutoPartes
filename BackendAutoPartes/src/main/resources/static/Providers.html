@@ -25,7 +25,18 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="Providers.html" onclick="mostrarAgregar()">Agregar Proveedor</a></li>
                 <li class="nav-item"><a class="nav-link" href="Admin.html" onclick="mostrarAgregar()">Agregar Empleado</a></li>
-                <li class="nav-item"><a class="nav-link" href="ConsultarEmpleados.html" onclick="mostrarConsultar()">Consultar Empleados</a></li>
+                <!-- Dropdown Mi Cuenta -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Mi cuenta
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="Perfil.html">Perfil</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="#" onclick="cerrarSesion()">Cerrar sesión</a></li>
+                    </ul>
+                </li>
+                <!-- Fin Dropdown -->
             </ul>
         </div>
     </div>

@@ -43,6 +43,9 @@ public class SecurityConfig {
                     "/Bodeguero.html",
                     "/Batch.html",
                     "/Admin.html",
+                    "/Providers.html",
+
+                    "/Perfil.html",
 
                     // ¡Recuerda quitar esto en producción!
                     "/api/batches/**",

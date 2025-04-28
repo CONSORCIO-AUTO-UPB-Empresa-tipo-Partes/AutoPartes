@@ -1,4 +1,3 @@
-Admin.html -->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -10,7 +9,6 @@ Admin.html -->
     <link rel="stylesheet" href="css/Admin.css">
 
     <style>
-        /* Estilos adicionales para mensajes y UI */
         .mensaje-flotante {
             position: fixed;
             top: 20px;
@@ -62,7 +60,7 @@ Admin.html -->
                         Mi cuenta
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" id="userProfileLink">Mi perfil</a></li>
+                        <li><a class="dropdown-item" href="Perfil.html">Perfil</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li><a class="dropdown-item" href="#" onclick="cerrarSesion()">Cerrar sesión</a></li>
                     </ul>
@@ -104,13 +102,11 @@ Admin.html -->
 <div class="admin-panel container">
     <h2 class="text-center">Administrar empleados</h2>
 
-    <!-- Botones para alternar entre secciones -->
     <div class="btn-group w-100 mb-4">
         <button class="btn btn-primary" onclick="mostrarAgregar()">Agregar empleado</button>
         <button class="btn btn-info" onclick="mostrarConsultar()">Consultar empleado</button>
     </div>
 
-    <!-- Sección de Agregar Empleado -->
     <div id="agregarEmpleado">
         <h4 class="mt-4">Agregar empleado</h4>
         <form id="formAgregarEmpleado">
@@ -171,7 +167,6 @@ Admin.html -->
         </form>
     </div>
 
-    <!-- Sección de Consultar Empleado por ID -->
     <div id="consultarEmpleado" class="hidden">
         <h4 class="mt-4">Consultar empleado por ID</h4>
         <div class="input-group mb-3">
@@ -181,7 +176,6 @@ Admin.html -->
         <div id="resultadoConsulta" class="mt-3"></div>
     </div>
 
-    <!-- Tabla dinámica de empleados -->
     <div id="tablaEmpleados" class="mt-5">
         <h4>Lista de empleados</h4>
         <div class="table-responsive">
@@ -196,7 +190,6 @@ Admin.html -->
                 </tr>
                 </thead>
                 <tbody id="tablaEmpleadosBody">
-                <!-- Aquí se cargarán dinámicamente los empleados -->
                 </tbody>
             </table>
         </div>
@@ -222,30 +215,33 @@ Admin.html -->
 </footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Tu archivo JavaScript -->
 <script src="js/Admin.js"></script>
 
-<!-- Script para mostrar información del usuario actual -->
+<!-- Script para cargar nombre del usuario -->
 <script>
-    // Cargar información del usuario actual
     document.addEventListener('DOMContentLoaded', function() {
         const userDataStr = localStorage.getItem('user');
         if (userDataStr) {
             try {
                 const userData = JSON.parse(userDataStr);
-                document.getElementById('userName').textContent = userData.name || 'Usuario';
+                if (userData && userData.name) {
+                    document.getElementById('userName').textContent = userData.name;
+                }
             } catch (e) {
-                console.error('Error parsing user data:', e);
+                console.error('Error al cargar el usuario:', e);
             }
         }
-
-        // Si ruta de imagen del usuario existe, mostrarla
-        const userImage = localStorage.getItem('userImage');
-        if (userImage) {
-            document.querySelector('#userInfo img').src = userImage;
-        }
     });
+
+    function cerrarSesion() {
+        localStorage.removeItem('user');
+        window.location.href = 'index.html'; // Redireccionar al login
+    }
+
+    function toggleMode() {
+        document.body.classList.toggle('dark-mode');
+    }
 </script>
+
 </body>
 </html>
