@@ -9,94 +9,142 @@
     <link rel="stylesheet" href="/css/Registro.css">
 </head>
 <body>
-    <div class="background-stripes">
-        <div class="stripe"></div>
-        <div class="stripe"></div>
-        <div class="stripe"></div>
-    </div>
+<div class="background-stripes">
+    <div class="stripe"></div>
+    <div class="stripe"></div>
+    <div class="stripe"></div>
+</div>
 
-    <nav class="navbar navbar-expand-lg navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" href="#">
-                <img src="/img/logo-totes0.png" alt="TOTES BGA" class="logo-principal">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="PrincipalUltimo.html">Inicio</a></li>
-                    <li class="nav-item"><a class="nav-link" href="CatalogoPrincipal.html">Catalogo</a></li>
-                    <li class="nav-item"><a class="nav-link" href="Contacto.html">Contacto</a></li>
-                    <li class="nav-item"><a class="nav-link" href="InicioSesionCliente.html">Iniciar Sesion</a></li>
-                </ul>
+<nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <img src="/img/logo-totes0.png" alt="TOTES BGA" class="logo-principal">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="PrincipalUltimo.html">Inicio</a></li>
+                <li class="nav-item"><a class="nav-link" href="CatalogoPrincipal.html">Catálogo</a></li>
+                <li class="nav-item"><a class="nav-link" href="Contacto.html">Contacto</a></li>
+                <li class="nav-item"><a class="nav-link" href="InicioSesionCliente.html">Iniciar Sesión</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Botón de modo claro/oscuro -->
+<button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
+
+<!-- Contenedor de registro -->
+<div class="registro-container">
+    <h2>Regístrate</h2>
+
+    <!-- Mensajes de error y éxito -->
+    <div id="error-message" class="alert alert-danger" style="display: none;"></div>
+    <div id="success-message" class="alert alert-success" style="display: none;"></div>
+
+
+    <form id="formRegistroUsuario">
+        <div class="form-row">
+            <!-- Columna izquierda -->
+            <div class="form-column">
+                <div class="mb-3">
+                    <label class="form-label">Nombres y Apellidos</label>
+                    <input type="text" class="form-control" id="personName" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Teléfono</label>
+                    <input type="text" class="form-control" id="phonenumber" maxlength="10" required pattern="\d{10}">
+                    <small class="form-text text-muted">Debe tener exactamente 10 dígitos numéricos.</small>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Dirección</label>
+                    <input type="text" class="form-control" id="personaddress" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Tipo de Documento</label>
+                    <select class="form-control" id="typedocument" required>
+                        <option value="">Seleccione un tipo</option>
+                        <option value="CC">Cédula de Ciudadanía</option>
+                        <option value="TI">Tarjeta de Identidad</option>
+                        <option value="NIT">NIT</option>
+                        <option value="CE">Cédula de Extranjería</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Columna derecha -->
+            <div class="form-column">
+                <div class="mb-3">
+                    <label class="form-label">Número de Documento</label>
+                    <input type="text" class="form-control" id="iddocument" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Correo Electrónico</label>
+                    <input type="email" class="form-control" id="email" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Contraseña</label>
+                    <input type="password" class="form-control" id="password" minlength="8" maxlength="8" required>
+                    <small class="form-text text-muted">Debe tener exactamente 8 caracteres.</small>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Confirmar Contraseña</label>
+                    <input type="password" class="form-control" id="confirmPassword" minlength="8" maxlength="8" required>
+                    <small class="form-text text-muted">Debe coincidir con la contraseña.</small>
+                </div>
             </div>
         </div>
-    </nav>
 
-    <!-- Botón de modo claro/oscuro -->
-    <button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
+        <button type="submit" class="btn btn-primary w-100">Registrarme</button>
+    </form>
+</div>
 
-    <!-- Contenedor de registro -->
-    <div class="registro-container">
-        <h2>Registrate</h2>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-        <!-- Mensajes de error y éxito -->
-        <div id="error-message" class="alert alert-danger" style="display: none;"></div>
-        <div id="success-message" class="alert alert-success" style="display: none;"></div>
+<script>
+    // Script para validar teléfono y contraseña
+    document.getElementById('formRegistroUsuario').addEventListener('submit', function(event) {
+        event.preventDefault(); // Evitar que envíe directamente
 
-        <form id="formRegistroUsuario">
-            <div class="form-row">
-                <!-- Columna izquierda -->
-                <div class="form-column">
-                    <div class="mb-3">
-                        <label class="form-label">Nombres y Apellidos</label>
-                        <input type="text" class="form-control" id="personName" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Teléfono</label>
-                        <input type="text" class="form-control" id="phonenumber" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Dirección</label>
-                        <input type="text" class="form-control" id="personaddress" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Tipo de Documento</label>
-                        <select class="form-control" id="typedocument" required>
-                            <option value="CC">Cédula de Ciudadanía</option>
-                            <option value="TI">Tarjeta de Identidad</option>
-                            <option value="NIT">NIT</option>
-                            <option value="CE">Cédula de Extranjería</option>
-                        </select>
-                    </div>
-                </div>
+        const telefono = document.getElementById('phonenumber').value.trim();
+        const password = document.getElementById('password').value.trim();
+        const confirmPassword = document.getElementById('confirmPassword').value.trim();
+        const errorMessage = document.getElementById('error-message');
+        const successMessage = document.getElementById('success-message');
 
-                <!-- Columna derecha -->
-                <div class="form-column">
-                    <div class="mb-3">
-                        <label class="form-label">Número de Documento</label>
-                        <input type="text" class="form-control" id="iddocument" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Correo Electrónico</label>
-                        <input type="email" class="form-control" id="email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Contraseña</label>
-                        <input type="password" class="form-control" id="password" required>
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label">Confirmar Contraseña</label>
-                        <input type="password" class="form-control" id="confirmPassword" required>
-                    </div>
-                </div>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Registrarme</button>
-        </form>
-    </div>
+        errorMessage.style.display = 'none';
+        successMessage.style.display = 'none';
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/registroUsuario.js"></script>
+        // Validar teléfono
+        if (!/^\d{10}$/.test(telefono)) {
+            errorMessage.style.display = 'block';
+            errorMessage.innerText = 'El número de teléfono debe tener exactamente 10 dígitos numéricos.';
+            return;
+        }
+
+        // Validar contraseña
+        if (password.length !== 8) {
+            errorMessage.style.display = 'block';
+            errorMessage.innerText = 'La contraseña debe tener exactamente 8 caracteres.';
+            return;
+        }
+
+        // Validar confirmación de contraseña
+        if (password !== confirmPassword) {
+            errorMessage.style.display = 'block';
+            errorMessage.innerText = 'Las contraseñas no coinciden.';
+            return;
+        }
+
+        // Si todo está bien
+        successMessage.style.display = 'block';
+        successMessage.innerText = '¡Registro exitoso!';
+        // Aquí podrías enviar el formulario si quieres:
+        // this.submit();
+    });
+</script>
 </body>
 </html>
