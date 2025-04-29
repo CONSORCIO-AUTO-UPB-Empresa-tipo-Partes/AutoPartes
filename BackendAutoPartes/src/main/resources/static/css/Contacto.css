@@ -310,7 +310,6 @@ body {
     overflow: hidden;
     position: relative;
 }
-
 .contacto-container::before {
     content: "";
     position: absolute;
@@ -391,4 +390,53 @@ body {
 
 .modo-claro .contacto-container p {
     color: #555 !important;
+}
+/* === Estilos base para preguntas frecuentes === */
+.accordion {
+    background-color: transparent;
+}
+
+.accordion-button {
+    background-color: #343a40;
+    color: white;
+    font-weight: bold;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #495057;
+    color: #fff;
+}
+
+.accordion-body {
+    background-color: #212529;
+    color: white;
+}
+
+/* === Modo claro === */
+body.modo-claro .accordion-button {
+    background-color: #f8f9fa;
+    color: #212529;
+}
+
+body.modo-claro .accordion-button:not(.collapsed) {
+    background-color: #e2e6ea;
+    color: #000;
+}
+
+body.modo-claro .accordion-body {
+    background-color: #ffffff;
+    color: #212529;
+}
+
+/* Espaciado y alineación */
+.accordion-button {
+    padding: 1rem;
+    font-size: 1rem;
+}
+
+.accordion-item {
+    border: none;
+    margin-bottom: 10px;
+    border-radius: 0.375rem;
+    overflow: hidden;
 }

@@ -6,8 +6,6 @@
     <title>Contacto</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/Contacto.css">
-    <style>
-    </style>
 </head>
 <body>
 <div class="background-stripes">
@@ -47,15 +45,73 @@
 
         <!-- Correos electrónicos -->
         <p><strong>Correo Electrónico:</strong></p>
-        <p><a href="mailto:info@totesbga.com"><i class="fas fa-envelope"></i>info@totesbga.com</a></p>
-        <p><a href="mailto:soporte@totesbga.com"><i class="fas fa-envelope"></i>soporte@totesbga.com</a></p>
+        <p><a href="mailto:info@totesbga.com"><i class="fas fa-envelope"></i> info@totesbga.com</a></p>
+        <p><a href="mailto:soporte@totesbga.com"><i class="fas fa-envelope"></i> soporte@totesbga.com</a></p>
 
         <!-- Números de teléfono -->
         <p><strong>Teléfono:</strong></p>
-        <p><a href="tel:+573001234567"><i class="fas fa-phone"></i>+57 300 123 4567</a></p>
-        <p><a href="tel:+573002345678"><i class="fas fa-phone"></i>+57 300 234 5678</a></p>
+        <p><a href="tel:+573001234567"><i class="fas fa-phone"></i> +57 300 123 4567</a></p>
+        <p><a href="tel:+573002345678"><i class="fas fa-phone"></i> +57 300 234 5678</a></p>
     </div>
 </div>
+
+<!-- Preguntas Frecuentes -->
+<section class="container my-5">
+    <h2 class="text-center mb-4">Preguntas Frecuentes</h2>
+    <div class="accordion" id="faqAccordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq-heading-1">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faq-collapse-1" aria-expanded="true">
+                    ¿Cuáles son los medios de pago disponibles?
+                </button>
+            </h2>
+            <div id="faq-collapse-1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Aceptamos pagos con tarjeta de crédito, débito, transferencias bancarias y pagos en efectivo en puntos autorizados como Efecty o Baloto.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq-heading-2">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-collapse-2">
+                    ¿Realizan envíos a todo el país?
+                </button>
+            </h2>
+            <div id="faq-collapse-2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Sí, enviamos a todas las ciudades y municipios de Colombia con tiempos de entrega de 2 a 5 días hábiles.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq-heading-3">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-collapse-3">
+                    ¿Cómo puedo realizar un cambio o devolución?
+                </button>
+            </h2>
+            <div id="faq-collapse-3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Puedes solicitar un cambio o devolución dentro de los primeros 8 días tras la entrega, escribiéndonos al correo soporte@totesbga.com.
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="faq-heading-4">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-collapse-4">
+                    ¿Qué debo hacer si tengo problemas con mi pedido?
+                </button>
+            </h2>
+            <div id="faq-collapse-4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                <div class="accordion-body">
+                    Contáctanos de inmediato al correo <strong>soporte@totesbga.com</strong> o a nuestras líneas telefónicas para darte una solución rápida.
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <footer class="footer">
     <div class="container">
@@ -76,15 +132,11 @@
 </footer>
 
 <button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
-<!-- Bootstrap JS (necesario para el menú responsivo) -->
 
 <script>
-    // Función para cambiar el modo
     function toggleMode() {
         const body = document.body;
         body.classList.toggle("modo-claro");
-
-        // Guardar el estado del modo en localStorage
         if (body.classList.contains("modo-claro")) {
             localStorage.setItem("modo", "claro");
         } else {
@@ -92,7 +144,6 @@
         }
     }
 
-    // Aplicar el modo guardado al cargar la página
     function aplicarModoGuardado() {
         const modoGuardado = localStorage.getItem("modo");
         if (modoGuardado === "claro") {
@@ -100,15 +151,9 @@
         }
     }
 
-    // Llamar a la función al cargar la página
     aplicarModoGuardado();
 </script>
-<!-- Bootstrap JS (necesario para el menú responsivo) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
-    <script>
-        function toggleMode() {
-            document.body.classList.toggle('modo-claro');
-        }
-</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

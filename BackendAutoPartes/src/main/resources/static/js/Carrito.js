@@ -171,6 +171,9 @@ async function crearFacturaYActualizarStock() {
         });
 
         if (response.ok) {
+            const bill = await response.json(); // Obtener datos devueltos por el backend
+            const idbill = bill.id; // Asume que el backend retorna { id: 123, ... }
+
             // Actualizar el inventario
             for (const item of cart) {
                 await fetch(`/api/batches/sell/${item.batchId}?quantity=${item.quantity}`, {
@@ -183,8 +186,9 @@ async function crearFacturaYActualizarStock() {
 
             alert('¡Factura generada y stock actualizado!');
             localStorage.removeItem('cart');
-            window.location.reload();
-        } else {
+            window.location.href = `/recibo.html?id=${idbill}`;
+
+    } else {
             const errorMsg = await response.text();
             alert('Error al crear la factura: ' + errorMsg);
         }
