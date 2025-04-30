@@ -500,3 +500,18 @@ body {
 .modo-claro .profile-button:hover {
     color: #007BFF;
 }
+.payment-method {
+    margin-top: 30px;
+    background-color: #333;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.payment-method h4 {
+    margin-bottom: 15px;
+    color: #FF335F;
+}
+
+.payment-method .form-check {
+    margin-bottom: 10px;
+}

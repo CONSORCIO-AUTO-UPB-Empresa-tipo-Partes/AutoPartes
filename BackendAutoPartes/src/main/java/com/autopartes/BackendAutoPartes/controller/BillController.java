@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -61,8 +62,10 @@ public class BillController {
     @PostMapping
     public ResponseEntity<?> createBill(@Valid @RequestBody BillCreateRequest request) {
         return billService.createBill(request)
-                .map(saved -> ResponseEntity.status(201).body("Factura creada"))
-                .orElse(ResponseEntity.badRequest().body("Cliente no encontrado"));
+                .map(saved -> ResponseEntity.status(201)
+                        .body(Map.of("message", "Factura creada", "id", saved.getId())))
+                .orElse(ResponseEntity.badRequest()
+                        .body(Map.of("message", "Cliente no encontrado")));
     }
 
     /**

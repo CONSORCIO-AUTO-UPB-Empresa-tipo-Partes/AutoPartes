@@ -186,7 +186,7 @@ async function crearFacturaYActualizarStock() {
 
             alert('¡Factura generada y stock actualizado!');
             localStorage.removeItem('cart');
-            window.location.href = `/recibo.html?id=${idbill}`;
+            window.location.href = `/Recibo.html?id=${idbill}`;
 
     } else {
             const errorMsg = await response.text();
@@ -211,3 +211,20 @@ async function obtenerUsuario(token) {
     }
     return null;
 }
+document.addEventListener('DOMContentLoaded', function () {
+    const metodoPago = document.getElementById('paymentMethod');
+    const tarjeta = document.getElementById('formularioTarjeta');
+    const pse = document.getElementById('formularioPSE');
+
+    metodoPago.addEventListener('change', function () {
+        tarjeta.style.display = 'none';
+        pse.style.display = 'none';
+
+        if (metodoPago.value === 'tarjeta') {
+            tarjeta.style.display = 'block';
+        } else if (metodoPago.value === 'pse') {
+            pse.style.display = 'block';
+        }
+    });
+});
+

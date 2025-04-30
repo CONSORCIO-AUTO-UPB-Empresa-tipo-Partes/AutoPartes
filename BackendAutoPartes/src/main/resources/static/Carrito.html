@@ -6,7 +6,6 @@
     <title>Accesorios para Autos</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../css/Carrito.css">
-
 </head>
 <body>
 <div class="background-stripes">
@@ -32,8 +31,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="Catalogo.html">Inicio</a>
                 </li>
-
-                <!-- Menú desplegable del perfil -->
                 <li class="nav-item">
                     <div class="profile-dropdown">
                         <button class="profile-button">
@@ -46,8 +43,6 @@
                         </div>
                     </div>
                 </li>
-
-                <!-- Icono del carrito -->
                 <li class="nav-item">
                     <a class="nav-link" href="Carrito.html" style="font-size: 27px;">🛒</a>
                 </li>
@@ -58,23 +53,86 @@
 
 <script>
     function logout() {
-      window.location.href = 'PrincipalUltimo.html';
+        window.location.href = 'PrincipalUltimo.html';
     }
 </script>
 
+<!-- Carrito y métodos de pago -->
+<div class="container mt-5">
+    <div class="cart-container">
+        <div id="cart-items">
+            <!-- Los items del carrito se cargarán dinámicamente aquí -->
+        </div>
+        <div class="cart-summary">
+            <h3>Resumen de compra</h3>
+            <p>Total: <span id="total-price">$0</span></p>
 
-<!-- Dentro del div con id "cart-items" en Carrito.html -->
-<div class="cart-container">
-    <div id="cart-items">
-        <!-- Los items del carrito se cargarán dinámicamente aquí -->
-    </div>
-    <div class="cart-summary">
-        <h3>Resumen de compra</h3>
-        <p>Total: <span id="total-price">$0</span></p>
-        <button onclick="crearFacturaYActualizarStock()">Finalizar compra</button>
+            <!-- Método de Pago -->
+            <h4>Método de Pago</h4>
+            <form>
+                <div class="mb-3">
+                    <label for="paymentMethod" class="form-label">Selecciona el método de pago</label>
+                    <select class="form-select" id="paymentMethod">
+                        <option value="">-- Selecciona --</option>
+                        <option value="tarjeta">Tarjeta de crédito</option>
+                        <option value="pse">PSE</option>
+                    </select>
+                </div>
+
+                <!-- Formulario Tarjeta de Crédito -->
+                <div id="formularioTarjeta" style="display: none;">
+                    <div class="mb-3">
+                        <label for="cardNumber" class="form-label">Número de Tarjeta</label>
+                        <input type="text" class="form-control" id="cardNumber" placeholder="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="cardName" class="form-label">Nombre en la Tarjeta</label>
+                        <input type="text" class="form-control" id="cardName" placeholder="">
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="expiryDate" class="form-label">Fecha de Expiración</label>
+                            <input type="text" class="form-control" id="expiryDate" placeholder="MM/AA">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="cvv" class="form-label">CVV</label>
+                            <input type="text" class="form-control" id="cvv" placeholder="">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Formulario PSE -->
+                <div id="formularioPSE" style="display: none;">
+                    <div class="mb-3">
+                        <label for="bank" class="form-label">Banco</label>
+                        <select class="form-select" id="bank">
+                            <option value="">-- Selecciona tu banco --</option>
+                            <option>Bancolombia</option>
+                            <option>Davivienda</option>
+                            <option>Banco de Bogotá</option>
+                            <option>Nequi</option>
+                            <option>BBVA</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label for="document" class="form-label">Número de documento</label>
+                        <input type="text" class="form-control" id="document" placeholder="Cédula o NIT">
+                    </div>
+                    <div class="mb-3">
+                        <label for="accountType" class="form-label">Tipo de cuenta</label>
+                        <select class="form-select" id="accountType">
+                            <option value="">-- Selecciona tipo de cuenta --</option>
+                            <option>Cuenta de ahorros</option>
+                            <option>Cuenta corriente</option>
+                        </select>
+                    </div>
+                </div>
+            </form>
+
+            <button onclick="crearFacturaYActualizarStock()">Finalizar compra</button>
+        </div>
     </div>
 </div>
-
 
 <!-- Footer -->
 <footer class="footer">
@@ -95,10 +153,12 @@
     </div>
 </footer>
 
+<!-- Botón modo oscuro -->
 <button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
-<!-- Bootstrap JS (necesario para el menú responsivo) -->
+
+<!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- Tu archivo JavaScript -->
 <script src="../js/Carrito.js"></script>
+<script src="../js/metodoPago.js"></script>
 </body>
 </html>
