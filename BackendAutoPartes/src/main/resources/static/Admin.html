@@ -55,21 +55,20 @@
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="Providers.html">Proveedores</a></li>
                 <li class="nav-item"><a class="nav-link active" href="Admin.html">Empleados</a></li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-                        Mi cuenta
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="Perfil.html">Perfil</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#" onclick="cerrarSesion()">Cerrar sesión</a></li>
-                    </ul>
+                    <!-- Menú desplegable del perfil -->
+                <li class="nav-item">
+                    <div class="profile-dropdown">
+                        <button class="profile-button">
+                            <img src="../img/USUARIO.png" alt="Perfil" class="profile-icon">
+                        </button>
+                        <div class="profile-dropdown-content">
+                            <a href="PerfilAdm.html">Mi cuenta</a>
+                            <a href="InicioSesionEmpleados.html" onclick="logout()">Salir</a>
+                        </div>
+                    </div>
                 </li>
             </ul>
-            <div class="user-info" id="userInfo">
-                <img src="img/user-avatar.png" alt="Usuario">
-                <span id="userName">Usuario</span>
-            </div>
+
         </div>
     </div>
 </nav>

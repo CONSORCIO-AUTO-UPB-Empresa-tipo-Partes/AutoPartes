@@ -261,8 +261,41 @@ function mostrarMensaje(mensaje, tipo) {
     alert(`${tipo.toUpperCase()}: ${mensaje}`);
 }
 
-// Función para verificar el modo claro/oscuro
+// Modo claro/oscuro
+function toggleMode() {
+    const body = document.body;
+    body.classList.toggle("modo-claro");
+    localStorage.setItem("modo", body.classList.contains("modo-claro") ? "claro" : "oscuro");
+}
+
+function aplicarModoGuardado() {
+    const modoGuardado = localStorage.getItem("modo");
+    if (modoGuardado === "claro") {
+        document.body.classList.add("modo-claro");
+    }
+}
+
+// Verificar el modo guardado
 function verificarModo() {
     const modoOscuro = localStorage.getItem('modoOscuro') === 'true';
     document.body.classList.toggle('dark-mode', modoOscuro);
 }
+<!-- Script para mostrar información del usuario actual -->
+// Cargar información del usuario actual
+document.addEventListener('DOMContentLoaded', function() {
+    const userDataStr = localStorage.getItem('user');
+    if (userDataStr) {
+        try {
+            const userData = JSON.parse(userDataStr);
+            document.getElementById('userName').textContent = userData.name || 'Usuario';
+        } catch (e) {
+            console.error('Error parsing user data:', e);
+        }
+    }
+
+    // Si ruta de imagen del usuario existe, mostrarla
+    const userImage = localStorage.getItem('userImage');
+    if (userImage) {
+        document.querySelector('#userInfo img').src = userImage;
+    }
+});

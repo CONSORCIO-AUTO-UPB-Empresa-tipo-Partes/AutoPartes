@@ -43,7 +43,9 @@ public class SecurityConfig {
                     "/Admin.html",
                     "/Providers.html",
                     "/Perfil.html",
-                    "/Recibo.html",
+                    "/Recibo.html",                   
+                    "/PerfilAdm.html",
+
                     // ¡Recuerda quitar esto en producción!
                     "/api/batches/**",
                     "/api/itemtypes/**",
