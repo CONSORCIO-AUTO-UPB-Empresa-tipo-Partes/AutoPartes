@@ -9,13 +9,11 @@
     <link rel="stylesheet" href="../css/Suppliers.css">
 </head>
 <body>
-<!-- Botón de modo claro/oscuro -->
-<button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
 
 <nav class="navbar navbar-expand-lg navbar-dark">
     <div class="container">
         <a class="navbar-brand" href="#">
-            <img src="../img/logo-totes0.png" alt="Logo">
+            <img src="img/logo-totes0.png" alt="Logo">
             Totes BGA - Administrador
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -23,11 +21,20 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link" href="Providers.html" onclick="mostrarAgregar()">Agregar Proveedor</a></li>
-                <li class="nav-item"><a class="nav-link" href="Admin.html" onclick="mostrarAgregar()">Agregar Empleado</a></li>
-                <li class="nav-item"><a class="nav-link" href="ConsultarEmpleados.html" onclick="mostrarConsultar()">Consultar Empleados</a></li>
-            </ul>
-        </div>
+                <li class="nav-item"><a class="nav-link" href="Providers.html">Proveedores</a></li>
+                <li class="nav-item"><a class="nav-link active" href="Admin.html">Empleados</a></li>
+                <!-- Menú desplegable del perfil -->
+                <li class="nav-item">
+                    <div class="profile-dropdown">
+                        <button class="profile-button">
+                            <img src="../img/USUARIO.png" alt="Perfil" class="profile-icon">
+                        </button>
+                        <div class="profile-dropdown-content">
+                            <a href="PerfilAdm.html">Mi cuenta</a>
+                            <a href="InicioSesionEmpleados.html" onclick="logout()">Salir</a>
+                        </div>
+                    </div>
+                </li>
     </div>
 </nav>
 
@@ -59,17 +66,26 @@
 <div class="admin-panel container">
     <h2 class="text-center">Administrar Proveedores</h2>
 
-    <!-- Sección de Agregar Proveedor -->
-    <div id="agregarProveedor">
-        <h4 class="mt-4">Agregar proveedor</h4>
-        <form id="formAgregarProveedor">
-            <div class="mb-3">
-                <label class="form-label">Nombre del proveedor</label>
-                <input type="text" class="form-control" id="nombreProveedor" required>
-            </div>
-            <button type="submit" class="btn btn-primary">Agregar proveedor</button>
-        </form>
-    </div>
+    <!-- Dentro del <div id="agregarProveedor"> -->
+    <form id="formAgregarProveedor">
+        <div class="mb-3">
+            <label class="form-label">Nombre del proveedor</label>
+            <input type="text" class="form-control" id="nombreProveedor" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Dirección</label>
+            <input type="text" class="form-control" id="direccionProveedor" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Teléfono</label>
+            <input type="tel" class="form-control" id="telefonoProveedor" required>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Correo electrónico</label>
+            <input type="email" class="form-control" id="correoProveedor" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Agregar proveedor</button>
+    </form>
 
     <!-- Tabla dinámica de proveedores -->
     <div id="tablaProveedores">
@@ -79,6 +95,9 @@
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
+                <th>Dirección</th>
+                <th>Teléfono</th>
+                <th>Correo</th>
                 <th>Acciones</th>
             </tr>
             </thead>
@@ -106,7 +125,8 @@
         </div>
     </div>
 </footer>
-
+<!-- Botón de modo claro/oscuro -->
+<button class="toggle-mode" onclick="toggleMode()">🌓 Modo</button>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="../js/Suppliers.js"></script>

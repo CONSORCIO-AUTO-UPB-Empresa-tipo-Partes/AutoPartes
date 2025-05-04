@@ -444,15 +444,17 @@ function mostrarMensaje(mensaje, tipo) {
     }, 5000);
 }
 
-// Función para alternar modo claro/oscuro
+// Modo claro/oscuro
 function toggleMode() {
-    document.body.classList.toggle('modo-claro');
-    
-    // Guardar preferencia en localStorage
-    if (document.body.classList.contains('modo-claro')) {
-        localStorage.setItem('modo', 'claro');
-    } else {
-        localStorage.setItem('modo', 'oscuro');
+    const body = document.body;
+    body.classList.toggle("modo-claro");
+    localStorage.setItem("modo", body.classList.contains("modo-claro") ? "claro" : "oscuro");
+}
+
+function aplicarModoGuardado() {
+    const modoGuardado = localStorage.getItem("modo");
+    if (modoGuardado === "claro") {
+        document.body.classList.add("modo-claro");
     }
 }
 
@@ -475,3 +477,22 @@ function cerrarSesion() {
     // Redirigir al login
     window.location.href = 'InicioSesionEmpleados.html';
 }
+<!-- Script para mostrar información del usuario actual -->
+// Cargar información del usuario actual
+document.addEventListener('DOMContentLoaded', function() {
+    const userDataStr = localStorage.getItem('user');
+    if (userDataStr) {
+        try {
+            const userData = JSON.parse(userDataStr);
+            document.getElementById('userName').textContent = userData.name || 'Usuario';
+        } catch (e) {
+            console.error('Error parsing user data:', e);
+        }
+    }
+
+    // Si ruta de imagen del usuario existe, mostrarla
+    const userImage = localStorage.getItem('userImage');
+    if (userImage) {
+        document.querySelector('#userInfo img').src = userImage;
+    }
+});

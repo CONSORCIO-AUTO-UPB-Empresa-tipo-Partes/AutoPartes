@@ -157,3 +157,215 @@
         .hidden {
             display: none;
         }
+        /* Estilos adicionales para mensajes y UI */
+        .mensaje-flotante {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            min-width: 300px;
+        }
+        .hidden {
+            display: none;
+        }
+        .footer {
+            margin-top: 50px;
+        }
+        .user-info {
+            display: flex;
+            align-items: center;
+            margin-left: 15px;
+            color: white;
+        }
+        /* Estilos del menú desplegable */
+        .profile-dropdown {
+            position: relative;
+        }
+        .profile-button {
+            background-color: transparent;
+            border: none;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        .profile-button:hover {
+            color: #FF335F;
+        }
+        .profile-icon {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            object-fit: cover;
+            vertical-align: middle;
+        }
+        .profile-dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #222;
+            border-radius: 10px;
+            padding: 10px 0;
+            width: 150px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            z-index: 100;
+        }
+        .profile-dropdown-content a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 15px;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        .profile-dropdown-content a:hover {
+            background-color: #FF335F;
+            border-radius: 5px;
+        }
+        .profile-dropdown:hover .profile-dropdown-content {
+            display: block;
+        }
+        .modo-claro .profile-icon {
+            filter: invert(1);
+        }
+        .modo-claro .profile-dropdown-content {
+            background-color: #f8f9fa;
+        }
+        .modo-claro .profile-dropdown-content a {
+            color: black;
+        }
+        .modo-claro .profile-dropdown-content a:hover {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        /* Contenedor del perfil */
+        .profile-container {
+            max-width: 600px;
+            margin: 80px auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(255, 51, 95, 0.25);
+            color: white;
+        }
+
+        .profile-container h2 {
+            color: #FF335F;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 30px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .profile-field {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .profile-field label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #FF335F;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .profile-field span {
+            display: block;
+            font-size: 16px;
+            padding: 8px 0;
+            color: white;
+        }
+
+        .profile-field input,
+        .profile-field select {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 51, 95, 0.5);
+            background-color: rgba(0, 0, 0, 0.3);
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .profile-field input:focus,
+        .profile-field select:focus {
+            border-color: #FF335F;
+            box-shadow: 0 0 0 3px rgba(255, 51, 95, 0.2);
+            outline: none;
+        }
+
+        /* Botones del perfil */
+        .profile-actions {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .profile-actions button {
+            background-color: #FF335F;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .profile-actions button:hover {
+            background-color: #e63946;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 51, 95, 0.4);
+        }
+
+        /* Ajustes en modo claro para perfil */
+        .modo-claro .profile-container {
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .modo-claro .profile-field label {
+            color: #007BFF;
+        }
+
+        .modo-claro .profile-field span {
+            color: #333;
+        }
+
+        .modo-claro .profile-field input,
+        .modo-claro .profile-field select {
+            background-color: rgba(255, 255, 255, 0.8);
+            color: #333;
+            border: 1px solid rgba(0, 123, 255, 0.5);
+        }
+
+        .modo-claro .profile-field input:focus,
+        .modo-claro .profile-field select:focus {
+            border-color: #007BFF;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+        }
+
+        .modo-claro .profile-actions button {
+            background-color: #007BFF;
+        }
+
+        .modo-claro .profile-actions button:hover {
+            background-color: #0056b3;
+            box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+        }
