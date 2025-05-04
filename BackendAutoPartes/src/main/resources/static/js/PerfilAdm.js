@@ -92,7 +92,32 @@ window.addEventListener("DOMContentLoaded", () => {
             });
 
             if (response.ok) {
-                document.getElementById("confirmationMessage").textContent = "¡Perfil actualizado!";
+                const confirmationBox = document.getElementById("confirmationMessage");
+                confirmationBox.textContent = "¡Perfil actualizado!";
+
+// Estilos en línea para mostrarlo centrado como un cuadro
+                Object.assign(confirmationBox.style, {
+                    display: "block",
+                    position: "fixed",
+                    top: "50%",
+                    left: "50%",
+                    transform: "translate(-50%, -50%)",
+                    backgroundColor: "#28a745",
+                    color: document.body.classList.contains("modo-claro") ? "#000" : "#fff",
+                    padding: "30px 40px",
+                    borderRadius: "12px",
+                    zIndex: "9999",
+                    boxShadow: "0 6px 20px rgba(0, 0, 0, 0.4)",
+                    fontSize: "18px",
+                    textAlign: "center",
+                    minWidth: "300px",
+                    maxWidth: "90%"
+                });
+
+                setTimeout(() => {
+                    confirmationBox.style.display = "none";
+                }, 3000);
+
                 document.getElementById("confirmationMessage").style.display = "block";
                 setTimeout(() => {
                     document.getElementById("confirmationMessage").style.display = "none";
