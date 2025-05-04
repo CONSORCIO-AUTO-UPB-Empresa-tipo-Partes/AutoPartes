@@ -1,6 +1,5 @@
 package com.autopartes.BackendAutoPartes.controller;
 
-import com.autopartes.BackendAutoPartes.model.dto.Bill;
 import com.autopartes.BackendAutoPartes.model.dto.request.BillCreateRequest;
 import com.autopartes.BackendAutoPartes.model.dto.response.BillResponse;
 import com.autopartes.BackendAutoPartes.service.BillService;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 /**
  * Controller for managing Bill entities.

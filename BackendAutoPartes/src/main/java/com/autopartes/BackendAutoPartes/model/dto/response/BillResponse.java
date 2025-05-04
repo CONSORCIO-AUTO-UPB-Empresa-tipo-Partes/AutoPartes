@@ -1,6 +1,5 @@
 package com.autopartes.BackendAutoPartes.model.dto.response;
 
-import com.autopartes.BackendAutoPartes.model.dto.Bill;
 import lombok.Data;
 
 import java.math.BigDecimal;

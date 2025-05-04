@@ -1,9 +1,5 @@
 package com.autopartes.BackendAutoPartes.observer;
 
-import org.springframework.stereotype.Component;
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Interface for catalog observers.
  */

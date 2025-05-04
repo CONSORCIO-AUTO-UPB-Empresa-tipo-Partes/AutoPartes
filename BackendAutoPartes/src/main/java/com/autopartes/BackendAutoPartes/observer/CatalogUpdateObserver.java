@@ -1,9 +1,7 @@
 package com.autopartes.BackendAutoPartes.observer;
 
 import com.autopartes.BackendAutoPartes.model.dto.response.BatchResponse;
-import com.autopartes.BackendAutoPartes.model.dto.response.BillResponse;
 import com.autopartes.BackendAutoPartes.service.BatchService;
-import com.autopartes.BackendAutoPartes.service.ItemtypeService;
 import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -14,16 +12,13 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Component
 public class CatalogUpdateObserver implements CatalogObserver {
     private final BatchService batchService;
-    private final ItemtypeService itemtypeService;
 
     private volatile List<BatchResponse> catalogCache = new CopyOnWriteArrayList<>();
     private volatile boolean isCacheInitialized = false;
 
     public CatalogUpdateObserver(BatchService batchService,
-                                 ItemtypeService itemtypeService,
                                  CatalogObserverService observerService) {
         this.batchService = batchService;
-        this.itemtypeService = itemtypeService;
         observerService.addObserver(this);
     }
 

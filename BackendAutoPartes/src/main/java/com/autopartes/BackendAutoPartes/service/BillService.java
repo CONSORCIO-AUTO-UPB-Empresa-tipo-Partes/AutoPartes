@@ -1,7 +1,6 @@
 package com.autopartes.BackendAutoPartes.service;
 
 import com.autopartes.BackendAutoPartes.model.dto.*;
-import com.autopartes.BackendAutoPartes.model.dto.request.BatchRequest;
 import com.autopartes.BackendAutoPartes.model.dto.request.BillCreateRequest;
 import com.autopartes.BackendAutoPartes.model.dto.request.ItemSold;
 import com.autopartes.BackendAutoPartes.model.dto.response.BatchResponse;

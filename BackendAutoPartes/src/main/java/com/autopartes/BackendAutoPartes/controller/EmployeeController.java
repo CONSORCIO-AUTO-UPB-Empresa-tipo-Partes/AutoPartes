@@ -2,7 +2,6 @@ package com.autopartes.BackendAutoPartes.controller;
 
 import com.autopartes.BackendAutoPartes.model.dto.request.EmployeeRequest;
 import com.autopartes.BackendAutoPartes.model.dto.response.EmployeeResponse;
-import com.autopartes.BackendAutoPartes.security.JwtUtils;
 import com.autopartes.BackendAutoPartes.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +19,9 @@ import java.util.Map;
 public class EmployeeController {
 
     private final EmployeeService employeeService;
-    private final JwtUtils jwtUtils;
 
-    public EmployeeController(EmployeeService employeeService, JwtUtils jwtUtils) {
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
-        this.jwtUtils = jwtUtils;
     }
 
     /**

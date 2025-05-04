@@ -8,7 +8,6 @@ import com.autopartes.BackendAutoPartes.model.dto.response.PersonResponse;
 import com.autopartes.BackendAutoPartes.repository.PersonRepository;
 import com.autopartes.BackendAutoPartes.repository.UserRepository;
 import com.autopartes.BackendAutoPartes.repository.UsertypeRepository;
-import com.autopartes.BackendAutoPartes.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,9 +22,6 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/persons")
 public class PersonController {
-
-    @Autowired
-    private PersonService personService;
     
     @Autowired
     private PersonRepository personRepository;
