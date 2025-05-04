@@ -50,7 +50,8 @@ public class SecurityConfig {
                     "/api/batches/**",
                     "/api/itemtypes/**",
                     "/api/providers/**",
-                    "/api/usertype/**"
+                    "/api/usertype/**",
+                        "/Devoluciones.html"
                 ).permitAll()
                 .requestMatchers(
                     "/api/catalog/**",

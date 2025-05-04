@@ -1,0 +1,429 @@
+/* Estilos generales heredados */
+body {
+    background-color: black;
+    color: white;
+    position: relative;
+    overflow-x: hidden;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.background-stripes {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.stripe {
+    position: absolute;
+    width: 15%;
+    height: 180vh;
+    background: #FF335F;
+    transform: rotate(21deg);
+    opacity: 0.8;
+    transition: background-color 0.3s;
+}
+
+.stripe:nth-child(1) { right: 0; background: #FF335F; }
+.stripe:nth-child(2) { right: 12%; background: #FF4C73; }
+.stripe:nth-child(3) { right: 24%; background: #FF335F; }
+
+/* Estilos específicos para devoluciones */
+.devoluciones-container {
+    max-width: 1200px;
+    margin: 100px auto;
+    padding: 40px;
+    background-color: rgba(17, 17, 17, 0.9);
+    border-radius: 15px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 1;
+}
+
+.devoluciones-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.devoluciones-header h1 {
+    font-size: 2.8rem;
+    color: #FF335F;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.devoluciones-header p {
+    font-size: 1.2rem;
+    color: #ddd;
+    opacity: 0.9;
+}
+
+.devoluciones-content {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+}
+
+.devoluciones-form {
+    flex: 1;
+    min-width: 350px;
+    background-color: #222;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.form-control, .form-select {
+    background-color: #333;
+    border: 1px solid #444;
+    color: white;
+    padding: 12px 15px;
+}
+
+.form-control:focus, .form-select:focus {
+    background-color: #444;
+    color: white;
+    border-color: #FF335F;
+    box-shadow: 0 0 0 0.25rem rgba(255, 51, 95, 0.25);
+}
+
+.form-label {
+    font-weight: 500;
+    color: #eee;
+    margin-bottom: 8px;
+}
+
+.btn-devolucion {
+    background-color: #FF335F;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    font-weight: 600;
+    width: 100%;
+    transition: all 0.3s;
+}
+
+.btn-devolucion:hover {
+    background-color: #e62b54;
+    transform: translateY(-2px);
+}
+
+.devoluciones-politica {
+    flex: 1;
+    min-width: 350px;
+    background-color: #222;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.devoluciones-politica h3 {
+    color: #FF335F;
+    margin-bottom: 25px;
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+.politica-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+}
+
+.politica-list li {
+    margin-bottom: 15px;
+    padding-left: 30px;
+    position: relative;
+    color: #ddd;
+    font-size: 1.05rem;
+    line-height: 1.5;
+}
+
+.politica-list li i {
+    position: absolute;
+    left: 0;
+    top: 4px;
+    color: #FF335F;
+    font-size: 1.2rem;
+}
+
+.garantia-info {
+    background-color: rgba(255, 51, 95, 0.1);
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 30px;
+}
+
+.garantia-info h4 {
+    color: #FF335F;
+    margin-bottom: 15px;
+    font-size: 1.4rem;
+}
+
+.garantia-info p {
+    color: #ddd;
+    margin-bottom: 15px;
+    font-size: 1rem;
+}
+
+.progress {
+    height: 10px;
+    background-color: #444;
+    border-radius: 5px;
+    margin: 15px 0;
+}
+
+.progress-bar {
+    background-color: #FF335F;
+    transition: width 0.5s ease;
+}
+
+.dias-garantia {
+    font-weight: 600;
+    text-align: center;
+    color: #FF335F;
+    font-size: 1.1rem;
+    margin-top: 10px;
+}
+
+/* Estilos para mensajes */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.alert-danger {
+    background-color: rgba(220, 53, 69, 0.2);
+    border-color: rgba(220, 53, 69, 0.3);
+    color: #ff6b7b;
+}
+
+.alert-success {
+    background-color: rgba(25, 135, 84, 0.2);
+    border-color: rgba(25, 135, 84, 0.3);
+    color: #6bdba7;
+}
+
+/* Modo claro */
+.modo-claro .devoluciones-container,
+.modo-claro .devoluciones-form,
+.modo-claro .devoluciones-politica {
+    background-color: rgba(248, 249, 250, 0.95) !important;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1) !important;
+}
+
+.modo-claro .devoluciones-header h1 {
+    color: #0056b3 !important;
+}
+
+.modo-claro .devoluciones-header p,
+.modo-claro .politica-list li,
+.modo-claro .garantia-info p {
+    color: #555 !important;
+}
+
+.modo-claro .form-control,
+.modo-claro .form-select {
+    background-color: #f8f9fa !important;
+    color: #333 !important;
+    border: 1px solid #ddd !important;
+}
+
+.modo-claro .form-control:focus,
+.modo-claro .form-select:focus {
+    background-color: #fff !important;
+    border-color: #0056b3 !important;
+    box-shadow: 0 0 0 0.25rem rgba(0, 86, 179, 0.25) !important;
+}
+
+.modo-claro .politica-list li i,
+.modo-claro .progress-bar,
+.modo-claro .dias-garantia {
+    color: #0056b3 !important;
+}
+
+.modo-claro .btn-devolucion {
+    background-color: #0056b3 !important;
+}
+
+.modo-claro .btn-devolucion:hover {
+    background-color: #003d7a !important;
+}
+
+.modo-claro .garantia-info {
+    background-color: rgba(0, 86, 179, 0.1) !important;
+}
+
+.modo-claro .progress {
+    background-color: #e2e6ea !important;
+}
+/* Estilos del navbar */
+.navbar {
+    background-color: black;
+    padding: 10px 0;
+}
+
+.navbar-brand {
+    display: flex;
+    align-items: center;
+}
+
+.logo-principal {
+    height: 100px;
+    margin-right: 10px;
+    transition: filter 0.3s;
+}
+
+.nav-link {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 8px 15px;
+    transition: color 0.3s;
+}
+
+.nav-link:hover {
+    color: #FF335F;
+}
+
+/* Dropdown de perfil */
+.profile-dropdown {
+    position: relative;
+}
+
+.profile-button {
+    background-color: transparent;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    cursor: pointer;
+    padding: 8px 15px;
+}
+
+.profile-button:hover {
+    color: #FF335F;
+}
+
+.profile-icon {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    object-fit: cover;
+    vertical-align: middle;
+    transition: filter 0.3s;
+}
+
+.profile-dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #222;
+    border-radius: 10px;
+    padding: 10px 0;
+    min-width: 180px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+}
+
+.profile-dropdown-content a {
+    color: white;
+    text-decoration: none;
+    padding: 10px 15px;
+    display: block;
+    transition: background-color 0.3s;
+}
+
+.profile-dropdown-content a:hover {
+    background-color: #FF335F;
+    border-radius: 5px;
+}
+
+.profile-dropdown:hover .profile-dropdown-content {
+    display: block;
+}
+
+/* Estilos para el modo claro */
+.modo-claro .navbar {
+    background-color: white !important;
+}
+
+.modo-claro .navbar-dark .navbar-nav .nav-link {
+    color: black !important;
+}
+
+.modo-claro .nav-link:hover {
+    color: #007BFF !important;
+}
+
+.modo-claro .profile-icon {
+    filter: brightness(0) invert(0);
+}
+
+.modo-claro .profile-button {
+    color: black !important;
+}
+
+.modo-claro .profile-button:hover {
+    color: #007BFF !important;
+}
+
+.modo-claro .profile-dropdown-content {
+    background-color: #f8f9fa !important;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}
+
+.modo-claro .profile-dropdown-content a {
+    color: black !important;
+}
+
+.modo-claro .profile-dropdown-content a:hover {
+    background-color: #007BFF !important;
+    color: white !important;
+}
+
+/* Estilos responsivos */
+@media (max-width: 991.98px) {
+    .navbar-collapse {
+        background-color: black;
+        padding: 10px;
+        border-radius: 10px;
+        margin-top: 10px;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .profile-dropdown-content {
+        position: static;
+        background-color: transparent;
+        box-shadow: none;
+        display: none;
+        width: 100%;
+    }
+
+    .profile-dropdown:hover .profile-dropdown-content {
+        display: block;
+    }
+
+    .profile-dropdown-content a {
+        padding: 5px 10px;
+    }
+
+    .modo-claro .navbar-collapse {
+        background-color: white !important;
+    }
+}
+
+/* Estilo especial para el icono del carrito */
+.nav-link[href="Carrito.html"] {
+    font-size: 27px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+}
