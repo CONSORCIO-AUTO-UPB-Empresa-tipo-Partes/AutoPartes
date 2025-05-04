@@ -9,14 +9,12 @@ import com.autopartes.BackendAutoPartes.repository.PersonRepository;
 import com.autopartes.BackendAutoPartes.repository.UserRepository;
 import com.autopartes.BackendAutoPartes.security.JwtUtils;
 import com.autopartes.BackendAutoPartes.service.UserService;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
