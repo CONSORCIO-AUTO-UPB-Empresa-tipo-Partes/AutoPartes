@@ -59,9 +59,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById('invoice-date').textContent = formatDate(invoice.billDate);
         document.getElementById('invoice-number').textContent = `#${invoice.id}`;
         document.getElementById('client-name').textContent = invoice.customerName;
-        document.getElementById('client-phone').textContent = invoice.customerPhone || "No registrado";
-        document.getElementById('client-address').textContent = invoice.customerAddress || "No registrada";
-        document.getElementById('payment-method').textContent = invoice.paymentMethod || "No registrado";
+        document.getElementById('client-phone').textContent = invoice.customerPhone || "123 456 7890";
+        document.getElementById('client-address').textContent = invoice.customerAddress || "ange@gmail.com";
+        document.getElementById('payment-method').textContent = invoice.paymentMethod || "Tarjeta de Credito";
         document.getElementById('payment-reference').textContent = invoice.paymentReference || "No aplica";
 
         const itemsTableBody = document.getElementById('items-table-body');
