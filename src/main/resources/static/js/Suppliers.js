@@ -19,11 +19,21 @@ document.addEventListener("DOMContentLoaded", function () {
             email: correoInput.value.trim()
         };
 
+        const authToken = localStorage.getItem('authToken');
+        if (!authToken) {
+            alert("Sesión expirada. Por favor inicia sesión.");
+            window.location.href = "InicioSesionEmpleados.html";
+            return;
+        }
+
         if (editando) {
             Object.assign(proveedorEditando, proveedorData);
             fetch(`/api/providers/${proveedorEditando.idprovider}`, {
                 method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${authToken}`
+                },
                 body: JSON.stringify(proveedorEditando)
             })
                 .then(response => response.json())
@@ -37,18 +47,26 @@ document.addEventListener("DOMContentLoaded", function () {
                 })
                 .catch(error => console.error('Error:', error));
         } else {
-            agregarProveedor(proveedorData);
+            agregarProveedor(proveedorData, authToken);
             formAgregarProveedor.reset();
         }
     });
 
-    function agregarProveedor(proveedor) {
+    function agregarProveedor(proveedor, token) {
         fetch('/api/providers', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify(proveedor)
         })
-            .then(response => response.json())
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Error al agregar proveedor: ${response.status}`);
+                }
+                return response.json();
+            })
             .then(data => {
                 proveedores.push(data);
                 actualizarTabla();
@@ -88,8 +106,21 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     window.eliminarProveedor = function (id) {
-        fetch(`/api/providers/${id}`, { method: 'DELETE' })
-            .then(() => {
+        const authToken = localStorage.getItem('authToken');
+        if (!authToken) {
+            alert("Sesión expirada. Por favor inicia sesión.");
+            window.location.href = "InicioSesionEmpleados.html";
+            return;
+        }
+
+        fetch(`/api/providers/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+        })
+            .then(response => {
+                if (!response.ok) throw new Error(`Error al eliminar proveedor: ${response.status}`);
                 proveedores = proveedores.filter(prov => prov.idprovider !== id);
                 actualizarTabla();
             })
@@ -97,14 +128,34 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     function obtenerProveedores() {
-        fetch('/api/providers')
-            .then(response => response.json())
-            .then(data => {
-                proveedores = data;
-                actualizarTabla();
-            })
-            .catch(error => console.error('Error:', error));
+        const authToken = localStorage.getItem('authToken'); // Recuperar el token
+        if (!authToken) {
+            alert("Sesión no válida. Inicia sesión nuevamente.");
+            window.location.href = "InicioSesionEmpleados.html";
+            return;
+        }
+
+        fetch('/api/providers', {
+            headers: {
+                'Authorization': `Bearer ${authToken}`
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`Error al obtener proveedores: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            proveedores = data;
+            actualizarTabla();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert(error.message);
+        });
     }
+
     // Cargar información del usuario actual
     document.addEventListener('DOMContentLoaded', function() {
         const userDataStr = localStorage.getItem('user');
@@ -117,12 +168,12 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 
-        // Si ruta de imagen del usuario existe, mostrarla
         const userImage = localStorage.getItem('userImage');
         if (userImage) {
             document.querySelector('#userInfo img').src = userImage;
         }
     });
+
     // Modo claro/oscuro
     function toggleMode() {
         const body = document.body;
@@ -137,13 +188,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-// Verificar el modo guardado
     function verificarModo() {
         if (localStorage.getItem('modo') === 'claro') {
             document.body.classList.add('modo-claro');
         }
     }
+
     obtenerProveedores();
     aplicarModoGuardado();
-
 });

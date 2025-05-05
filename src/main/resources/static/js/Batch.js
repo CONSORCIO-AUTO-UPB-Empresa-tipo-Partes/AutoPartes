@@ -9,6 +9,9 @@ document.addEventListener("DOMContentLoaded", function () {
         return;
     }
 
+    // Asegurarse de que cargarProveedores se ejecute correctamente
+    cargarProveedores();
+
     const formAgregarLote = document.getElementById("formAgregarLote");
     const tablaLotes = document.getElementById("tablaLotes");
     let lotes = [];
@@ -32,7 +35,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const quantity = parseInt(document.getElementById("quantity").value);
         const purchasePrice = parseFloat(document.getElementById("purchaseprice").value);
-        const monthsWarranty = parseInt(document.getElementById("monthsofwarranty").value || "0");
+        const haveWarranty = document.getElementById("havewarranty").value === "true";
+        const monthsWarranty = haveWarranty ? parseInt(document.getElementById("monthsofwarranty").value || "0") : 0;
+        const warrantyDays = monthsWarranty * 30; // Calcular días de garantía en base a los meses
 
         const unitPurchase = parseFloat((purchasePrice / quantity).toFixed(2));
         const unitSale = parseFloat((unitPurchase * 1.15).toFixed(2));
@@ -44,11 +49,11 @@ document.addEventListener("DOMContentLoaded", function () {
             unitpurchaseprice: unitPurchase,
             unitsaleprice: unitSale,
             monthsofwarranty: monthsWarranty,
-            warrantyindays: monthsWarranty * 30,
+            warrantyindays: warrantyDays,
             itemdescription: document.getElementById("itemdescription").value,
             itemId: parseInt(document.getElementById("itemId").value),
             providerId: parseInt(document.getElementById("providerId").value),
-            havewarranty: document.getElementById("havewarranty").value === "true"
+            havewarranty: haveWarranty
         };
 
         fetch("/api/batches", {
@@ -167,8 +172,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 selectProv.innerHTML = '<option value="">Seleccione un proveedor</option>';
                 data.forEach(p => {
                     const option = document.createElement("option");
-                    option.value = p.id;
-                    option.textContent = p.businessname;
+                    option.value = p.idprovider; // Usar idprovider como valor
+                    option.textContent = p.name; // Usar name como texto
                     selectProv.appendChild(option);
                 });
             })
@@ -177,7 +182,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Cargar lotes al inicio
     cargarItemtypes();
-    cargarProveedores();
     obtenerLotes();
 
 });

@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.http.HttpMethod;
 
 /**
  * Security configuration class for the application.
@@ -22,45 +25,29 @@ public class SecurityConfig {
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers(
-                    "/api/auth/**",
-                    "/css/**", "/js/**", "/img/**", "/static/**",
-                    "/InicioSesionCliente.html",
-                    "/Registro.html",
-                    "/CatalogoPrincipal.html",
-                    "/PrincipalUltimo.html",
-                    "/Contacto.html",
-                    "/Catalogo.html",
-                    "/Perfil.html",
-                    "/Carrito.html",
-                    "/Historial_Compras.html",
-                    "/InicioSesionEmpleados.html",
-                    "/Bodeguero.html",
-                    "/Batch.html",
-                    "/Admin.html",
-                    "/Providers.html",
-                    "/Perfil.html",
-                    "/Recibo.html",                   
-                    "/PerfilAdm.html",
-
-                    // ¡Recuerda quitar esto en producción!
-                    "/api/batches/**",
-                    "/api/itemtypes/**",
-                    "/api/providers/**",
-                    "/api/usertype/**",
-                        "/Devoluciones.html"
-                ).permitAll()
-                .requestMatchers(
-                    "/api/catalog/**",
-                    "/api/bills/**",
-                    "/api/auth/profile"
-                ).hasAnyRole("CLIENTE", "BODEGUERO", "ADMINISTRADOR")
-                .anyRequest().authenticated()
-            )
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/api/auth/**", "/css/**", "/js/**", "/img/**", "/*.html", "/favicon.ico").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll() // Allow GET for products
+                        .requestMatchers(HttpMethod.POST, "/api/products").hasAnyRole("ADMINISTRADOR", "BODEGUERO") 
+                        .requestMatchers(HttpMethod.PUT, "/api/products/**").hasAnyRole("ADMINISTRADOR", "BODEGUERO") 
+                        .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasAnyRole("ADMINISTRADOR", "BODEGUERO") 
+                        .requestMatchers("/api/persons/**").hasAnyRole("ADMINISTRADOR", "SECRETARIA") 
+                        .requestMatchers(HttpMethod.POST, "/api/bills").hasAnyRole("ADMINISTRADOR", "CLIENTE")
+                        .requestMatchers(HttpMethod.GET, "/api/bills/customer/{document}").hasAnyRole("ADMINISTRADOR", "CLIENTE")
+                        .requestMatchers(HttpMethod.GET, "/api/bills/{id}").hasAnyRole("ADMINISTRADOR", "CLIENTE")
+                        .requestMatchers("/api/bills/**").hasRole("ADMINISTRADOR") 
+                        .requestMatchers("/api/usertype/**").hasRole("ADMINISTRADOR") 
+                        .requestMatchers("/api/providers/**").hasAnyRole("ADMINISTRADOR", "BODEGUERO") 
+                        .requestMatchers("/api/batch/**").hasAnyRole("ADMINISTRADOR", "BODEGUERO") 
+                        .requestMatchers("/api/returns/**").hasAnyRole("ADMINISTRADOR", "BODEGUERO") 
+                        .requestMatchers("/uploads/images/**").permitAll() // Exclude uploads/images from JWT filter
+                        .anyRequest().authenticated()
+                )
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

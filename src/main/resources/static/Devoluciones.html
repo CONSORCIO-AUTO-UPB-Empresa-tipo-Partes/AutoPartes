@@ -59,13 +59,23 @@
         <form id="devolucionForm" class="devoluciones-form">
             <div class="mb-3">
                 <label for="numeroPedido" class="form-label">Número de Pedido</label>
-                <input type="text" class="form-control" id="numeroPedido" required>
+                <select class="form-select" id="numeroPedido" required>
+                    <option value="" selected disabled>Selecciona un pedido</option>
+                    <!-- Opciones dinámicas cargadas desde el backend -->
+                </select>
             </div>
 
             <div class="mb-3">
                 <label for="fechaCompra" class="form-label">Fecha de Compra</label>
                 <input type="date" class="form-control" id="fechaCompra" required>
                 <div id="garantiaInfo" class="form-text"></div>
+            </div>
+
+            <div class="mb-3">
+                <label for="detalleFactura" class="form-label">Detalle de la Factura</label>
+                <div id="detalleFactura" class="border p-3" style="display: none;">
+                    <!-- Aquí se mostrará la información de la factura seleccionada -->
+                </div>
             </div>
 
             <div class="mb-3">

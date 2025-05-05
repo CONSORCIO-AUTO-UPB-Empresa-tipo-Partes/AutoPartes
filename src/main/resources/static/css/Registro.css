@@ -291,33 +291,28 @@ body {
 }
 .modo-claro .hero .btn:hover {
     background-color: #0056b3 !important; /* Azul más oscuro al hacer hover */
+}
 
-    /* Mensajes de advertencia */
-    .warning-message {
-        background-color: #333; /* Un fondo gris oscuro */
-        color: white;           /* Texto en blanco */
-        border: 1px solid #ff0033; /* Borde rojo para que resalte */
-        padding: 10px 15px;
-        margin-top: 10px;
-        border-radius: 5px;
-        font-weight: bold;
-        text-align: center;
-    }
+/* Mensajes de error/advertencia */
+#error-message { /* Target the ID used in HTML */
+    background-color: #f8d7da; /* Light red background */
+    color: #721c24;           /* Dark red text */
+    border: 1px solid #f5c6cb; /* Reddish border */
+    padding: 10px 15px;
+    margin-bottom: 20px; /* Use margin-bottom like success message */
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
+}
 
-
-    /* Mensaje de éxito */
-    #success-message {
-        background-color: #ddffdd;   /* Fondo verde muy claro */
-        color: #4F8A10;              /* Verde fuerte para el texto */
-        border: 1px solid #4F8A10;   /* Borde verde */
-        padding: 10px 15px;
-        margin-bottom: 20px;
-        border-radius: 5px;
-        font-weight: bold;
-        text-align: center;
-    }
-
-
-
-
+/* Mensaje de éxito */
+#success-message {
+    background-color: #ddffdd;   /* Fondo verde muy claro */
+    color: #4F8A10;              /* Verde fuerte para el texto */
+    border: 1px solid #4F8A10;   /* Borde verde */
+    padding: 10px 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-align: center;
 }

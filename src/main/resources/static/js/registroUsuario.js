@@ -62,6 +62,21 @@ function handleRegistration(event) {
     const password = document.getElementById("password").value;
     const confirmPassword = document.getElementById("confirmPassword").value;
 
+    // --- New Validations ---
+    // Validate phone number (10 digits)
+    if (!/^\d{10}$/.test(phonenumber)) {
+        showError("El número de teléfono debe tener exactamente 10 dígitos numéricos.");
+        return;
+    }
+
+    // Validate password complexity
+    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+    if (!passwordRegex.test(password)) {
+        showError("La contraseña debe tener mínimo 8 caracteres, al menos una letra y un número.");
+        return;
+    }
+    // --- End New Validations ---
+
     // Validate passwords match
     if (password !== confirmPassword) {
         showError("Las contraseñas no coinciden. Por favor, inténtalo de nuevo.");

@@ -61,17 +61,23 @@ public class AuthController {
         return userService.login(loginRequest.getEmail(), loginRequest.getPassword())
                 .map(token -> {
                     Instant expiresAt = jwtUtils.extractExpiration(token).toInstant();
-                    String userType = userService.getUserTypeByEmail(loginRequest.getEmail());
+                    
+                    // Fetch the user details again after successful login to get the definitive user type
+                    String userType = userRepository.findByEmail(loginRequest.getEmail())
+                                        .map(user -> user.getUsertypeIdtypeuser().getUsertypename()) // Get type name consistently
+                                        .orElse("UNKNOWN"); // Fallback if user somehow not found after login
+
+                    // Log the userType being sent
+                    System.out.println("Login successful for: " + loginRequest.getEmail() + ", UserType determined as: " + userType); 
 
                     AuthResponse response = new AuthResponse(
                             token,
                             expiresAt,
                             loginRequest.getEmail(),
-                            userType
+                            userType 
                     );
                     return ResponseEntity.ok(response);
                 })
-
                 .orElse(ResponseEntity.status(401).body(
                         new AuthResponse(null, null, null, "Credenciales inválidas")
                 ));

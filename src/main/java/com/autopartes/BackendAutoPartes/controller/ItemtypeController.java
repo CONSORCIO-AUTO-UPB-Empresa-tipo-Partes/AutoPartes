@@ -174,7 +174,8 @@ public class ItemtypeController {
 
         Files.copy(image.getInputStream(), filePath);
 
-        return "/images/" + filename;
+        // Cambiar el prefijo de la ruta devuelta para que sea consistente con la ubicación real
+        return "/uploads/images/" + filename;
     }
 
     private void deleteImageFile(String imagePath) {

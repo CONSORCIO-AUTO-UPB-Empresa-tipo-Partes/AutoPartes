@@ -112,19 +112,43 @@ function validateToken(token) {
 
 // Redirect user based on user type
 function redirectBasedOnUserType(userType) {
-    switch(userType) {
+    console.log("Redirecting based on userType:", userType); // Log the userType being checked
+    // Normalize userType for comparison (e.g., trim and uppercase)
+    const normalizedUserType = (userType || '').trim().toUpperCase();
+    console.log("Normalized userType for switch:", normalizedUserType);
+
+    switch(normalizedUserType) {
         case 'BODEGUERO':
-        case 'ROLE_BODEGUERO': // por compatibilidad
+        case 'ROLE_BODEGUERO':
             window.location.href = 'Bodeguero.html';
             break;
+        case 'ADMIN': // Added case for ADMIN
         case 'ADMINISTRADOR':
+        case 'ADMNISTRADOR': // Added exact match for ADMNISTRADOR
         case 'ROLE_ADMINISTRADOR':
             window.location.href = 'Admin.html';
+            break;
+        case 'SECRETARIA':
+        case 'ROLE_SECRETARIA':
+            window.location.href = 'Secretaria.html';
             break;
         case 'CLIENTE':
         case 'ROLE_CLIENTE':
         default:
-            window.location.href = 'Catalogo.html';
+            // Check if it's an unknown but non-client employee type before defaulting to client view
+            if (normalizedUserType && normalizedUserType !== 'CLIENTE' && normalizedUserType !== 'ROLE_CLIENTE') {
+                console.warn(`Unknown employee userType '${userType}', redirecting to default employee page or showing error.`);
+                // Decide on a fallback for unknown employee types, e.g., show error or a generic employee page
+                // For now, let's redirect to login with an error message
+                showError(`Tipo de usuario empleado desconocido: ${userType}`);
+                // Optional: Clear local storage if login should be forced
+                // localStorage.clear();
+                // window.location.href = 'InicioSesionCliente.html'; // Or stay on page
+            } else {
+                // Default to client catalog page for CLIENT or truly unknown/null types
+                window.location.href = 'Catalogo.html';
+            }
+            break;
     }
 }
 
