@@ -333,6 +333,9 @@
             color: #000000;
         }
 
-
+        .navbar-brand img {
+            height: 100px; /* Ajusta el tamaño del logo para que sea igual al de la página principal */
+            transition: filter 0.3s;
+        }
 
 
