@@ -179,53 +179,9 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch(err => console.error("Error cargando proveedores:", err));
     }
-    // --- CARGAR PROVEEDORES EN TABLA Y BÚSQUEDA ---
-    function cargarProveedoresTabla() {
-        fetch("/api/providers", {
-            headers: { "Authorization": "Bearer " + token }
-        })
-            .then(res => res.json())
-            .then(data => {
-                proveedores = data;
-                mostrarProveedores(proveedores);
-            })
-            .catch(error => {
-                console.error("Error cargando proveedores:", error);
-                alert("No se pudieron cargar los proveedores.");
-            });
-    }
 
-    function mostrarProveedores(lista) {
-        const tabla = document.getElementById("tablaProveedores");
-        if (!tabla) return;
-        tabla.innerHTML = "";
-        lista.forEach(p => {
-            const fila = document.createElement("tr");
-            fila.innerHTML = `
-                <td>${p.idprovider}</td>
-                <td>${p.name}</td>
-            `;
-            tabla.appendChild(fila);
-        });
-    }
-
-    function filtrarYMostrar() {
-        const texto = document.getElementById("buscarProveedor").value.trim().toLowerCase();
-        const filtrados = proveedores.filter(p =>
-            p.name.toLowerCase().includes(texto) ||
-            p.idprovider.toString().includes(texto)
-        );
-        mostrarProveedores(filtrados);
-    }
-
-    const inputBuscar = document.getElementById("buscarProveedor");
-    const btnBuscar = document.getElementById("btnBuscarProveedor");
-    if (inputBuscar) inputBuscar.addEventListener("input", filtrarYMostrar);
-    if (btnBuscar) btnBuscar.addEventListener("click", filtrarYMostrar);
-
-    // --- INICIALIZAR ---
-    cargarProveedores();
+    // Cargar lotes al inicio
     cargarItemtypes();
     obtenerLotes();
-    cargarProveedoresTabla();
+
 });
