@@ -195,3 +195,38 @@ body.dark-mode .login-container input {
         margin: 0 auto;
     }
 }
+/* Contenedor para el campo de contraseña y el ícono */
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding: 12px;
+    padding-right: 40px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px;
+    height: 22px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+body.dark-mode .toggle-password {
+    filter: invert(1);
+}
+body:not(.dark-mode) .toggle-password {
+    filter: invert(0);
+}
+

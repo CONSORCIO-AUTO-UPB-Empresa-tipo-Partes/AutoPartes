@@ -123,3 +123,13 @@ function handleRegistration(event) {
         showError('Error en el registro: ' + (error.message || 'Problema de conexión con el servidor'));
     });
 }
+document.addEventListener('DOMContentLoaded', function () {
+    const passwordInput = document.getElementById('password');
+    const togglePassword = document.getElementById('togglePassword');
+
+    togglePassword.addEventListener('click', () => {
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        togglePassword.src = isPassword ? '/img/OjoCerrado.png' : '/img/OjoAbierto.png';
+    });
+});

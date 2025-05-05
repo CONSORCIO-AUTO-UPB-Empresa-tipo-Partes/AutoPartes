@@ -171,3 +171,17 @@ function showError(message) {
         errorElement.style.display = 'none';
     }, 3000);
 }
+document.getElementById("togglePassword").addEventListener("click", function () {
+    const passwordInput = document.getElementById("password");
+    const icon = this;
+
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        icon.src = "/img/OjoAbierto.png";
+        icon.alt = "Ocultar contraseña";
+    } else {
+        passwordInput.type = "password";
+        icon.src = "/img/OjoCerrado.png";
+        icon.alt = "Mostrar contraseña";
+    }
+});

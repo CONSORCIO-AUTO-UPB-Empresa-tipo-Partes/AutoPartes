@@ -16,7 +16,7 @@
 
             .navbar {
                 background: black;
-                padding: 15px 20px;
+                padding: 10px 20px;
                 position: fixed;
                 top: 0;
                 width: 100%;
@@ -87,6 +87,7 @@
                 text-align: center;
                 z-index: 2;
                 position: relative;
+                margin-top: 85px; /* Ajusta el valor según lo que necesites */
             }
 
             .modo-claro .login-container {
@@ -233,3 +234,44 @@
                 background-color: #000;
                 color: #fff;
             }
+
+        /* Contenedor para el campo de contraseña y el ícono */
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-wrapper input {
+            width: 100%;
+            padding: 12px;
+            padding-right: 40px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+            margin-top: 10px;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 22px;
+            height: 22px;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+
+        .toggle-password:hover {
+            opacity: 1;
+        }
+        /* Ícono de ojo en modo oscuro: se asume que el ícono es negro */
+        .toggle-password {
+            filter: invert(1);
+        }
+
+        /* Ícono de ojo en modo claro: invertimos colores para que se vea en fondo blanco */
+        .modo-claro .toggle-password {
+            filter: invert(0);
+        }

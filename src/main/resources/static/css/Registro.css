@@ -316,3 +316,38 @@ body {
     font-weight: bold;
     text-align: center;
 }
+/* Color del texto de ayuda en modo oscuro */
+.form-text.text-muted {
+    color: #bbbbbb !important;
+}
+
+
+/* Color del texto de ayuda en modo claro */
+.modo-claro .form-text.text-muted {
+    color: #6c757d !important; /* Gris más oscuro, típico en Bootstrap para modo claro */
+}
+.toggle-password {
+    position: absolute;
+    right: 10px;
+    top: 38px;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.toggle-password:hover {
+    opacity: 1;
+}
+/* Ícono de ojo en modo oscuro: se asume que el ícono es negro */
+.toggle-password {
+    filter: invert(1);
+}
+
+/* Ícono de ojo en modo claro: invertimos colores para que se vea en fondo blanco */
+.modo-claro .toggle-password {
+    filter: invert(0);
+}
+
+

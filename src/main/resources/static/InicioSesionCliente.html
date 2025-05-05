@@ -37,11 +37,17 @@
         <h2>Iniciar Sesión</h2>
         <img src="/img/USUARIO.png" width="80" alt="Usuario">
         <input type="text" placeholder="Email" id="email">
-        <input type="password" placeholder="Contraseña" id="password">
+
+        <div style="position: relative;">
+            <input type="password" placeholder="Contraseña" id="password">
+            <img src="/img/OjoCerrado.png" alt="Mostrar contraseña" class="toggle-password" id="togglePassword">
+        </div>
+
         <div class="error-message" style="display: none;"></div>
         <button type="submit">Ingresar</button>
         <p class="register-link">¿No tienes una cuenta? <a href="Registro.html">Regístrate aquí</a></p>
     </div>
+</div>
 
     <!-- Toggle mode button -->
     <button class="toggle-mode" onclick="toggleMode()">
