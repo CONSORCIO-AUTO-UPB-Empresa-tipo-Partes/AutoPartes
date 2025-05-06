@@ -92,6 +92,26 @@ function renderPurchaseHistory(bills) {
 
     container.innerHTML = historyHtml;
 }
+function toggleMode() {
+    const body = document.body;
+    body.classList.toggle("modo-claro");
+
+    // Guardar preferencia en localStorage
+    if (body.classList.contains("modo-claro")) {
+        localStorage.setItem("modo", "claro");
+    } else {
+        localStorage.setItem("modo", "oscuro");
+    }
+}
+
+// Aplicar modo al cargar la página
+function aplicarModoGuardado() {
+    const modoGuardado = localStorage.getItem("modo");
+    if (modoGuardado === "claro") {
+        document.body.classList.add("modo-claro");
+    }
+}
+
 
 
 

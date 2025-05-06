@@ -323,7 +323,7 @@ body {
 
 .contacto-container .imagen-contacto {
     flex: 1;
-    background-image: url('../assets/IMAGENES/secretaria.jpeg');
+    background-image: url('/img/secretaria.jpeg');
     background-size: cover;
     background-position: center;
     position: relative;

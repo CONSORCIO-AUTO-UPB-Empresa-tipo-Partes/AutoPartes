@@ -427,3 +427,6 @@ body {
     align-items: center;
     padding: 0 15px;
 }
+.modo-claro .navbar-brand img {
+    filter: invert(1); /* Invierte el color del logo en modo claro */
+}
