@@ -273,3 +273,14 @@ body {
     height: 100px; /* Ajusta el tamaño del logo para que sea igual al de la página principal */
     transition: filter 0.3s;
 }
+.toggle-mode {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 1000;
+    background-color: #343a40;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+}
