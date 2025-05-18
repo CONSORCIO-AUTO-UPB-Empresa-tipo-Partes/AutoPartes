@@ -5,6 +5,7 @@
 Este repositorio alberga el código fuente y la documentación del sistema integral de gestión de autopartes, desarrollado para optimizar las operaciones del **Consorcio AUTO-UPB**.
 
 **Fecha de última actualización del README:** 2025-05-18
+
 **Autores del proyecto:**
   - [Sofia Santis Silva (Estudiante Ing. Sitemas UPB)](https://github.com/esedesofiaaa)
   - [Valentina Fuentes (Estudiante Ing. Sitemas UPB)](https://github.com/ZValentinaF)
