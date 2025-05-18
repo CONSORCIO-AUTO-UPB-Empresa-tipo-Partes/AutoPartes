@@ -94,7 +94,7 @@ Las configuraciones detalladas de estos servicios, así como la topología de re
 
 ➡️ **[https://github.com/CONSORCIO-AUTO-UPB-Empresa-tipo-Partes/autopartes-servicios-red]**
 
-## 🛠️ Tecnologías Utilizadas
+## 🛠Tecnologías Utilizadas
 
 ### Backend:
 *   **Lenguaje:** Java 17
@@ -128,7 +128,7 @@ Para contribuir al proyecto:
 5.  **Revisión de Código:** Espera la revisión y aprobación del equipo antes de que tu PR sea fusionado.
 6.  **Mensajes de Commit Significativos:** Utiliza mensajes de commit claros y descriptivos.
 
-## 🚀 Guía de Inicio Rápido (Configuración y Ejecución)
+## Guía de Inicio Rápido (Configuración y Ejecución)
 
 ### Prerrequisitos:
 *   JDK 17+
@@ -174,7 +174,7 @@ Para contribuir al proyecto:
     ```
 3.  **Acceso:** `http://localhost:8080/` (o el puerto configurado).
 
-## 📄 Licencia
+## Licencia
 
 ---
 *Consorcio AUTO-UPB*
